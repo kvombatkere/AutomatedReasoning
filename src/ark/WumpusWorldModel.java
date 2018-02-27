@@ -5,6 +5,7 @@
 package ark;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,15 +20,15 @@ import pl.examples.WumpusWorldKB;
 public class WumpusWorldModel implements Model, Cloneable {
 
 	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
-	private WumpusWorldKB kb = new WumpusWorldKB();
-	
 	public WumpusWorldModel() {
 		//initialize assignment map to none
-		assignments.put(new Symbol("P1"), null);
-		assignments.put(new Symbol("P2"), null);
-		assignments.put(new Symbol("P3"), null);
-		assignments.put(new Symbol("B1"), null);
-		assignments.put(new Symbol("B2"), null);
+		assignments.put(new Symbol("P1,1"), null);
+		assignments.put(new Symbol("P1,2"), null);
+		assignments.put(new Symbol("P2,1"), null);
+		assignments.put(new Symbol("P2,2"), null);
+		assignments.put(new Symbol("P3,1"), null);
+		assignments.put(new Symbol("B1,1"), null);
+		assignments.put(new Symbol("B2,1"), null);
 
 	}
 	
@@ -44,8 +45,13 @@ public class WumpusWorldModel implements Model, Cloneable {
 
 	@Override
 	public Boolean satisfies(KB kb) {
-		// TODO Auto-generated method stub
-		return false;
+		Collection<Sentence> sentences = kb.sentences();
+		for(Sentence s: sentences) {
+			if(!(s.isSatisfiedBy(this))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -101,4 +107,22 @@ public class WumpusWorldModel implements Model, Cloneable {
 		}
 	} //end ttCheckAll
 
-}
+	//main method for sanity checking
+	public static void main(String[] args) throws CloneNotSupportedException {
+		WumpusWorldKB kb = new WumpusWorldKB();
+		WumpusWorldModel wwModel = new WumpusWorldModel();
+		
+		Symbol p11 = kb.intern("P1,1");
+		Symbol p12 = kb.intern("P1,2");
+		Symbol p21 = kb.intern("P2,1");
+		Symbol p22 = kb.intern("P2,2");
+		Symbol p31 = kb.intern("P3,1");
+		Symbol b11 = kb.intern("B1,1");
+		Symbol b21 = kb.intern("B2,1");
+		
+		System.out.println(wwModel.ttEntails(kb, b11));
+		System.out.println(wwModel.ttEntails(kb, b21));
+
+	}
+	
+} //end class WumpusWorldModel

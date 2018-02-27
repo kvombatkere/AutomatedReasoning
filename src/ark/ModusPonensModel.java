@@ -5,14 +5,10 @@
 package ark;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.Collection;
-=======
->>>>>>> a1210b60d89869081129b852e72790ec493c1862
 import java.util.HashMap;
 import java.util.List;
-
 import pl.core.Conjunction;
 import pl.core.Implication;
 import pl.core.KB;
@@ -27,8 +23,6 @@ import pl.examples.ModusPonensKB;
 public class ModusPonensModel implements Model{
 	
 	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
-	private ModusPonensKB kb = new ModusPonensKB();
-	
 	public ModusPonensModel() {
 		assignments.put(new Symbol("P"), null);
 		assignments.put(new Symbol("Q"), null);
