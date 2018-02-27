@@ -4,13 +4,12 @@
 
 package ark;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.Collection;
+=======
+>>>>>>> a1210b60d89869081129b852e72790ec493c1862
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
+//This and ModusPonensModel can probably be generalized to a common model class
 
 public class ModusPonensModel implements Model{
 	
@@ -59,8 +59,9 @@ public class ModusPonensModel implements Model{
 
 	@Override
 	public void dump() {
-		// TODO Auto-generated method stub
-		
+		for(Symbol s: assignments.keySet()) {
+			System.out.println(s.toString() + " = " + assignments.get(s));
+		}		
 	}
 
 	@Override
