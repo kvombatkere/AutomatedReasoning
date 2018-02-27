@@ -4,10 +4,6 @@
 
 package ark;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +20,7 @@ public class WumpusWorldModel implements Model, Cloneable {
 	private WumpusWorldKB kb = new WumpusWorldKB();
 	
 	public WumpusWorldModel() {
+		//initialize assignment map to none
 		assignments.put(new Symbol("P1"), null);
 		assignments.put(new Symbol("P2"), null);
 		assignments.put(new Symbol("P3"), null);
@@ -57,10 +54,12 @@ public class WumpusWorldModel implements Model, Cloneable {
 
 	@Override
 	public void dump() {
-		// TODO Auto-generated method stub
-		
+		for(Symbol s: assignments.keySet()) {
+			System.out.println(s.toString() + " = " + assignments.get(s));
+		}
 	}
 	
+	//assign just calls set, but returns the model for use in TT-entails algorithm
 	@Override
 	public Model assign(Symbol s, Boolean b) {
 		this.set(s,  b);
@@ -73,7 +72,7 @@ public class WumpusWorldModel implements Model, Cloneable {
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
 		symbols.addAll(alpha.getSymbols());
 		return(ttCheckAll(kb, alpha, symbols, new WumpusWorldModel()));
-	}
+	}//end ttEntails
 	
 	//Method to enumerate Truth Table for model
 	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) throws CloneNotSupportedException {
@@ -86,15 +85,14 @@ public class WumpusWorldModel implements Model, Cloneable {
 			return true;
 			}
 			 
-			 } 
+		} 
 		else {
-			 
 			Symbol p = symbols.remove(0);
 			return (ttCheckAll(kb, alpha, symbols,
 			((Model) ((WumpusWorldModel) model).clone()).assign(p, Boolean.TRUE)) &&
 			ttCheckAll(kb, alpha, symbols,
 			((Model) ((WumpusWorldModel) model).clone()).assign(p, Boolean.FALSE)));
-			}
-	}
+		}
+	} //end ttCheckAll
 
 }

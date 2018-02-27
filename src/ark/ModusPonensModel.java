@@ -55,8 +55,9 @@ public class ModusPonensModel implements Model{
 
 	@Override
 	public void dump() {
-		// TODO Auto-generated method stub
-		
+		for(Symbol s: assignments.keySet()) {
+			System.out.println(s.toString() + " = " + assignments.get(s));
+		}		
 	}
 
 	@Override
