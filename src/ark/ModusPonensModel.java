@@ -5,11 +5,8 @@
 package ark;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.Collection;
-=======
->>>>>>> a1210b60d89869081129b852e72790ec493c1862
 import java.util.HashMap;
 import java.util.List;
 
