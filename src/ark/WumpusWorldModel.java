@@ -51,8 +51,12 @@ public class WumpusWorldModel implements Model, Cloneable {
 
 	@Override
 	public Boolean satisfies(Sentence sentence) {
-		// TODO Auto-generated method stub
+		if(sentence.isSatisfiedBy(this)) {
+			return true;
+		}
+		else {
 		return false;
+		}
 	}
 
 	@Override

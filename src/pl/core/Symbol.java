@@ -2,7 +2,7 @@ package pl.core;
 
 import java.util.List;
 
-public class Symbol implements Sentence {
+public class Symbol extends Sentence {
 	
 	protected String name;
 

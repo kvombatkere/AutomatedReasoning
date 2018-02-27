@@ -10,11 +10,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import pl.core.Conjunction;
+import pl.core.Implication;
 import pl.core.KB;
 import pl.core.Model;
+import pl.core.Negation;
 import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
@@ -41,16 +45,16 @@ public class ModusPonensModel implements Model{
 	}
 
 
-
+	//Returns true is sentence is satisfied by the model
 	@Override
 	public Boolean satisfies(Sentence sentence) {
-
 		if(sentence.isSatisfiedBy(this)) {
 			return true;
 		}
 		else {
 		return false;
 		}
+
 	}
 
 	@Override
@@ -68,7 +72,12 @@ public class ModusPonensModel implements Model{
 	//Method to check entailment
 	public Boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
-		symbols.addAll(alpha.getSymbols());
+		
+		//create temporary new knowledge base for adding symbols
+		KB kb2 = new KB();
+		Symbol q = kb2.intern("Q");
+		kb2.add(q);
+		symbols.addAll(kb2.symbols());
 		return(ttCheckAll(kb, alpha, symbols, new ModusPonensModel()));
 	}
 	
@@ -78,17 +87,16 @@ public class ModusPonensModel implements Model{
 		
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
-			return model.satisfies(alpha);
+				return model.satisfies(alpha);
 			} 
 			else {
-			return Boolean.TRUE;
+				return Boolean.TRUE;
 			}
 			 
 			 } 
 		else {
 			 
 			Symbol p = symbols.remove(0);
-			
 
 			try {
 				return (ttCheckAll(kb, alpha, symbols,
@@ -103,10 +111,37 @@ public class ModusPonensModel implements Model{
 		}
 	}
 
+	//Check if all sentences in the knowledge base are satisfied by the model
 	@Override
 	public Boolean satisfies(KB kb) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Sentence> sentences = kb.sentences();
+		for(Sentence s: sentences) {
+			if(!(s.isSatisfiedBy(this))) {
+				return false;
+			}
+		}
+		return true;
 	}
+	
+	public static void main(String[] args) throws CloneNotSupportedException {
+		ModusPonensKB kb = new ModusPonensKB();
+		ModusPonensModel mpModel = new ModusPonensModel();
+
+		Symbol q = kb.intern("Q");
+		Symbol p = kb.intern("P");
+		
+		//Check if Modus Ponens entails q (should be true)
+		System.out.println(mpModel.ttEntails(kb, q));
+		
+		//Check if Modus Ponens entails not q (should be false)
+		System.out.println(mpModel.ttEntails(kb, new Negation(q)));
+		
+		//Check if Modus Ponens entails (p and (not q)) -> should be false
+		System.out.println(mpModel.ttEntails(kb, new Conjunction(p,new Negation(q))));
+		
+		//Check if Modus Ponens entails (p and q) -> should be true
+		System.out.println(mpModel.ttEntails(kb, new Conjunction(p,q)));
+	}
+	
 
 }

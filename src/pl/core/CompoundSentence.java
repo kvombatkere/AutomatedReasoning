@@ -2,7 +2,7 @@ package pl.core;
 
 import java.util.List;
 
-abstract public class CompoundSentence implements Sentence {
+abstract public class CompoundSentence extends Sentence {
 	
 	List<Symbol> symList;
 	
