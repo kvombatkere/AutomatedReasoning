@@ -1,5 +1,7 @@
 package pl.core;
 
+import java.util.List;
+
 /**
  * A Model is an assignment of boolean values (true or false) to
  * PropositionalSymbols.
@@ -33,8 +35,7 @@ public interface Model {
 	 */
 	public void dump();
 	
-
-	public Model assign(List<String> )
+	public Model assign(List<Symbol> variables, List<Boolean> values);
 
 	public Model getClone();
 	
