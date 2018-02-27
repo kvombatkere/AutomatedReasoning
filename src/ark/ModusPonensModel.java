@@ -30,7 +30,6 @@ public class ModusPonensModel implements Model, TTModelChecking {
 		assignments.put(new Symbol("Q"), null);
 	}
 
-
 	@Override
 	public void set(Symbol sym, boolean value) {
 		assignments.replace(sym, value);
@@ -42,13 +41,13 @@ public class ModusPonensModel implements Model, TTModelChecking {
 	}
 
 	@Override
-	public boolean satisfies(KB kb) {
+	public Boolean satisfies(KB kb) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean satisfies(Sentence sentence) {
+	public Boolean satisfies(Sentence sentence) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -58,17 +57,15 @@ public class ModusPonensModel implements Model, TTModelChecking {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
 	@Override
 	public Model assign(Symbol s, Boolean b) {
 		this.set(s, b);
-
 		return this;
 	}
 	
 	//Method to check entailment
-	public boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
+	public Boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
 		symbols.addAll(alpha.getSymbols());
 		return(ttCheckAll(kb, alpha, symbols, new ModusPonensModel()));
@@ -76,14 +73,14 @@ public class ModusPonensModel implements Model, TTModelChecking {
 	
 	
 	//Method to enumerate Truth Table for model
-	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, ModusPonensModel model ) throws CloneNotSupportedException{
+	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) throws CloneNotSupportedException{
 		
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
 			return model.satisfies(alpha);
 			} 
 			else {
-			return true;
+			return Boolean.TRUE;
 			}
 			 
 			 } 
@@ -91,21 +88,25 @@ public class ModusPonensModel implements Model, TTModelChecking {
 			 
 			Symbol p = symbols.remove(0);
 			
+<<<<<<< HEAD
 			return (ttCheckAll(kb, alpha, symbols,
  
 			((ModusPonensModel) model.clone()).assign(p, Boolean.TRUE)) &&
 			ttCheckAll(kb, alpha, symbols,
 			((ModusPonensModel) model.clone()).assign(p, Boolean.FALSE)));
 
+=======
+			try {
+				return (ttCheckAll(kb, alpha, symbols,
+				((Model) ((ModusPonensModel)model).clone()).assign(p, Boolean.TRUE)) &&
+				ttCheckAll(kb, alpha, symbols,
+				((Model) ((ModusPonensModel) model).clone()).assign(p, Boolean.FALSE)));
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+				return null;
+>>>>>>> db292c6689654b3ab65369ba9d8a817ad9c42c48
 			}
+		}
 	}
-
-
-	
-	
-	
-
-
-
 
 }

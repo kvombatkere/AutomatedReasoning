@@ -24,24 +24,21 @@ public interface Model extends Cloneable{
 	/**
 	 * Return true if this Model satisfies (makes true) the given KB.
 	 */
-	public boolean satisfies(KB kb);
+	public Boolean satisfies(KB kb);
 
 	/**
 	 * Return true if this Model satisfies (makes true) the given Sentence.
 	 */
-	public boolean satisfies(Sentence sentence);
+	public Boolean satisfies(Sentence sentence);
 	
 	/**
 	 * Print the assignments in this Model to System.out.
 	 */
 	public void dump();
 	
-
 	public Model assign(Symbol s, Boolean b);
-
-
-
 	
+	//public Model clone() throws CloneNotSupportedException;
 
 
 }
