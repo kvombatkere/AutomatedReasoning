@@ -20,6 +20,7 @@ import pl.examples.ModusPonensKB;
 public class ModusPonensModel implements Model, TTModelChecking{
 
 	private ModusPonensKB kb = new ModusPonensKB();
+	
 	@Override
 	public void set(Symbol sym, boolean value) {
 		// TODO Auto-generated method stub
@@ -74,11 +75,18 @@ public class ModusPonensModel implements Model, TTModelChecking{
 			 
 			Symbol p = symbols.remove(0);
 			return (ttCheckAll(kb, alpha, symbols,
-			model.getClone().assign(p, Boolean.TRUE)) &&
+			model.clone().assign(p, Boolean.TRUE)) &&
 			tt_check_all(kb, alpha, symbols,
-			model.getClone().assign(p, Boolean.FALSE)));
+			model.clone().assign(p, Boolean.FALSE)));
 			}
 	}
+
+
+	
+	
+	
+
+
 
 
 }

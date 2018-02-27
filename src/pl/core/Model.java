@@ -4,7 +4,7 @@ package pl.core;
  * A Model is an assignment of boolean values (true or false) to
  * PropositionalSymbols.
  */
-public interface Model {
+public interface Model extends Cloneable{
 
 	/**
 	 * Set the value assigned to the given PropositionSymbol in this
@@ -33,7 +33,7 @@ public interface Model {
 	 */
 	public void dump();
 	
-	public Model getClone();
+	
 	
 
 }

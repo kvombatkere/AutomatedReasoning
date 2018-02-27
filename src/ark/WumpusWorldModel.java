@@ -4,6 +4,10 @@
 
 package ark;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +16,7 @@ import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
 
-public class WumpusWorldModel implements Model, {
+public class WumpusWorldModel implements Model, TTModelChecking {
 
 	@Override
 	public void set(Symbol sym, boolean value) {
@@ -68,10 +72,15 @@ public class WumpusWorldModel implements Model, {
 			 
 			Symbol p = symbols.remove(0);
 			return (ttCheckAll(kb, alpha, symbols,
-			model.clone().assign(p, Boolean.TRUE)) &&
+			model.getClone().assign(p, Boolean.TRUE)) &&
 			ttCheckAll(kb, alpha, symbols,
-			model.clone().assign(p, Boolean.FALSE)));
+			model.getClone().assign(p, Boolean.FALSE)));
 			}
+	}
+
+	@Override
+	public Model getClone() {
+		return null;
 	}
 
 }
