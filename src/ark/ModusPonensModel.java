@@ -92,7 +92,7 @@ public class ModusPonensModel implements Model, TTModelChecking {
 			Symbol p = symbols.remove(0);
 			
 			return (ttCheckAll(kb, alpha, symbols,
-
+ 
 			((ModusPonensModel) model.clone()).assign(p, Boolean.TRUE)) &&
 			ttCheckAll(kb, alpha, symbols,
 			((ModusPonensModel) model.clone()).assign(p, Boolean.FALSE)));
