@@ -36,12 +36,9 @@ public interface Model extends Cloneable{
 	 */
 	public void dump();
 	
-<<<<<<< HEAD
 
-	public Model assign(List<Symbol> variables, List<Boolean> values);
-=======
 	public Model assign(Symbol s, Boolean b);
->>>>>>> eac9c19c3a3ea65ed79a93c2f0e76a4619bfbe48
+
 
 
 	
