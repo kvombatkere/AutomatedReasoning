@@ -1,5 +1,6 @@
 package pl.core;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public interface Model {
 	 * Returns the boolean value associated with the given PropositionalSymbol
 	 * in this Model.
 	 */
-	public boolean get(Symbol sym);
+	public Boolean get(Symbol sym);
 	
 	/**
 	 * Return true if this Model satisfies (makes true) the given KB.
@@ -35,7 +36,7 @@ public interface Model {
 	 */
 	public void dump();
 	
-	public Model assign(List<Symbol> variables, List<Boolean> values);
+	public Model assign(Symbol s, Boolean b);
 
 	public Model getClone();
 	
