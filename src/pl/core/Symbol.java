@@ -1,5 +1,7 @@
 package pl.core;
 
+import java.util.List;
+
 public class Symbol implements Sentence {
 	
 	protected String name;
@@ -60,6 +62,11 @@ public class Symbol implements Sentence {
 	 */
 	public int hashCode() {
 		return name.hashCode();
+	}
+
+	@Override
+	public List<Symbol> getSymbols() {
+		return null;
 	}
 
 }

@@ -32,5 +32,8 @@ public interface Model {
 	 * Print the assignments in this Model to System.out.
 	 */
 	public void dump();
+	
+	public Model getClone();
+	
 
 }

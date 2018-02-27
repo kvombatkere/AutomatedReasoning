@@ -1,5 +1,12 @@
 package pl.core;
 
-abstract public class CompoundSentence implements Sentence {
+import java.util.List;
 
+abstract public class CompoundSentence implements Sentence {
+	
+	List<Symbol> symList;
+	
+	public List<Symbol> getSymbols(){
+		return symList;
+	}
 }

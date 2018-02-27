@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class KB {
 	
-	protected List<Sentence>sentences;
+	protected List<Sentence> sentences;
 	protected SymbolTable symtab;
 	
 	public KB(List<Sentence> sentences, SymbolTable symtab) {

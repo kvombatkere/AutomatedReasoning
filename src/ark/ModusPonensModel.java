@@ -4,13 +4,22 @@
 
 package ark;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.core.KB;
 import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
+import pl.examples.ModusPonensKB;
 
-public class ModusPonensModel implements Model{
+public class ModusPonensModel implements Model, TTModelChecking{
 
+	private ModusPonensKB kb = new ModusPonensKB();
 	@Override
 	public void set(Symbol sym, boolean value) {
 		// TODO Auto-generated method stub
@@ -40,5 +49,36 @@ public class ModusPonensModel implements Model{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//Method to check entailment
+	public boolean ttEntails(KB kb, Sentence alpha) {
+		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
+		symbols.addAll(alpha.getSymbols());
+		return(ttCheckAll(kb, alpha, symbols, new ModusPonensModel()));
+	}
+	
+	
+	//Method to enumerate Truth Table for model
+	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) {
+		
+		if (symbols.isEmpty()) {
+			if (model.satisfies(kb)) {
+			return model.satisfies(alpha);
+			} 
+			else {
+			return true;
+			}
+			 
+			 } 
+		else {
+			 
+			Symbol p = symbols.remove(0);
+			return (ttCheckAll(kb, alpha, symbols,
+			model.getClone().assign(p, Boolean.TRUE)) &&
+			tt_check_all(kb, alpha, symbols,
+			model.getClone().assign(p, Boolean.FALSE)));
+			}
+	}
+
 
 }
