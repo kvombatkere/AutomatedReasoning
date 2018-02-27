@@ -16,7 +16,7 @@ import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
 
-public class WumpusWorldModel implements Model, TTModelChecking {
+public class WumpusWorldModel implements Model, Cloneable {
 
 	@Override
 	public void set(Symbol sym, boolean value) {
@@ -57,7 +57,7 @@ public class WumpusWorldModel implements Model, TTModelChecking {
 	}
 	
 	//Method to enumerate Truth Table for model
-	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) {
+	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, WumpusWorldModel model ) {
 		
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
@@ -72,15 +72,18 @@ public class WumpusWorldModel implements Model, TTModelChecking {
 			 
 			Symbol p = symbols.remove(0);
 			return (ttCheckAll(kb, alpha, symbols,
-			model.getClone().assign(p, Boolean.TRUE)) &&
+			model.clone().assign(p, Boolean.TRUE)) &&
 			ttCheckAll(kb, alpha, symbols,
-			model.getClone().assign(p, Boolean.FALSE)));
+			model.clone().assign(p, Boolean.FALSE)));
 			}
 	}
 
 	@Override
-	public Model getClone() {
+	public Model assign(List<Symbol> variables, List<Boolean> values) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

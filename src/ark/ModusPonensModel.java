@@ -18,7 +18,7 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
-public class ModusPonensModel implements Model, TTModelChecking{
+public class ModusPonensModel implements Model, Cloneable{
 
 	private ModusPonensKB kb = new ModusPonensKB();
 	
@@ -52,7 +52,7 @@ public class ModusPonensModel implements Model, TTModelChecking{
 		
 	}
 	
-	@Override
+	
 	public Model assign(List<Symbol> variables, List<Boolean> values) {
 		for(int i=0; i<variables.size(); i++) {
 			this.set(variables.get(i), values.get(i));
@@ -69,7 +69,7 @@ public class ModusPonensModel implements Model, TTModelChecking{
 	
 	
 	//Method to enumerate Truth Table for model
-	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) {
+	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, ModusPonensModel model ) {
 		
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
@@ -85,15 +85,10 @@ public class ModusPonensModel implements Model, TTModelChecking{
 			Symbol p = symbols.remove(0);
 			
 			return (ttCheckAll(kb, alpha, symbols,
-<<<<<<< HEAD
-			model.clone().assign(p, Boolean.TRUE)) &&
-			tt_check_all(kb, alpha, symbols,
-			model.clone().assign(p, Boolean.FALSE)));
-=======
-			model.getClone().assign(Arrays.asList(p), Arrays.asList(Boolean.TRUE))) &&
+			((Model) model.clone()).assign(Arrays.asList(p), Arrays.asList(Boolean.TRUE))) &&
 			ttCheckAll(kb, alpha, symbols,
-			model.getClone().assign(Arrays.asList(p), Arrays.asList(Boolean.FALSE))));
->>>>>>> e147a8a75edaf09022516ffef9bb678eb1c5b2e5
+			((Model) model.clone()).assign(Arrays.asList(p), Arrays.asList(Boolean.FALSE))));
+
 			}
 	}
 
