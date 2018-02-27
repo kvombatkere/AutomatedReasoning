@@ -15,11 +15,11 @@ import pl.core.Symbol;
 public interface TTModelChecking {
 	
 	//Method to 
-	public boolean ttEntails(KB kb, Sentence alpha);
+	public Boolean ttEntails(KB kb, Sentence alpha);
 	
 	
-	//Currently just directly copy and pasted from slides, enumerates truth table
-	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model );
+	//
+	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model );
 	
 	
 

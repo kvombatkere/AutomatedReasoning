@@ -4,6 +4,10 @@
 
 package ark;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +16,7 @@ import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
 
-public class WumpusWorldModel implements Model, {
+public class WumpusWorldModel implements Model, Cloneable {
 
 	@Override
 	public void set(Symbol sym, boolean value) {
@@ -53,7 +57,7 @@ public class WumpusWorldModel implements Model, {
 	}
 	
 	//Method to enumerate Truth Table for model
-	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) {
+	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, WumpusWorldModel model ) {
 		
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
@@ -73,5 +77,13 @@ public class WumpusWorldModel implements Model, {
 			model.clone().assign(p, Boolean.FALSE)));
 			}
 	}
+
+	@Override
+	public Model assign(List<Symbol> variables, List<Boolean> values) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }
