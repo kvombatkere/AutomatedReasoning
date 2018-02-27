@@ -20,7 +20,7 @@ import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
 
-public class ModusPonensModel implements Model, TTModelChecking {
+public class ModusPonensModel implements Model{
 	
 	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
 	private ModusPonensKB kb = new ModusPonensKB();
@@ -40,16 +40,17 @@ public class ModusPonensModel implements Model, TTModelChecking {
 		return assignments.get(sym);
 	}
 
-	@Override
-	public Boolean satisfies(KB kb) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 
 	@Override
 	public Boolean satisfies(Sentence sentence) {
-		// TODO Auto-generated method stub
+
+		if(sentence.isSatisfiedBy(this)) {
+			return true;
+		}
+		else {
 		return false;
+		}
 	}
 
 	@Override
@@ -88,14 +89,7 @@ public class ModusPonensModel implements Model, TTModelChecking {
 			 
 			Symbol p = symbols.remove(0);
 			
-<<<<<<< HEAD
-			return (ttCheckAll(kb, alpha, symbols,
- 
-			((ModusPonensModel) model.clone()).assign(p, Boolean.TRUE)) &&
-			ttCheckAll(kb, alpha, symbols,
-			((ModusPonensModel) model.clone()).assign(p, Boolean.FALSE)));
 
-=======
 			try {
 				return (ttCheckAll(kb, alpha, symbols,
 				((Model) ((ModusPonensModel)model).clone()).assign(p, Boolean.TRUE)) &&
@@ -104,9 +98,15 @@ public class ModusPonensModel implements Model, TTModelChecking {
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 				return null;
->>>>>>> db292c6689654b3ab65369ba9d8a817ad9c42c48
+
 			}
 		}
+	}
+
+	@Override
+	public Boolean satisfies(KB kb) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
