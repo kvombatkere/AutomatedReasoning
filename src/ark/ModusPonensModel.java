@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import pl.core.KB;
@@ -51,6 +52,14 @@ public class ModusPonensModel implements Model, TTModelChecking{
 		
 	}
 	
+	@Override
+	public Model assign(List<Symbol> variables, List<Boolean> values) {
+		for(int i=0; i<variables.size(); i++) {
+			this.set(variables.get(i), values.get(i));
+		}
+		return this;
+	}
+	
 	//Method to check entailment
 	public boolean ttEntails(KB kb, Sentence alpha) {
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
@@ -74,10 +83,17 @@ public class ModusPonensModel implements Model, TTModelChecking{
 		else {
 			 
 			Symbol p = symbols.remove(0);
+			
 			return (ttCheckAll(kb, alpha, symbols,
+<<<<<<< HEAD
 			model.clone().assign(p, Boolean.TRUE)) &&
 			tt_check_all(kb, alpha, symbols,
 			model.clone().assign(p, Boolean.FALSE)));
+=======
+			model.getClone().assign(Arrays.asList(p), Arrays.asList(Boolean.TRUE))) &&
+			ttCheckAll(kb, alpha, symbols,
+			model.getClone().assign(Arrays.asList(p), Arrays.asList(Boolean.FALSE))));
+>>>>>>> e147a8a75edaf09022516ffef9bb678eb1c5b2e5
 			}
 	}
 
