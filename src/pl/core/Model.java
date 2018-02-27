@@ -36,6 +36,9 @@ public interface Model extends Cloneable{
 	 */
 	public void dump();
 	
-	public Model assign(Symbol s, Boolean b);	
+	public Model assign(Symbol s, Boolean b);
+	
+	//public Model clone() throws CloneNotSupportedException;
+
 
 }

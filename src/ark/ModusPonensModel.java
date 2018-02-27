@@ -20,7 +20,7 @@ import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
 
-public class ModusPonensModel implements Model, TTModelChecking{
+public class ModusPonensModel implements Model, TTModelChecking {
 	
 	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
 	private ModusPonensKB kb = new ModusPonensKB();
@@ -57,7 +57,7 @@ public class ModusPonensModel implements Model, TTModelChecking{
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	@Override
 	public Model assign(Symbol s, Boolean b) {
 		this.set(s, b);
@@ -65,7 +65,7 @@ public class ModusPonensModel implements Model, TTModelChecking{
 	}
 	
 	//Method to check entailment
-	public Boolean ttEntails(KB kb, Sentence alpha) {
+	public Boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
 		symbols.addAll(alpha.getSymbols());
 		return(ttCheckAll(kb, alpha, symbols, new ModusPonensModel()));
@@ -73,7 +73,7 @@ public class ModusPonensModel implements Model, TTModelChecking{
 	
 	
 	//Method to enumerate Truth Table for model
-	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, ModusPonensModel model ) {
+	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) throws CloneNotSupportedException{
 		
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
@@ -90,28 +90,14 @@ public class ModusPonensModel implements Model, TTModelChecking{
 			
 			try {
 				return (ttCheckAll(kb, alpha, symbols,
-				((ModusPonensModel) model.clone()).assign(p, Boolean.TRUE)) &&
+				((Model) ((ModusPonensModel)model).clone()).assign(p, Boolean.TRUE)) &&
 				ttCheckAll(kb, alpha, symbols,
-				((ModusPonensModel) model.clone()).assign(p, Boolean.FALSE)));
+				((Model) ((ModusPonensModel) model).clone()).assign(p, Boolean.FALSE)));
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 				return null;
 			}
-			}
+		}
 	}
-
-	@Override
-	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	
-	
-	
-
-
-
 
 }

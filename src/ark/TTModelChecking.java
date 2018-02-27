@@ -15,11 +15,10 @@ import pl.core.Symbol;
 public interface TTModelChecking {
 	
 	//Method to 
-	public Boolean ttEntails(KB kb, Sentence alpha);
+	public Boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException;
 	
 	
-	//
-	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model );
+	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) throws CloneNotSupportedException;
 	
 	
 
