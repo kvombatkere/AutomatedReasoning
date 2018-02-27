@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import pl.core.KB;
@@ -18,20 +19,31 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
+<<<<<<< HEAD
 public class ModusPonensModel implements Model, Cloneable{
 
 	private ModusPonensKB kb = new ModusPonensKB();
 	
+=======
+public class ModusPonensModel implements Model, TTModelChecking{
+	
+	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
+	private ModusPonensKB kb = new ModusPonensKB();
+	
+	public ModusPonensModel() {
+		assignments.put(new Symbol("P"), null);
+		assignments.put(new Symbol("Q"), null);
+	}
+
+>>>>>>> eac9c19c3a3ea65ed79a93c2f0e76a4619bfbe48
 	@Override
 	public void set(Symbol sym, boolean value) {
-		// TODO Auto-generated method stub
-		
+		assignments.replace(sym, value);
 	}
 
 	@Override
-	public boolean get(Symbol sym) {
-		// TODO Auto-generated method stub
-		return false;
+	public Boolean get(Symbol sym) {
+		return assignments.get(sym);
 	}
 
 	@Override
@@ -52,11 +64,17 @@ public class ModusPonensModel implements Model, Cloneable{
 		
 	}
 	
+<<<<<<< HEAD
 	
 	public Model assign(List<Symbol> variables, List<Boolean> values) {
 		for(int i=0; i<variables.size(); i++) {
 			this.set(variables.get(i), values.get(i));
 		}
+=======
+	@Override
+	public Model assign(Symbol s, Boolean b) {
+		this.set(s, b);
+>>>>>>> eac9c19c3a3ea65ed79a93c2f0e76a4619bfbe48
 		return this;
 	}
 	
@@ -85,10 +103,16 @@ public class ModusPonensModel implements Model, Cloneable{
 			Symbol p = symbols.remove(0);
 			
 			return (ttCheckAll(kb, alpha, symbols,
+<<<<<<< HEAD
 			((Model) model.clone()).assign(Arrays.asList(p), Arrays.asList(Boolean.TRUE))) &&
 			ttCheckAll(kb, alpha, symbols,
 			((Model) model.clone()).assign(Arrays.asList(p), Arrays.asList(Boolean.FALSE))));
 
+=======
+			model.getClone().assign(p, Boolean.TRUE)) &&
+			ttCheckAll(kb, alpha, symbols,
+			model.getClone().assign(p, Boolean.FALSE)));
+>>>>>>> eac9c19c3a3ea65ed79a93c2f0e76a4619bfbe48
 			}
 	}
 

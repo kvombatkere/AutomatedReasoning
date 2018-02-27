@@ -1,5 +1,6 @@
 package pl.core;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public interface Model extends Cloneable{
 	 * Returns the boolean value associated with the given PropositionalSymbol
 	 * in this Model.
 	 */
-	public boolean get(Symbol sym);
+	public Boolean get(Symbol sym);
 	
 	/**
 	 * Return true if this Model satisfies (makes true) the given KB.
@@ -35,8 +36,12 @@ public interface Model extends Cloneable{
 	 */
 	public void dump();
 	
+<<<<<<< HEAD
 
 	public Model assign(List<Symbol> variables, List<Boolean> values);
+=======
+	public Model assign(Symbol s, Boolean b);
+>>>>>>> eac9c19c3a3ea65ed79a93c2f0e76a4619bfbe48
 
 
 	
