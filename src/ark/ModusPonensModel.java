@@ -4,12 +4,7 @@
 
 package ark;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +14,7 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
+//This and ModusPonensModel can probably be generalized to a common model class
 
 public class ModusPonensModel implements Model{
 	

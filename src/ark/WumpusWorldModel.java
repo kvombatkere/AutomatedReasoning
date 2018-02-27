@@ -14,6 +14,8 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.WumpusWorldKB;
 
+//This and ModusPonensModel can probably be generalized to a common model class
+
 public class WumpusWorldModel implements Model, Cloneable {
 
 	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
