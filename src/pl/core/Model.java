@@ -33,6 +33,11 @@ public interface Model {
 	 */
 	public void dump();
 	
+
 	public Model assign(List<String> )
+
+	public Model getClone();
+	
+
 
 }
