@@ -4,6 +4,7 @@
 
 package ark;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,8 +30,8 @@ public class WumpusWorldChecker implements TTModelChecking{
 		Symbol p31 = kb.intern("P3,1");
 		Symbol b11 = kb.intern("B1,1");
 		Symbol b21 = kb.intern("B2,1");
-		
-		System.out.println(TTModelChecking.ttEntails(kb, b11));
+
+		System.out.println(TTModelChecking.ttEntails(kb, p12));
 		System.out.println(TTModelChecking.ttEntails(kb, b21));
 
 	}

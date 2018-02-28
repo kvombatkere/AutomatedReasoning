@@ -1,9 +1,5 @@
 package ark;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +33,7 @@ public interface TTModelChecking {
 		} 
 		else {
 			Symbol p = symbols.remove(0);
+
 			return (ttCheckAll(kb, alpha, symbols,
 			(((Model) Model.deepClone(model)).assign(p, Boolean.TRUE))) &&
 			ttCheckAll(kb, alpha, symbols,

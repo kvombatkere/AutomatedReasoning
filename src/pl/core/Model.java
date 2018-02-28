@@ -13,6 +13,7 @@ import java.util.List;
  * A Model is an assignment of boolean values (true or false) to
  * PropositionalSymbols.
  */
+@SuppressWarnings({ "serial", "unused" })
 public class Model implements Serializable{
 
 	//Model was changed from an interface to a class and all methods were implemented
@@ -33,7 +34,7 @@ public class Model implements Serializable{
 	 * Model to the given boolean VALUE.
 	 */
 	public void set(Symbol sym, boolean value) {
-		assignments.replace(sym, value);
+		assignments.put(sym, value);
 	}
 
 	/**
@@ -48,6 +49,8 @@ public class Model implements Serializable{
 	 * Return true if this Model satisfies (makes true) the given KB.
 	 */
 	public Boolean satisfies(KB kb) {
+		//dump();
+		//System.out.println("\n");
 		Collection<Sentence> sentences = kb.sentences();
 		for(Sentence s: sentences) {
 			if(!(s.isSatisfiedBy(this))) {
@@ -79,7 +82,7 @@ public class Model implements Serializable{
 	}
 	
 	public Model assign(Symbol s, Boolean b) {
-		this.set(s, b);
+		assignments.put(s, b);
 		return this;
 	}
 	
