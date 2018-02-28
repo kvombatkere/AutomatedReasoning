@@ -1,5 +1,6 @@
 package pl.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Symbol extends Sentence {
@@ -66,7 +67,9 @@ public class Symbol extends Sentence {
 
 	@Override
 	public List<Symbol> getSymbols() {
-		return null;
+		List<Symbol> symbols = new ArrayList<Symbol>();
+		symbols.add(this);
+		return symbols;
 	}
 
 }

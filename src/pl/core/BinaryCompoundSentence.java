@@ -1,5 +1,8 @@
 package pl.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 abstract public class BinaryCompoundSentence extends CompoundSentence {
 
 	protected BinaryConnective connective;
@@ -27,6 +30,17 @@ abstract public class BinaryCompoundSentence extends CompoundSentence {
 
 	public String toString() {
 		return "(" + connective.toString() + " " + lhs.toString() + " " + rhs.toString() + ")"; 
+	}
+	
+	
+	//Currently just a placeholder
+	public List<Symbol> getSymbols(){
+		List<Symbol> symList = new ArrayList<Symbol>();
+		if(this.lhs instanceof Symbol) {
+			symList.add(this.lhs);
+		}
+		return symList;
+		return null;
 	}
 	
 	/**

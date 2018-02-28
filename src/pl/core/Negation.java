@@ -1,5 +1,7 @@
 package pl.core;
 
+import java.util.List;
+
 public class Negation extends UnaryCompoundSentence {
 	
 	public Negation(Sentence argument) {
@@ -12,6 +14,12 @@ public class Negation extends UnaryCompoundSentence {
 	 */
 	public boolean isSatisfiedBy(Model model) {
 		return !argument.isSatisfiedBy(model);
+	}
+
+	@Override
+	public List<Symbol> getSymbols() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

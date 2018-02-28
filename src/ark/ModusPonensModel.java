@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import pl.core.Conjunction;
 import pl.core.Implication;
@@ -16,6 +17,7 @@ import pl.core.Model;
 import pl.core.Negation;
 import pl.core.Sentence;
 import pl.core.Symbol;
+import pl.core.SymbolTable;
 import pl.examples.ModusPonensKB;
 
 //This and ModusPonensModel can probably be generalized to a common model class
@@ -67,12 +69,11 @@ public class ModusPonensModel implements Model{
 	//Method to check entailment
 	public Boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
-		
-		//create temporary new knowledge base for adding symbols
-		KB kb2 = new KB();
-		Symbol q = kb2.intern("Q");
-		kb2.add(q);
-		symbols.addAll(kb2.symbols());
+	//	KB kb2 = new KB();
+	//	kb2.add(alpha);
+	//	List<Symbol> alphaSyms = new ArrayList<Symbol>(kb2.symbols());
+		symbols.addAll(alpha.getSymbols());
+	//	System.out.println(alpha.getSymbols());
 		return(ttCheckAll(kb, alpha, symbols, new ModusPonensModel()));
 	}
 	
@@ -125,6 +126,7 @@ public class ModusPonensModel implements Model{
 		Symbol q = kb.intern("Q");
 		Symbol p = kb.intern("P");
 		
+		
 		//Check if Modus Ponens entails q (should be true)
 		System.out.println(mpModel.ttEntails(kb, q));
 		
@@ -135,7 +137,11 @@ public class ModusPonensModel implements Model{
 		System.out.println(mpModel.ttEntails(kb, new Conjunction(p,new Negation(q))));
 		
 		//Check if Modus Ponens entails (p and q) -> should be true
-		System.out.println(mpModel.ttEntails(kb, new Conjunction(p,q)));
+		System.out.println(mpModel.ttEntails(kb, p));
+		
+	
+		
+
 	}
 	
 
