@@ -48,6 +48,8 @@ public class Model implements Serializable{
 	 * Return true if this Model satisfies (makes true) the given KB.
 	 */
 	public Boolean satisfies(KB kb) {
+		dump();
+		System.out.println("\n");
 		Collection<Sentence> sentences = kb.sentences();
 		for(Sentence s: sentences) {
 			if(!(s.isSatisfiedBy(this))) {
