@@ -14,6 +14,13 @@ import java.util.List;
  * PropositionalSymbols.
  */
 public class Model implements Serializable{
+<<<<<<< HEAD
+=======
+	//Model was changed from an interface to a class and all methods were implemented
+	//Only the assign and deep clone methods were added, all others were in original class as method signatures
+	
+	//ARK added HashMap to contain values and assignments
+>>>>>>> 4aae176b069c60cbcbce63cf9312cbf06ccbcda6
 	protected HashMap<Symbol, Boolean> assignments = new HashMap<>();
 	
 	public Model() {}
