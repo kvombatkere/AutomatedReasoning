@@ -22,7 +22,7 @@ public interface TTModelChecking {
 		Symbol q = kb2.intern("Q");
 		kb2.add(q);
 		symbols.addAll(kb2.symbols());
-		return(ttCheckAll(kb, alpha, symbols, new ModusPonensChecker()));
+		return(ttCheckAll(kb, alpha, symbols, new Model()));
 	}
 	
 	//Method to enumerate Truth Table for model
@@ -47,7 +47,5 @@ public interface TTModelChecking {
 			
 		}
 	}
-	
-	
 
 }
