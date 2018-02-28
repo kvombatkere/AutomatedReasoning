@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * A Model is an assignment of boolean values (true or false) to
  * PropositionalSymbols.
  */
-public class Model{
+public class Model implements Serializable{
 	protected HashMap<Symbol, Boolean> assignments = new HashMap<>();
 	
 	public Model() {}

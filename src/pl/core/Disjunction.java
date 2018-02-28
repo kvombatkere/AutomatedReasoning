@@ -1,5 +1,7 @@
 package pl.core;
 
+import java.util.List;
+
 public class Disjunction extends BinaryCompoundSentence {
 
 	public Disjunction(Sentence lhs, Sentence rhs) {
@@ -14,4 +16,10 @@ public class Disjunction extends BinaryCompoundSentence {
 		return lhs.isSatisfiedBy(model) || rhs.isSatisfiedBy(model);
 	}
 
+	//added by avi
+	@Override
+	public List<Symbol> getSymbols() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

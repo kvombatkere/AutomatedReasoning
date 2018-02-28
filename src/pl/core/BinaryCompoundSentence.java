@@ -34,14 +34,14 @@ abstract public class BinaryCompoundSentence extends CompoundSentence {
 	
 	
 	//Currently just a placeholder
-	public List<Symbol> getSymbols(){
-		List<Symbol> symList = new ArrayList<Symbol>();
-		if(this.lhs instanceof Symbol) {
-			symList.add(this.lhs);
-		}
-		return symList;
-		return null;
-	}
+//	public List<Symbol> getSymbols(){
+//		List<Symbol> symList = new ArrayList<Symbol>();
+//		if(this.lhs instanceof Symbol) {
+//			symList.add(this.lhs);
+//		}
+//		return symList;
+//		return null;
+//	}
 	
 	/**
 	 * If the given connective, lhs, and rhs are equal to the

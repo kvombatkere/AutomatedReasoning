@@ -16,10 +16,13 @@ public class Negation extends UnaryCompoundSentence {
 		return !argument.isSatisfiedBy(model);
 	}
 
+	//added by avi
 	@Override
 	public List<Symbol> getSymbols() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

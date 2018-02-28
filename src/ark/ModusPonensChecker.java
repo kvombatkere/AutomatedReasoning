@@ -4,6 +4,7 @@
 
 package ark;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,11 +21,11 @@ import pl.examples.ModusPonensKB;
 
 //This and ModusPonensModel can probably be generalized to a common model class
 
-public class ModusPonensChecker implements TTModelChecking{
+public class ModusPonensChecker implements TTModelChecking, Serializable{
 	
 	public static void main(String[] args){
 		ModusPonensKB kb = new ModusPonensKB();
-
+		
 		Symbol q = kb.intern("Q");
 		Symbol p = kb.intern("P");
 		
