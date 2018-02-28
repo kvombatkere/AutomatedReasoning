@@ -20,44 +20,8 @@ import pl.examples.ModusPonensKB;
 
 //This and ModusPonensModel can probably be generalized to a common model class
 
-public class ModusPonensModel implements Model{
+public class ModusPonensModel extends Model{
 	
-	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
-	public ModusPonensModel() {
-		assignments.put(new Symbol("P"), null);
-		assignments.put(new Symbol("Q"), null);
-	}
-
-	@Override
-	public void set(Symbol sym, boolean value) {
-		assignments.replace(sym, value);
-	}
-
-	@Override
-	public Boolean get(Symbol sym) {
-		return assignments.get(sym);
-	}
-
-
-	//Returns true is sentence is satisfied by the model
-	@Override
-	public Boolean satisfies(Sentence sentence) {
-		if(sentence.isSatisfiedBy(this)) {
-			return true;
-		}
-		else {
-		return false;
-		}
-
-	}
-
-	@Override
-	public void dump() {
-		for(Symbol s: assignments.keySet()) {
-			System.out.println(s.toString() + " = " + assignments.get(s));
-		}		
-	}
-
 	@Override
 	public Model assign(Symbol s, Boolean b) {
 		this.set(s, b);
@@ -104,18 +68,6 @@ public class ModusPonensModel implements Model{
 
 			}
 		}
-	}
-
-	//Check if all sentences in the knowledge base are satisfied by the model
-	@Override
-	public Boolean satisfies(KB kb) {
-		Collection<Sentence> sentences = kb.sentences();
-		for(Sentence s: sentences) {
-			if(!(s.isSatisfiedBy(this))) {
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	public static void main(String[] args) throws CloneNotSupportedException {

@@ -17,77 +17,17 @@ import pl.examples.WumpusWorldKB;
 
 //This and ModusPonensModel can probably be generalized to a common model class
 
-public class WumpusWorldModel implements Model, Cloneable {
-
-	private HashMap<Symbol, Boolean> assignments = new HashMap<>();
-	public WumpusWorldModel() {
-		//initialize assignment map to none
-		assignments.put(new Symbol("P1,1"), null);
-		assignments.put(new Symbol("P1,2"), null);
-		assignments.put(new Symbol("P2,1"), null);
-		assignments.put(new Symbol("P2,2"), null);
-		assignments.put(new Symbol("P3,1"), null);
-		assignments.put(new Symbol("B1,1"), null);
-		assignments.put(new Symbol("B2,1"), null);
-
-	}
-	
-	@Override
-	public void set(Symbol sym, boolean value) {
-		assignments.replace(sym, value);
-		
-	}
-
-	@Override
-	public Boolean get(Symbol sym) {
-		return assignments.get(sym);
-	}
-
-	@Override
-	public Boolean satisfies(KB kb) {
-		Collection<Sentence> sentences = kb.sentences();
-		for(Sentence s: sentences) {
-			if(!(s.isSatisfiedBy(this))) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	@Override
-	public Boolean satisfies(Sentence sentence) {
-		if(sentence.isSatisfiedBy(this)) {
-			return true;
-		}
-		else {
-		return false;
-		}
-	}
-
-	@Override
-	public void dump() {
-		for(Symbol s: assignments.keySet()) {
-			System.out.println(s.toString() + " = " + assignments.get(s));
-		}
-	}
-	
-	//assign just calls set, but returns the model for use in TT-entails algorithm
-	@Override
-	public Model assign(Symbol s, Boolean b) {
-		this.set(s,  b);
-		return this;
-	}
-	
+public class WumpusWorldModel extends Model implements TTModelChecking{
 	
 	//Method to check entailment
-	public boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
+	public Boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
 		symbols.addAll(alpha.getSymbols());
 		return(ttCheckAll(kb, alpha, symbols, new WumpusWorldModel()));
 	}//end ttEntails
 	
 	//Method to enumerate Truth Table for model
-	public boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) throws CloneNotSupportedException {
+	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) throws CloneNotSupportedException {
 		
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
