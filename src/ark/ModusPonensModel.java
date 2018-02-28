@@ -96,7 +96,7 @@ public class ModusPonensModel implements Model{
 
 			try {
 				return (ttCheckAll(kb, alpha, symbols,
-				((Model) ((ModusPonensModel)model).clone()).assign(p, Boolean.TRUE)) &&
+				((Model) ((ModusPonensModel) model).clone()).assign(p, Boolean.TRUE)) &&
 				ttCheckAll(kb, alpha, symbols,
 				((Model) ((ModusPonensModel) model).clone()).assign(p, Boolean.FALSE)));
 			} catch (CloneNotSupportedException e) {
