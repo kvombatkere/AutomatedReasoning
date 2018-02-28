@@ -17,11 +17,6 @@ public interface TTModelChecking {
 	//Method to check entailment
 	public static Boolean ttEntails(KB kb, Sentence alpha){
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
-		//create temporary new knowledge base for adding symbols
-		KB kb2 = new KB();
-		Symbol q = kb2.intern("Q");
-		kb2.add(q);
-		symbols.addAll(kb2.symbols());
 		return(ttCheckAll(kb, alpha, symbols, new Model()));
 	}
 	
@@ -31,15 +26,15 @@ public interface TTModelChecking {
 			if (model.satisfies(kb)) {
 				return model.satisfies(alpha);
 			} 
+			
 			else {
 				return Boolean.TRUE;
-			}
-			 
-			 } 
-		else {
-			 
+			}		 
+		}
+		
+		else { 
 			Symbol p = symbols.remove(0);
-
+			
 			return (ttCheckAll(kb, alpha, symbols,
 			((Model) Model.deepClone(model)).assign(p, Boolean.TRUE)) &&
 			ttCheckAll(kb, alpha, symbols,
