@@ -20,7 +20,10 @@ public class Model implements Serializable{
 	//Only the assign and deep clone methods were added, all others were in original class as method signatures
 	
 	//ARK added HashMap to contain values and assignments
+<<<<<<< HEAD
 
+=======
+>>>>>>> f4a325d4a86bd0953d7db36efa5af8aa253bcaaf
 	protected HashMap<Symbol, Boolean> assignments = new HashMap<>();
 	
 	public Model() {}
@@ -49,8 +52,13 @@ public class Model implements Serializable{
 	 * Return true if this Model satisfies (makes true) the given KB.
 	 */
 	public Boolean satisfies(KB kb) {
+<<<<<<< HEAD
 		//dump();
 		//System.out.println("\n");
+=======
+		dump();
+		System.out.println("\n");
+>>>>>>> f4a325d4a86bd0953d7db36efa5af8aa253bcaaf
 		Collection<Sentence> sentences = kb.sentences();
 		for(Sentence s: sentences) {
 			if(!(s.isSatisfiedBy(this))) {

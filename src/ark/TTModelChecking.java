@@ -33,7 +33,11 @@ public interface TTModelChecking {
 		} 
 		else {
 			Symbol p = symbols.remove(0);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> f4a325d4a86bd0953d7db36efa5af8aa253bcaaf
 			return (ttCheckAll(kb, alpha, symbols,
 			(((Model) Model.deepClone(model)).assign(p, Boolean.TRUE))) &&
 			ttCheckAll(kb, alpha, symbols,
