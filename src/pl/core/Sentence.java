@@ -11,6 +11,7 @@ public abstract class Sentence {
 	 * Return true if this Sentence is satisfied by the given Model.
 	 */
 	public abstract boolean isSatisfiedBy(Model model);
+	
 	//ARK: getSymbols added, should probably also be removed
 	public abstract List<Symbol> getSymbols();
 	

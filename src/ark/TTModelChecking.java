@@ -27,6 +27,7 @@ public interface TTModelChecking {
 			if (model.satisfies(kb)) {
 				return model.satisfies(alpha);
 			} 
+			
 			else {
 				return Boolean.TRUE;
 			}
