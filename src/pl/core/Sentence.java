@@ -12,11 +12,8 @@ public abstract class Sentence {
 	 */
 	public abstract boolean isSatisfiedBy(Model model);
 	
-<<<<<<< HEAD
 	//Still figuring out best way to get list of symbols in a given sentence
-=======
 	//ARK: getSymbols added, should probably also be removed
->>>>>>> 4aae176b069c60cbcbce63cf9312cbf06ccbcda6
 	public abstract List<Symbol> getSymbols();
 	
 	

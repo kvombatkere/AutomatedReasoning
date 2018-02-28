@@ -17,10 +17,7 @@ public interface TTModelChecking {
 	//Method to check entailment
 	public static Boolean ttEntails(KB kb, Sentence alpha){
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
-<<<<<<< HEAD
-=======
 		System.out.print("Number of symbols = " + symbols.size());
->>>>>>> 4aae176b069c60cbcbce63cf9312cbf06ccbcda6
 		return(ttCheckAll(kb, alpha, symbols, new Model()));
 	}
 	
