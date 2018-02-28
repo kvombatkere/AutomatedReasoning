@@ -1,8 +1,9 @@
 package pl.core;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Symbol extends Sentence {
+public class Symbol extends Sentence implements Serializable{
 	
 	protected String name;
 

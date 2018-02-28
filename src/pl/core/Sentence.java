@@ -7,6 +7,7 @@ public abstract class Sentence {
 	
 	//ARK: symlist added, should probably be removed
 	List<Symbol> symlist;
+	
 	/**
 	 * Return true if this Sentence is satisfied by the given Model.
 	 */

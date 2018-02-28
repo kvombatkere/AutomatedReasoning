@@ -31,7 +31,7 @@ public class Model implements Serializable{
 	 * Model to the given boolean VALUE.
 	 */
 	public void set(Symbol sym, boolean value) {
-		assignments.replace(sym, value);
+		assignments.put(sym, value);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Model implements Serializable{
 	}
 	
 	public Model assign(Symbol s, Boolean b) {
-		this.set(s, b);
+		assignments.put(s, b);
 		return this;
 	}
 	
