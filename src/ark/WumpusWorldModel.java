@@ -18,34 +18,6 @@ import pl.examples.WumpusWorldKB;
 //This and ModusPonensModel can probably be generalized to a common model class
 
 public class WumpusWorldModel extends Model implements TTModelChecking{
-	
-	//Method to check entailment
-	public Boolean ttEntails(KB kb, Sentence alpha) throws CloneNotSupportedException {
-		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
-		symbols.addAll(alpha.getSymbols());
-		return(ttCheckAll(kb, alpha, symbols, new WumpusWorldModel()));
-	}//end ttEntails
-	
-	//Method to enumerate Truth Table for model
-	public Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ) throws CloneNotSupportedException {
-		
-		if (symbols.isEmpty()) {
-			if (model.satisfies(kb)) {
-			return model.satisfies(alpha);
-			} 
-			else {
-			return true;
-			}
-			 
-		} 
-		else {
-			Symbol p = symbols.remove(0);
-			return (ttCheckAll(kb, alpha, symbols,
-			((Model) ((WumpusWorldModel) model).clone()).assign(p, Boolean.TRUE)) &&
-			ttCheckAll(kb, alpha, symbols,
-			((Model) ((WumpusWorldModel) model).clone()).assign(p, Boolean.FALSE)));
-		}
-	} //end ttCheckAll
 
 	//main method for sanity checking
 	public static void main(String[] args) throws CloneNotSupportedException {
@@ -60,8 +32,8 @@ public class WumpusWorldModel extends Model implements TTModelChecking{
 		Symbol b11 = kb.intern("B1,1");
 		Symbol b21 = kb.intern("B2,1");
 		
-		System.out.println(wwModel.ttEntails(kb, b11));
-		System.out.println(wwModel.ttEntails(kb, b21));
+		System.out.println(TTModelChecking.ttEntails(kb, b11));
+		System.out.println(TTModelChecking.ttEntails(kb, b21));
 
 	}
 	
