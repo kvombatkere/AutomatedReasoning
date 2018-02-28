@@ -19,15 +19,11 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
-<<<<<<< HEAD
 //This and ModusPonensModel can probably be generalized to a common model class
 
 public class ModusPonensChecker implements TTModelChecking, Serializable{
-=======
-//This class was created from scratch
-public class ModusPonensChecker implements TTModelChecking{
->>>>>>> 4aae176b069c60cbcbce63cf9312cbf06ccbcda6
-	
+	//temp counter for testing
+	static int count = 0;
 	public static void main(String[] args){
 		ModusPonensKB kb = new ModusPonensKB();
 		

@@ -65,6 +65,7 @@ public class Symbol extends Sentence {
 		return name.hashCode();
 	}
 
+	//this method is dumb and just creates a list of one symbol and returns it
 	@Override
 	public List<Symbol> getSymbols() {
 		List<Symbol> symbols = new ArrayList<Symbol>();
