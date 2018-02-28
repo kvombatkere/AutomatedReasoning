@@ -17,12 +17,11 @@ import pl.examples.WumpusWorldKB;
 
 //This and ModusPonensModel can probably be generalized to a common model class
 
-public class WumpusWorldModel extends Model implements TTModelChecking{
+public class WumpusWorldChecker implements TTModelChecking{
 
 	//main method for sanity checking
 	public static void main(String[] args) throws CloneNotSupportedException {
 		WumpusWorldKB kb = new WumpusWorldKB();
-		WumpusWorldModel wwModel = new WumpusWorldModel();
 		
 		Symbol p11 = kb.intern("P1,1");
 		Symbol p12 = kb.intern("P1,2");
