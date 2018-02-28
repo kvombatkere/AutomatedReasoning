@@ -1,6 +1,7 @@
 package pl.core;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Symbol extends Sentence implements Serializable{
@@ -67,7 +68,9 @@ public class Symbol extends Sentence implements Serializable{
 
 	@Override
 	public List<Symbol> getSymbols() {
-		return null;
+		List<Symbol> symbols = new ArrayList<Symbol>();
+		symbols.add(this);
+		return symbols;
 	}
 
 }

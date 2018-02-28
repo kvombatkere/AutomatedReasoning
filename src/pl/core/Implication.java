@@ -1,5 +1,7 @@
 package pl.core;
 
+import java.util.List;
+
 public class Implication extends BinaryCompoundSentence {
 
 	public Implication(Sentence lhs, Sentence rhs) {
@@ -13,6 +15,13 @@ public class Implication extends BinaryCompoundSentence {
 	 */
 	public boolean isSatisfiedBy(Model model) {
 		return !lhs.isSatisfiedBy(model) || rhs.isSatisfiedBy(model);
+	}
+	
+	//added by avi
+	@Override
+	public List<Symbol> getSymbols() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
