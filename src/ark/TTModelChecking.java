@@ -17,7 +17,10 @@ public interface TTModelChecking {
 	//Method to check entailment
 	public static Boolean ttEntails(KB kb, Sentence alpha){
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
+<<<<<<< HEAD
 		System.out.print("Number of symbols = " + symbols.size());
+=======
+>>>>>>> 6d49469d8ab9dc05ee6675ad1cd76a31025e04f5
 		return(ttCheckAll(kb, alpha, symbols, new Model()));
 	}
 	
@@ -34,10 +37,7 @@ public interface TTModelChecking {
 		} 
 		else {
 			Symbol p = symbols.remove(0);
-			
-			System.out.println("Popped symbol " + p.toString());
-			System.out.println(symbols.isEmpty());
-
+		
 			return (ttCheckAll(kb, alpha, symbols,
 			(((Model) Model.deepClone(model)).assign(p, Boolean.TRUE))) &&
 			ttCheckAll(kb, alpha, symbols,

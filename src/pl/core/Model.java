@@ -79,7 +79,7 @@ public class Model implements Serializable{
 	}
 	
 	public Model assign(Symbol s, Boolean b) {
-		this.set(s, b);
+		assignments.put(s, b);
 		return this;
 	}
 	
