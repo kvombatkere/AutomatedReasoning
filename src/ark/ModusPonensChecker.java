@@ -1,6 +1,6 @@
 //CSC 442 Project 2
 //Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
-//ModusPonensModel
+//ModusPonensChecker
 
 package ark;
 
@@ -18,8 +18,7 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
 
-//This and ModusPonensModel can probably be generalized to a common model class
-
+//This class was created from scratch
 public class ModusPonensChecker implements TTModelChecking{
 	
 	public static void main(String[] args){

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,11 @@ import java.util.List;
  * A Model is an assignment of boolean values (true or false) to
  * PropositionalSymbols.
  */
-public class Model{
+public class Model implements Serializable{
+	//Model was changed from an interface to a class and all methods were implemented
+	//Only the assign and deep clone methods were added, all others were in original class as method signatures
+	
+	//ARK added HashMap to contain values and assignments
 	protected HashMap<Symbol, Boolean> assignments = new HashMap<>();
 	
 	public Model() {}

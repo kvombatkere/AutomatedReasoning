@@ -1,6 +1,6 @@
 //CSC 442 Project 2
 //Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
-//ModusPonensModel
+//WumpusWorldChecker
 
 package ark;
 
@@ -15,8 +15,7 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.WumpusWorldKB;
 
-//This and ModusPonensModel can probably be generalized to a common model class
-
+//This class was created from scratch
 public class WumpusWorldChecker implements TTModelChecking{
 
 	//main method for sanity checking
