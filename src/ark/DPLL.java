@@ -36,7 +36,7 @@ public class DPLL {
 		Literal pure = findPureSymbol(symbols, clauses, model);
 		if(pure != null) {
 			//reminder to check about cloning symbols
-			symbols.remove(pure);
+			symbols.remove(pure.getContent());
 			Boolean value;
 			
 			//If literal is a negation, assign it false to make it true
@@ -52,14 +52,14 @@ public class DPLL {
 				value = true;
 			}
 			Model modelClonePure = (Model) Model.deepClone(model);
-			return dpll(clauses, symbols, modelClonePure.assign(pure.getContent(), value ));
+			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelClonePure.assign(pure.getContent(), value ));
 		}
 		
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		if(unit != null) {
 			//reminder to check about cloning symbols
-			symbols.remove(unit);
+			symbols.remove(unit.getContent());
 			Boolean value;
 			
 			//If literal is a negation, assign it false to make it true
@@ -76,16 +76,16 @@ public class DPLL {
 			}
 			Model modelCloneUnit = (Model) Model.deepClone(model);
 			
-			return dpll(clauses, symbols, modelCloneUnit.assign(unit.getContent(), value ));
+			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelCloneUnit.assign(unit.getContent(), value ));
 		}
 		
 		Symbol p = symbols.remove(0);
 		Model modelCloneT = (Model) Model.deepClone(model);
 		Model modelCloneF = (Model) Model.deepClone(model);
 		
-		return (dpll(clauses, symbols, modelCloneT.assign(p, true))
+		return (dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelCloneT.assign(p, true))
 			   ||
-			   dpll(clauses, symbols, modelCloneF.assign(p, false)));
+			   dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelCloneF.assign(p, false)));
 			
 		
 	}
@@ -102,12 +102,31 @@ public class DPLL {
 		return true;
 	}
 	
+	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
 	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
 		return null;
 	}
 	
+	//IN PROGRESS
+	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+		for(Clause clause: clauses) {
+			if(clause.size() == 1) {
+				return clause.get(0);
+			}
+		}
 		return null;
 	}
+	
+	//IN PROGRESS
+	//helper method for finding clauses where only one literal is true
+	public static Boolean oneTrueLiteral(Clause clause) {
+		int trueCount = 0;
+		for(Literal l: clause) {
+			
+		} 
+		return true;
+	}
+	
 }
