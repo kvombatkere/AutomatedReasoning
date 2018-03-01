@@ -20,12 +20,19 @@ public class Model implements Serializable{
 	//Only the assign and deep clone methods were added, all others were in original class as method signatures
 	
 	//ARK added HashMap to contain values and assignments
+
 	protected HashMap<Symbol, Boolean> assignments = new HashMap<>();
 	
 	public Model() {}
 	
 	public Model(HashMap<Symbol, Boolean> assignments) {
 		this.assignments = assignments;
+	}
+	
+	//adding getter for assignments, maybe change name before submitting (if karan doesn't see)
+	
+	public HashMap<Symbol, Boolean> getAss(){
+		return this.assignments;
 	}
 	
 	/**
@@ -35,6 +42,8 @@ public class Model implements Serializable{
 	public void set(Symbol sym, boolean value) {
 		assignments.put(sym, value);
 	}
+	
+	//
 
 	/**
 	 * Returns the boolean value associated with the given PropositionalSymbol
@@ -48,26 +57,27 @@ public class Model implements Serializable{
 	 * Return true if this Model satisfies (makes true) the given KB.
 	 */
 	public Boolean satisfies(KB kb) {
-		dump();
-		System.out.println("\n");
+		//I flipped the return statements in this, they looked wrong before?
 		Collection<Sentence> sentences = kb.sentences();
 		for(Sentence s: sentences) {
 			if(!(s.isSatisfiedBy(this))) {
-				return false;
+				return Boolean.FALSE;
 			}
+
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	/**
 	 * Return true if this Model satisfies (makes true) the given Sentence.
 	 */
 	public Boolean satisfies(Sentence sentence) {
+
 		if(sentence.isSatisfiedBy(this)) {
-			return true;
+			return Boolean.TRUE;
 		}
 		else {
-		return false;
+		return Boolean.FALSE;
 		}
 	}
 	
@@ -80,6 +90,7 @@ public class Model implements Serializable{
 		}	
 	}
 	
+	//ARK
 	public Model assign(Symbol s, Boolean b) {
 		assignments.put(s, b);
 		return this;

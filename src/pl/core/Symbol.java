@@ -21,8 +21,14 @@ public class Symbol extends Sentence implements Serializable{
 	 * Return true if this Symbol is satisfied by the given Model.
 	 * That is, if it is assigned true by the model.
 	 */
+	//currently testing to deal with null pointer exception
 	public boolean isSatisfiedBy(Model model) {
+		//if(model.get(this) != null) {
 		return model.get(this);
+	//	}
+	//	else {
+		//	return Boolean.TRUE;
+	//	}
 	}
 	
 	//
@@ -66,6 +72,7 @@ public class Symbol extends Sentence implements Serializable{
 		return name.hashCode();
 	}
 
+	//this method is dumb and just creates a list of one symbol and returns it
 	@Override
 	public List<Symbol> getSymbols() {
 		List<Symbol> symbols = new ArrayList<Symbol>();
