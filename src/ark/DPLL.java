@@ -11,7 +11,7 @@ import pl.cnf.Clause;
 import pl.cnf.Literal;
 import pl.cnf.Literal.Polarity;
 
-public class DPLL {
+public interface DPLL {
 	
 	//Check if sentence is satisfiable by calling dpll
 	public static Boolean dpllSatisfiable(Sentence s, List<Symbol> symbols) {
@@ -61,6 +61,7 @@ public class DPLL {
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		if(unit != null) {
+			
 			//reminder to check about cloning symbols
 			symbols.remove(unit.getContent());
 			Boolean value;
@@ -109,23 +110,34 @@ public class DPLL {
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
 	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+		Polarity val;
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
-			
+			for(Clause cl: clauses) {
+				if(cl.contains(lit)) {
+				}
+			}
 		}
+		
+		//return null if can't find pure symbol
 		return null;
 	}
 	
 	//IN PROGRESS
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+		
 		//if clause only has one literal, return that literal
 		for(Clause clause: clauses) {
 			if(clause.size() == 1) {
 				return clause.get(0);
 			}
+			
+			if(oneTrueLiteral(clause)) {
+				
+			}
 		}
-		//placeholder return statement
+		//return null if can't find unit clause
 		return null;
 	}
 	
