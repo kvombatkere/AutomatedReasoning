@@ -1,3 +1,7 @@
+//CSC 442 Project 2
+//Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
+//TTModelChecking
+
 package ark;
 
 import java.util.ArrayList;
