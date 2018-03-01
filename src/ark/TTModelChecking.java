@@ -14,7 +14,6 @@ import pl.core.Symbol;
 
 public interface TTModelChecking {
 	
-	
 	//Method to check entailment
 	public static Boolean ttEntails(KB kb, Sentence alpha){
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());

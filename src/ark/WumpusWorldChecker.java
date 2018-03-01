@@ -19,7 +19,7 @@ import pl.examples.WumpusWorldKB;
 //This class was created from scratch
 public class WumpusWorldChecker implements TTModelChecking{
 
-	//main method for sanity checking
+	//main method for testing
 	public static void main(String[] args) throws CloneNotSupportedException {
 		WumpusWorldKB kb = new WumpusWorldKB();
 		
