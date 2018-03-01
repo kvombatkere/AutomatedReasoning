@@ -51,6 +51,7 @@ public class Model implements Serializable{
 		dump();
 		System.out.println("\n");
 		Collection<Sentence> sentences = kb.sentences();
+		
 		for(Sentence s: sentences) {
 			if(!(s.isSatisfiedBy(this))) {
 				return false;
@@ -67,7 +68,7 @@ public class Model implements Serializable{
 			return true;
 		}
 		else {
-		return false;
+			return false;
 		}
 	}
 	
