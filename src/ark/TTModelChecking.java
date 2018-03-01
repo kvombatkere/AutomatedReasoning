@@ -1,3 +1,7 @@
+//CSC 442 Project 2
+//Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
+//TTModelChecking
+
 package ark;
 
 import java.util.ArrayList;
@@ -9,7 +13,6 @@ import pl.core.Sentence;
 import pl.core.Symbol;
 
 public interface TTModelChecking {
-	
 	
 	//Method to check entailment
 	public static Boolean ttEntails(KB kb, Sentence alpha){
@@ -38,7 +41,6 @@ public interface TTModelChecking {
 			//Change to create model clone first for readability
 			Model modelCloneT = (Model) Model.deepClone(model);
 			Model modelCloneF = (Model) Model.deepClone(model);
-			
 			
 			return (ttCheckAll(kb, alpha, (List<Symbol>) Model.deepClone(symbols), modelCloneT.assign(p, Boolean.TRUE))
 					&&

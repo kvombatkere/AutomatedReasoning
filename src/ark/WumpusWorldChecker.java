@@ -4,36 +4,31 @@
 
 package ark;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-import pl.core.KB;
-import pl.core.Model;
-import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.WumpusWorldKB;
 
-//This class was created from scratch
+//Class to check Wumpus World using TTEntails
 public class WumpusWorldChecker implements TTModelChecking{
 
-	//main method for sanity checking
 	public static void main(String[] args) throws CloneNotSupportedException {
 		WumpusWorldKB kb = new WumpusWorldKB();
 		
-		Symbol p11 = kb.intern("P1,1");
 		Symbol p12 = kb.intern("P1,2");
-		Symbol p21 = kb.intern("P2,1");
-		Symbol p22 = kb.intern("P2,2");
 		Symbol p31 = kb.intern("P3,1");
-		Symbol b11 = kb.intern("B1,1");
-		Symbol b21 = kb.intern("B2,1");
+	
+		System.out.println("Basic Model Checking/Propositional Entailment for Wumpus World Problem\n");
+		System.out.println("Displaying Knowledge Base:");
+		kb.dump();
 
+<<<<<<< HEAD
 		System.out.println(TTModelChecking.ttEntails(kb, p12));
 		System.out.println(TTModelChecking.ttEntails(kb, b21));
 
+=======
+		System.out.println("\nPit in (1,2): " + TTModelChecking.ttEntails(kb, p12));
+		System.out.println("Pit in (3,1): " + TTModelChecking.ttEntails(kb, p31));
+		System.out.println(TTModelChecking.ttEntails(kb, p31));
+>>>>>>> 9f24e0197636f036c8c9f08d7a9587db6cb7686c
 	}
 	
 } //end class WumpusWorldModel
