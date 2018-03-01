@@ -39,7 +39,6 @@ public interface TTModelChecking {
 			Model modelCloneT = (Model) Model.deepClone(model);
 			Model modelCloneF = (Model) Model.deepClone(model);
 			
-			
 			return (ttCheckAll(kb, alpha, (List<Symbol>) Model.deepClone(symbols), modelCloneT.assign(p, Boolean.TRUE))
 					&&
 					ttCheckAll(kb, alpha,(List<Symbol>) Model.deepClone(symbols), modelCloneF.assign(p, Boolean.FALSE)));		
