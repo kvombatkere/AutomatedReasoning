@@ -46,7 +46,7 @@ public class ModusPonensChecker implements TTModelChecking, DPLL{
 		System.out.println(TTModelChecking.ttEntails(kb, new Conjunction(p,q)));
 		
 		//Check kb entailment of q using dpll (should be true)
-		System.out.println(DPLL.dpllSatisfiable(new Conjunction(sentence, q)));
+	//	System.out.println(DPLL.dpllSatisfiable(new Conjunction(sentence, q)));
 	}
 	
 

@@ -1,6 +1,12 @@
 package pl.core;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import pl.cnf.CNFConverter;
+import pl.cnf.Clause;
+import pl.cnf.Literal;
 
 //Sentence changed from interface to abstract class
 public abstract class Sentence {

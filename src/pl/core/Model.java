@@ -29,8 +29,7 @@ public class Model implements Serializable{
 		this.assignments = assignments;
 	}
 	
-	//adding getter for assignments, maybe change name before submitting (if karan doesn't see)
-	
+	//adding getter for assignments
 	public HashMap<Symbol, Boolean> getAss(){
 		return this.assignments;
 	}
