@@ -17,8 +17,11 @@ public class AmyBobCalPartBKB extends KB{
 		Symbol B = intern("Bob");
 		Symbol C = intern("Cal");
 		
+		//Amy says, “Cal is not honest.”
 		add(new Conjunction(A, new Negation(C)));
+		//Bob says, “Amy and Cal never lie.”
 		add(new Conjunction(B, new Conjunction(A, C)));
+		//Cal says, “Bob is correct.”
 		add(new Conjunction(C, new Conjunction(B, new Conjunction(A, C))));
 		
 	}
