@@ -3,6 +3,8 @@ package ark;
 import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,9 +16,18 @@ import pl.cnf.Literal.Polarity;
 public interface DPLL {
 	
 	//Check if sentence is satisfiable by calling dpll
-	public static Boolean dpllSatisfiable(Sentence s, List<Symbol> symbols) {
+	public static Boolean dpllSatisfiable(Sentence s) {
 		Set<Clause> clauses = CNFConverter.convert(s);
-		return dpll(clauses, symbols, new Model());
+		
+		//manually creating symbol list maybe, also idk if it should be array list
+		List<Symbol> symList = new ArrayList<Symbol>();
+		for(Clause cl: clauses){
+			for(Literal lit: cl) {
+				symList.add(lit.getContent());
+			}
+		}
+		
+		return dpll(clauses, symList, new Model());
 	}
 
 	//main DPLL algorithm
