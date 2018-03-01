@@ -13,11 +13,13 @@ import pl.cnf.Literal.Polarity;
 
 public class DPLL {
 	
+	//Check if sentence is satisfiable by calling dpll
 	public static Boolean dpllSatisfiable(Sentence s, List<Symbol> symbols) {
 		Set<Clause> clauses = CNFConverter.convert(s);
 		return dpll(clauses, symbols, new Model());
 	}
 
+	//main DPLL algorithm
 	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
 
 		//if some clause in clauses is false in model then return false
@@ -25,12 +27,13 @@ public class DPLL {
 			if(!clause.isSatisfiedBy(model)) {
 				return false;
 			}
-		}
-		
+		}		
 		//if every clause in clauses is true in model then return true
 		if(allClausesTrue(clauses, model)){
 			return true;
 		}
+
+		
 		
 		//Improve efficiency by looking for symbols that have same polarity in all clauses and assigning value to make them true
 		Literal pure = findPureSymbol(symbols, clauses, model);
@@ -54,7 +57,7 @@ public class DPLL {
 			Model modelClonePure = (Model) Model.deepClone(model);
 			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelClonePure.assign(pure.getContent(), value ));
 		}
-		
+				
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		if(unit != null) {
@@ -79,6 +82,7 @@ public class DPLL {
 			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelCloneUnit.assign(unit.getContent(), value ));
 		}
 		
+		//Algorithm defaults to truth table enumeration if can't use above heuristics
 		Symbol p = symbols.remove(0);
 		Model modelCloneT = (Model) Model.deepClone(model);
 		Model modelCloneF = (Model) Model.deepClone(model);
@@ -105,17 +109,23 @@ public class DPLL {
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
 	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+		for (Symbol sym: symbols) {
+			Literal lit = new Literal(sym);
+			
+		}
 		return null;
 	}
 	
 	//IN PROGRESS
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+		//if clause only has one literal, return that literal
 		for(Clause clause: clauses) {
 			if(clause.size() == 1) {
 				return clause.get(0);
 			}
 		}
+		//placeholder return statement
 		return null;
 	}
 	
