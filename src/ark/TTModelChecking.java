@@ -27,7 +27,7 @@ public interface TTModelChecking {
 				symbols.add(sym);
 			}
 		}
-		System.out.println(symbols);
+		//System.out.println(symbols);
 		return(ttCheckAll(kb, alpha, symbols, new Model()));
 	}
 	
