@@ -21,7 +21,7 @@ import pl.examples.ModusPonensKB;
 
 
 //This class was created from scratch
-public class ModusPonensChecker implements TTModelChecking{
+public class ModusPonensChecker implements TTModelChecking, DPLL{
 	
 
 	public static void main(String[] args){
@@ -30,17 +30,23 @@ public class ModusPonensChecker implements TTModelChecking{
 		Symbol q = kb.intern("Q");
 		Symbol p = kb.intern("P");
 		
-		//Check if Modus Ponens entails q (should be true)
+		Sentence sentence = new Conjunction(new Implication(p,q), p);
+		
+		
+		//Check if kb entails q (should be true)
 		System.out.println(TTModelChecking.ttEntails(kb, q));
 		
-		//Check if Modus Ponens entails not q (should be false)
+		//Check if kb entails not q (should be false)
 		System.out.println(TTModelChecking.ttEntails(kb, new Negation(q)));
 		
-		//Check if Modus Ponens entails (p and (not q)) -> should be false
+		//Check if kb entails (p and (not q)) -> should be false
 		System.out.println(TTModelChecking.ttEntails(kb, new Conjunction(p,new Negation(q))));
 		
-		//Check if Modus Ponens entails (p and q) -> should be true
+		//Check if kb entails (p and q) -> should be true
 		System.out.println(TTModelChecking.ttEntails(kb, new Conjunction(p,q)));
+		
+		//Check kb entailment of q using dpll (should be true)
+		System.out.println(DPLL.dpllSatisfiable(new Conjunction(sentence, q)));
 	}
 	
 

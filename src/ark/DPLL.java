@@ -18,36 +18,42 @@ public interface DPLL {
 	//Check if sentence is satisfiable by calling dpll
 	public static Boolean dpllSatisfiable(Sentence s) {
 		Set<Clause> clauses = CNFConverter.convert(s);
-		
+
 		//manually creating symbol list maybe, also idk if it should be array list
 		List<Symbol> symList = new ArrayList<Symbol>();
 		for(Clause cl: clauses){
 			for(Literal lit: cl) {
+				if(!symList.contains(lit.getContent())) {
 				symList.add(lit.getContent());
+				}
 			}
 		}
-		
+	//	System.out.println(symList);
 		return dpll(clauses, symList, new Model());
 	}
 
 	//main DPLL algorithm
 	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
-
+		
+		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
+		
 		//if some clause in clauses is false in model then return false
 		for(Clause clause: clauses) {
-			if(!clause.isSatisfiedBy(model)) {
+			if(!clause.isSatisfiedBy(model)) {	
 				return false;
 			}
 		}		
+		
 		//if every clause in clauses is true in model then return true
 		if(allClausesTrue(clauses, model)){
 			return true;
 		}
-
+	
 		
 		
 		//Improve efficiency by looking for symbols that have same polarity in all clauses and assigning value to make them true
 		Literal pure = findPureSymbol(symbols, clauses, model);
+
 		if(pure != null) {
 			//reminder to check about cloning symbols
 			symbols.remove(pure.getContent());
@@ -71,6 +77,7 @@ public interface DPLL {
 				
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
+
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -126,6 +133,7 @@ public interface DPLL {
 			Literal lit = new Literal(sym);
 			for(Clause cl: clauses) {
 				if(cl.contains(lit)) {
+					
 				}
 			}
 		}
