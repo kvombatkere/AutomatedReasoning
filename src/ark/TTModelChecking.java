@@ -30,10 +30,7 @@ public interface TTModelChecking {
 		else {
 			Symbol p = symbols.remove(0);
 		
-			return (ttCheckAll(kb, alpha, symbols,
-			(((Model) Model.deepClone(model)).assign(p, Boolean.TRUE))) &&
-			ttCheckAll(kb, alpha, symbols,
-			((Model) Model.deepClone(model)).assign(p, Boolean.FALSE)));
+			return (ttCheckAll(kb, alpha, symbols,(((Model) Model.deepClone(model)).assign(p, Boolean.TRUE))) && ttCheckAll(kb, alpha, symbols, ((Model) Model.deepClone(model)).assign(p, Boolean.FALSE)));
 		}
 	}
 
