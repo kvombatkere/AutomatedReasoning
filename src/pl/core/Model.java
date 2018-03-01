@@ -59,6 +59,7 @@ public class Model implements Serializable{
 	public Boolean satisfies(KB kb) {
 		//I flipped the return statements in this, they looked wrong before?
 		Collection<Sentence> sentences = kb.sentences();
+		
 		for(Sentence s: sentences) {
 			if(!(s.isSatisfiedBy(this))) {
 				return Boolean.FALSE;
@@ -77,7 +78,7 @@ public class Model implements Serializable{
 			return Boolean.TRUE;
 		}
 		else {
-		return Boolean.FALSE;
+			return Boolean.FALSE;
 		}
 	}
 	
