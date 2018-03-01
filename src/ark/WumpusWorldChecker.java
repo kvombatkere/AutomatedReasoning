@@ -31,7 +31,7 @@ public class WumpusWorldChecker implements TTModelChecking{
 		Symbol b11 = kb.intern("B1,1");
 		Symbol b21 = kb.intern("B2,1");
 
-		System.out.println(TTModelChecking.ttEntails(kb, p31));
+		System.out.println(TTModelChecking.ttEntails(kb, p12));
 		System.out.println(TTModelChecking.ttEntails(kb, b21));
 
 	}
