@@ -10,6 +10,7 @@ public class ModusPonensKB extends KB {
 		Symbol q = intern("Q");
 		add(p);
 		add(new Implication(p, q));
+
 	}
 	
 	public static void main(String[] argv) {
