@@ -7,7 +7,7 @@ package ark;
 import pl.core.Symbol;
 import pl.examples.WumpusWorldKB;
 
-//This class was created from scratch
+//Class to check Wumpus World using TTEntails
 public class WumpusWorldChecker implements TTModelChecking{
 
 	public static void main(String[] args) throws CloneNotSupportedException {
@@ -22,7 +22,7 @@ public class WumpusWorldChecker implements TTModelChecking{
 
 		System.out.println("\nPit in (1,2): " + TTModelChecking.ttEntails(kb, p12));
 		System.out.println("Pit in (3,1): " + TTModelChecking.ttEntails(kb, p31));
-
+		System.out.println(TTModelChecking.ttEntails(kb, p31));
 	}
 	
 } //end class WumpusWorldModel
