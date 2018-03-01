@@ -12,6 +12,11 @@ import pl.core.*;
  * A Literal is either a Symbol or the negation of an Symbol.
  */
 public class Literal {
+	
+	//Adding constructor with a symbol
+	public Literal(Symbol s) {
+		this.content = s;
+	}
 
     /**
      * Enumeration of possible polarities of a Literal (positive or

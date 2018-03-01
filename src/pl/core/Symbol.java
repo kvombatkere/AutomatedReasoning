@@ -23,12 +23,9 @@ public class Symbol extends Sentence implements Serializable{
 	 */
 	//currently testing to deal with null pointer exception
 	public boolean isSatisfiedBy(Model model) {
-		//if(model.get(this) != null) {
+		
 		return model.get(this);
-	//	}
-	//	else {
-		//	return Boolean.TRUE;
-	//	}
+
 	}
 	
 	//
