@@ -10,6 +10,7 @@ import pl.core.Symbol;
 
 public interface TTModelChecking {
 	
+	
 	//Method to check entailment
 	public static Boolean ttEntails(KB kb, Sentence alpha){
 		List<Symbol> symbols = new ArrayList<Symbol>(kb.symbols());
@@ -18,22 +19,30 @@ public interface TTModelChecking {
 	
 	//Method to enumerate Truth Table for model
 	public static Boolean ttCheckAll(KB kb, Sentence alpha, List<Symbol> symbols, Model model ){
+//		System.out.println(model.getAss().size());
+//		model.dump();
+//		System.out.println("------------------------");
 		if (symbols.isEmpty()) {
 			if (model.satisfies(kb)) {
 				return model.satisfies(alpha);
 			} 
 			
-			else {
+			else {	
 				return Boolean.TRUE;
 			}
 		} 
 		else {
+			
 			Symbol p = symbols.remove(0);
-		
-			return (ttCheckAll(kb, alpha, symbols,
-			(((Model) Model.deepClone(model)).assign(p, Boolean.TRUE))) &&
-			ttCheckAll(kb, alpha, symbols,
-			((Model) Model.deepClone(model)).assign(p, Boolean.FALSE)));
+			
+			//Change to create model clone first for readability
+			Model modelCloneT = (Model) Model.deepClone(model);
+			Model modelCloneF = (Model) Model.deepClone(model);
+			
+			
+			return (ttCheckAll(kb, alpha, (List<Symbol>) Model.deepClone(symbols), modelCloneT.assign(p, Boolean.TRUE))
+					&&
+					ttCheckAll(kb, alpha,(List<Symbol>) Model.deepClone(symbols), modelCloneF.assign(p, Boolean.FALSE)));		
 		}
 	}
 
