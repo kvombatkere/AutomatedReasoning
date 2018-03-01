@@ -4,6 +4,7 @@
 
 package ark;
 
+import pl.core.Biconditional;
 import pl.core.Conjunction;
 import pl.core.Disjunction;
 import pl.core.KB;
@@ -18,12 +19,13 @@ public class AmyBobCalPartAKB extends KB{
 		Symbol B = intern("Bob");
 		Symbol C = intern("Cal");
 		
-		//Amy says, “Cal and I are truthful.”
-		add(new Conjunction(A, new Conjunction(A, C)));
-		//Bob says, “Cal is a liar.”
-		add(new Conjunction(B, new Negation(C)));
-		//Cal says, “Bob speaks the truth or Amy lies.”
-		add(new Conjunction(C, new Disjunction(B, new Negation(A))));
+		//Amy says, ï¿½Cal and I are truthful.ï¿½
+		add(new Biconditional(A, new Conjunction(A, C)));
+		//Bob says, ï¿½Cal is a liar.ï¿½
+		add(new Biconditional(B, new Negation(C)));
+		//Cal says, ï¿½Bob speaks the truth or Amy lies.ï¿½
+		add(new Biconditional(C, new Disjunction(B, new Negation(A))));
+
 	}
 	
 	public static void main(String[] args) {

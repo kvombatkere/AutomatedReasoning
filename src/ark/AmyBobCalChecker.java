@@ -4,6 +4,7 @@
 
 package ark;
 
+import pl.core.Negation;
 import pl.core.Symbol;
 
 public class AmyBobCalChecker implements TTModelChecking{

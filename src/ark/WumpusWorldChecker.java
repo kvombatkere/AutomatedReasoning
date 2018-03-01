@@ -20,15 +20,11 @@ public class WumpusWorldChecker implements TTModelChecking{
 		System.out.println("Displaying Knowledge Base:");
 		kb.dump();
 
-<<<<<<< HEAD
-		System.out.println(TTModelChecking.ttEntails(kb, p12));
-		System.out.println(TTModelChecking.ttEntails(kb, b21));
 
-=======
-		System.out.println("\nPit in (1,2): " + TTModelChecking.ttEntails(kb, p12));
-		System.out.println("Pit in (3,1): " + TTModelChecking.ttEntails(kb, p31));
-		System.out.println(TTModelChecking.ttEntails(kb, p31));
->>>>>>> 9f24e0197636f036c8c9f08d7a9587db6cb7686c
+		System.out.println("\nPit in (1,2) Entailed: " + TTModelChecking.ttEntails(kb, p12));
+		System.out.println("Pit in (3,1) Entailed: " + TTModelChecking.ttEntails(kb, p31));
+
+
 	}
 	
 } //end class WumpusWorldModel
