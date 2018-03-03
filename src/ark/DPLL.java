@@ -39,6 +39,7 @@ public interface DPLL {
 
 	//NOT CHECKED
 	//main DPLL algorithm
+	@SuppressWarnings("unused")
 	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
 		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
 		
@@ -109,9 +110,10 @@ public interface DPLL {
 			else {
 				value = true;
 			}
+			
 			Model modelCloneUnit = (Model) Model.deepClone(model);
 			
-			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelCloneUnit.assign(unit.getContent(), value ));
+			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelCloneUnit.assign(unit.getContent(), value));
 		}
 		
 		//Algorithm defaults to truth table enumeration if can't use above heuristics
@@ -205,13 +207,14 @@ public interface DPLL {
 	//IN PROGRESS
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		
+		System.out.println("Unit Clause FUNCTION CALL:");//print when this method is called
+
 		Literal unitLiteral = null;
 
 		//Loop over all the clauses
 		for(Clause clause: clauses) {
-			//count to keep track if a clause has more than one assigned value - set to total size initially and decrement
-			int numAssignedValues = clause.size();
+			//count to keep track of number of assigned values in clause
+			int numAssignedValues = 0;
 			
 			//Get the total number of literals in the clause
 			int numLiterals = clause.size();
@@ -225,16 +228,29 @@ public interface DPLL {
 			for(Literal li: clause) {
 				Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
 				
+				//we have two cases that make a literal assigned false by the model
+				//case 1-> li has negative polarity and and symbolToCheck == true
+				//case 2-> li has positive polarity and symbolToCheck == false
 				
-				//decrement the count for number of assigned literals if the literal isn't null in the model
-				if(model.get(symbolToCheck) == null) {
-					numAssignedValues -= 1;
-					unitLiteral = li;
+				//increment the count for number of assigned literals if either of above cases is satisfied
+				if(model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
+					numAssignedValues += 1;
 				}
+				
+				if(model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
+					numAssignedValues += 1;
+				}
+				
+				
+				//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
+				else {
+					unitLiteral = li;
+				}	
 			}
 			
-			//After all literals have been checked, see if the clause is a unit clause
+			//After all literals have been checked, check if the clause is a unit clause
 			if(numAssignedValues + 1 == numLiterals) {
+				System.out.println("Unit Clause found:" + unitLiteral);
 				return unitLiteral;
 			}
 			
