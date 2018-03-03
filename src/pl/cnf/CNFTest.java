@@ -20,6 +20,15 @@ public class CNFTest {
 
 		Set<Clause> clauses = CNFConverter.convert(s);
 		System.out.println(clauses);
+		
+		
+		//Added by KV just some test code
+		for(Clause cl: clauses) {
+			for(Literal li: cl) {
+				System.out.println(li);
+				System.out.println(li.getPolarity());
+			}
+		}
 
 	}
 

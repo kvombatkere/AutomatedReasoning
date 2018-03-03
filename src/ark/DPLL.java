@@ -1,6 +1,7 @@
 package ark;
 
 import pl.core.Model;
+import pl.core.Negation;
 import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.ModusPonensKB;
@@ -43,8 +44,10 @@ public interface DPLL {
 		
 		//if some clause in clauses is false in model then return false
 		for(Clause clause: clauses) {
-			if(!clause.isSatisfiedBy(model)) {	
+			if(clause.isSatisfiedBy(model)!= null) {
+				if(!clause.isSatisfiedBy(model)) {	
 				return false;
+				}
 			}
 		}		
 		
@@ -58,6 +61,9 @@ public interface DPLL {
 		//Improve efficiency by looking for symbols that have same polarity in all clauses and assigning value to make them true
 		Literal pure = findPureSymbol(symbols, clauses, model);
 
+		//TEMP FOR TESTING
+		pure = null;
+		
 		if(pure != null) {
 			//reminder to check about cloning symbols
 			symbols.remove(pure.getContent());
@@ -82,6 +88,9 @@ public interface DPLL {
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 
+		//TEMP FOR TESTING
+		unit = null;
+		
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -121,11 +130,16 @@ public interface DPLL {
 	//method to determine if all clauses are true in model
 	public static Boolean allClausesTrue(Set<Clause> clauses, Model model) {
 		for(Clause clause: clauses) {
-			if(!clause.isSatisfiedBy(model)) {
+			if(clause.isSatisfiedBy(model)!=null) { //null check
+				if(!clause.isSatisfiedBy(model)) { //if any clause is not satisfied, return false
+					return false;
+				}
+			}
+			else { //if any clauses are still null, return false
 				return false;
 			}
 		}
-		
+		//no clauses are unsatisfied or unknown
 		return true;
 	}
 	
@@ -189,31 +203,54 @@ public interface DPLL {
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
 		
-		//if clause only has one literal, return that literal
+		Literal unitLiteral = null;
+
+		//Loop over all the clauses
 		for(Clause clause: clauses) {
-			if(clause.size() == 1) {
+			//count to keep track if a clause has more than one assigned value - set to total size initially and decrement
+			int numAssignedValues = clause.size();
+			
+			//Get the total number of literals in the clause
+			int numLiterals = clause.size();
+			
+			//if clause only has one literal, return that literal
+			if(numLiterals == 1) {
 				return clause.get(0);
 			}
 			
-			if(oneTrueLiteral(clause)) {
+			//Loop over all literals in a clause to check if it is a unit clause
+			for(Literal li: clause) {
+				Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
 				
+				
+				//decrement the count for number of assigned literals if the literal isn't null in the model
+				if(model.get(symbolToCheck) == null) {
+					numAssignedValues -= 1;
+					unitLiteral = li;
+				}
 			}
+			
+			//After all literals have been checked, see if the clause is a unit clause
+			if(numAssignedValues + 1 == numLiterals) {
+				return unitLiteral;
+			}
+			
 		}
 		//return null if can't find unit clause
 		return null;
 	}
 	
-	//IN PROGRESS
-	//helper method for finding clauses where only one literal is true
-	public static Boolean oneTrueLiteral(Clause clause) {
-		int trueCount = 0;
-		for(Literal l: clause) {
-			
-		} 
-		return true;
-	}
 	
 	public static void main(String[] args) {
+		
+		
+		//testing to see if null pointer problem is fixed
+		WumpusWorldKB wkb = new WumpusWorldKB();
+		Symbol p12 = wkb.intern("P1,2");
+		wkb.add(p12);
+		wkb.dump();
+		System.out.println("DPLL Satisiable = " + DPLL.dpllSatisfiable(wkb.getKBAsSentence()));
+
 		
 		//testing stuff
 		HornClausesKB kb = new HornClausesKB();
