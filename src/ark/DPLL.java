@@ -3,6 +3,7 @@ package ark;
 import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
+import pl.examples.ModusPonensKB;
 import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
@@ -129,38 +130,53 @@ public interface DPLL {
 	
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
-	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
+		
 		Polarity val = null;
 		boolean breakAgain = false;
-	
+		boolean pure = false;
+		//eliminateClauses currently not doing anything, just there as placeholder
+		Set<Clause> clauses = eliminateClauses(initClauses, model);
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
-			for(Clause cl: clauses) {
-				
+			
+			for(Clause cl: clauses) {				
 				for(Literal l: cl) {
-					if(l.getContent() == sym) {
-						lit.setPolarity(l.getPolarity());
-					}
-					if(l.getPolarity() != lit.getPolarity()) {
+
+					if(l.getContent() == sym && l.getPolarity() != lit.getPolarity()) {
+						System.out.println("nope");
+						pure = false;
 						breakAgain = true;
 						break;
-					}			
+					}		
+					
+					if(l.getContent() == sym) {
+						lit.setPolarity(l.getPolarity());
+						pure = true;
+					}
 				}
 				
 				if(breakAgain) {
 					breakAgain = false;
 					break;
-				}
-				
 
 			}
 		
 		//return null if can't find pure symbol
 
-			lit.setPolarity(val);
-			return lit;
+			}
+			if(pure) {
+				return lit;
+			}
+			
 		}
 		return null;
+	}
+	
+	//helper method for findPureSymbol to get rid of clauses that are already true
+	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
+		//right now do nothing, just placeholder
+		return clauses;
 	}
 	
 	//IN PROGRESS
@@ -194,7 +210,7 @@ public interface DPLL {
 	public static void main(String[] args) {
 		
 		//testing stuff
-		WumpusWorldKB kb = new WumpusWorldKB();
+		HornClausesKB kb = new HornClausesKB();
 		Sentence s = kb.getKBAsSentence();
 		Set<Clause> clauses = CNFConverter.convert(s);
 		List<Symbol> symList = new ArrayList<Symbol>();
@@ -210,6 +226,7 @@ public interface DPLL {
 		Model model = new Model();
 		System.out.println(clauses);
 		Literal lit = findPureSymbol(symList, clauses, model);
+		System.out.println(symList);
 		System.out.println(lit);
 	}
 }
