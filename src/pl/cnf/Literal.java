@@ -91,14 +91,21 @@ public class Literal {
      * true by the Model, or if it is a negative Literals, its content must
      * be assigned false by the Model.
      */
-    public boolean isSatisfiedBy(Model model) {
-    	System.out.println("Literal.iSatisfiedBy: this=" + this);
+    //ARK: Modified to handle null assignments in model
+    public Boolean isSatisfiedBy(Model model) {
+    	System.out.println("Literal.isSatisfiedBy: this=" + this);
     	model.dump();
     	System.out.println("  model says: " + model.get(content));
-    	if (polarity == Polarity.POSITIVE) {
-    		return model.get(content);
-    	} else {
-    		return !model.get(content);
+    	if(model.get(content) != null) {
+    		if (polarity == Polarity.POSITIVE) {
+    			return model.get(content);
+    		} else {
+    			return !model.get(content);
+    		}
+    	}
+    	//ARK: if value is not yet assigned in model, return null
+    	else {
+    		return null;
     	}
     }
 

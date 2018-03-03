@@ -74,12 +74,29 @@ public class Clause extends ArraySet<Literal> {
      * Return true if this Clause is satisfied by the given Model.
      * That is, if one of its Literals is satisfied by the Model.
      */
-	public boolean isSatisfiedBy(Model model) {
+	//ARK: Modified to handle null assignments in model
+	public Boolean isSatisfiedBy(Model model) {
+		//return true if at least one literal in clause is true
+		
+		//return false if all literals in clause are false
+		
+		//return null if no literals are true and at least one is still null
+		int nullcount = 0;
 		for (Literal literal : this) {
-			if (literal.isSatisfiedBy(model)) {
-				return true;
+			if(literal.isSatisfiedBy(model)!=null) {
+				if (literal.isSatisfiedBy(model)) {
+					return true;
+				}
+			}
+			else {
+				nullcount++;
 			}
 		}
+		//at this point, no literals have been found to be true
+		if(nullcount > 0) {
+			return null;
+		}
+		//at this point, all literals in clause must be false
 		return false;
 	}
 

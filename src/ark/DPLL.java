@@ -1,6 +1,7 @@
 package ark;
 
 import pl.core.Model;
+import pl.core.Negation;
 import pl.core.Sentence;
 import pl.core.Symbol;
 import pl.examples.WumpusWorldKB;
@@ -41,8 +42,10 @@ public interface DPLL {
 		
 		//if some clause in clauses is false in model then return false
 		for(Clause clause: clauses) {
-			if(!clause.isSatisfiedBy(model)) {	
+			if(clause.isSatisfiedBy(model)!= null) {
+				if(!clause.isSatisfiedBy(model)) {	
 				return false;
+				}
 			}
 		}		
 		
@@ -56,6 +59,9 @@ public interface DPLL {
 		//Improve efficiency by looking for symbols that have same polarity in all clauses and assigning value to make them true
 		Literal pure = findPureSymbol(symbols, clauses, model);
 
+		//TEMP FOR TESTING
+		pure = null;
+		
 		if(pure != null) {
 			//reminder to check about cloning symbols
 			symbols.remove(pure.getContent());
@@ -80,6 +86,9 @@ public interface DPLL {
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 
+		//TEMP FOR TESTING
+		unit = null;
+		
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -119,11 +128,16 @@ public interface DPLL {
 	//method to determine if all clauses are true in model
 	public static Boolean allClausesTrue(Set<Clause> clauses, Model model) {
 		for(Clause clause: clauses) {
-			if(!clause.isSatisfiedBy(model)) {
+			if(clause.isSatisfiedBy(model)!=null) { //null check
+				if(!clause.isSatisfiedBy(model)) { //if any clause is not satisfied, return false
+					return false;
+				}
+			}
+			else { //if any clauses are still null, return false
 				return false;
 			}
 		}
-		
+		//no clauses are unsatisfied or unknown
 		return true;
 	}
 	
@@ -183,7 +197,7 @@ public interface DPLL {
 	
 	//IN PROGRESS
 	//helper method for finding clauses where only one literal is true
-	public static Boolean oneTrueLiteral(Clause clause) {
+	public static Boolean oneTrueLiteral(Clause clause) { //to rule them all
 		int trueCount = 0;
 		for(Literal l: clause) {
 			
@@ -192,6 +206,15 @@ public interface DPLL {
 	}
 	
 	public static void main(String[] args) {
+		
+		
+		//testing to see if null pointer problem is fixed
+		WumpusWorldKB wkb = new WumpusWorldKB();
+		Symbol p12 = wkb.intern("P1,2");
+		wkb.add(p12);
+		wkb.dump();
+		System.out.println("DPLL Satisiable = " + DPLL.dpllSatisfiable(wkb.getKBAsSentence()));
+
 		
 		//testing stuff
 		WumpusWorldKB kb = new WumpusWorldKB();
