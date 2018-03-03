@@ -3,6 +3,7 @@ package ark;
 import pl.core.Model;
 import pl.core.Sentence;
 import pl.core.Symbol;
+import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import pl.cnf.Literal.Polarity;
 
 public interface DPLL {
 	
+	//NOT CHECKED
 	//Check if sentence is satisfiable by calling dpll
 	public static Boolean dpllSatisfiable(Sentence s) {
 		Set<Clause> clauses = CNFConverter.convert(s);
@@ -32,6 +34,7 @@ public interface DPLL {
 		return dpll(clauses, symList, new Model());
 	}
 
+	//NOT CHECKED
 	//main DPLL algorithm
 	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
 		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
@@ -112,7 +115,7 @@ public interface DPLL {
 		
 	}
 	
-	
+	//NOT CHECKED
 	//method to determine if all clauses are true in model
 	public static Boolean allClausesTrue(Set<Clause> clauses, Model model) {
 		for(Clause clause: clauses) {
@@ -127,17 +130,36 @@ public interface DPLL {
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
 	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		Polarity val;
+		Polarity val = null;
+		boolean breakAgain = false;
+	
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
 			for(Clause cl: clauses) {
-				if(cl.contains(lit)) {
-					
+				
+				for(Literal l: cl) {
+					if(l.getContent() == sym) {
+						lit.setPolarity(l.getPolarity());
+					}
+					if(l.getPolarity() != lit.getPolarity()) {
+						breakAgain = true;
+						break;
+					}			
 				}
+				
+				if(breakAgain) {
+					breakAgain = false;
+					break;
+				}
+				
+
 			}
-		}
 		
 		//return null if can't find pure symbol
+
+			lit.setPolarity(val);
+			return lit;
+		}
 		return null;
 	}
 	
@@ -169,4 +191,25 @@ public interface DPLL {
 		return true;
 	}
 	
+	public static void main(String[] args) {
+		
+		//testing stuff
+		WumpusWorldKB kb = new WumpusWorldKB();
+		Sentence s = kb.getKBAsSentence();
+		Set<Clause> clauses = CNFConverter.convert(s);
+		List<Symbol> symList = new ArrayList<Symbol>();
+		
+		for(Clause cl: clauses){
+			for(Literal lit: cl) {
+				if(!symList.contains(lit.getContent())) {
+				symList.add(lit.getContent());
+				}
+			}
+		}
+		
+		Model model = new Model();
+		System.out.println(clauses);
+		Literal lit = findPureSymbol(symList, clauses, model);
+		System.out.println(lit);
+	}
 }

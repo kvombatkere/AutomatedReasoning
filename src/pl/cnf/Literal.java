@@ -43,6 +43,11 @@ public class Literal {
     public Polarity getPolarity() {
     	return polarity;
     }
+    
+    //adding setter for polarity
+    public void setPolarity(Polarity p) {
+    		this.polarity = p;
+    }
 
     /**
      * Return a new Literal constructed from the given Sentence s,
