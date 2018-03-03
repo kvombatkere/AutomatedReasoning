@@ -31,34 +31,34 @@ public class MoreLiarsTruthTellersKB extends KB{
 		//Bob says, “Amy and Lee are truth-tellers.”
 		add(new Biconditional(B, new Conjunction(A, L)));
 		
-//		• Cal says, “Bob and Gil are truth-tellers.”
+//		Cal says, “Bob and Gil are truth-tellers.”
 		add(new Biconditional(C, new Conjunction(B, G)));
 		
-//		• Dee says, “Eli and Lee are truth-tellers.”		
+//		Dee says, “Eli and Lee are truth-tellers.”		
 		add(new Biconditional(D, new Conjunction(E, L)));
 
-//		• Eli says, “Cal and Hal are truth-tellers.”
+//		Eli says, “Cal and Hal are truth-tellers.”
 		add(new Biconditional(E, new Conjunction(C, H)));
 
-//		• Fay says, “Dee and Ida are truth-tellers.”
+//		Fay says, “Dee and Ida are truth-tellers.”
 		add(new Biconditional(F, new Conjunction(D, I)));
 		
 //		Gil says, “Eli and Jay are liars.”
 		add(new Biconditional(G, new Conjunction(new Negation(E), new Negation(J))));
 
-//		• Hal says, “Fay and Kay are liars.”
+//		Hal says, “Fay and Kay are liars.”
 		add(new Biconditional(H, new Conjunction(new Negation(F), new Negation(K))));
 
-//		• Ida says, “Gil and Kay are liars.”
+//		Ida says, “Gil and Kay are liars.”
 		add(new Biconditional(I, new Conjunction(new Negation(G), new Negation(K))));
 
-//		• Jay says, “Amy and Cal are liars.”
+//		Jay says, “Amy and Cal are liars.”
 		add(new Biconditional(J, new Conjunction(new Negation(A), new Negation(C))));
 
-//		• Kay says, “Dee and Fay are liars.”
+//		Kay says, “Dee and Fay are liars.”
 		add(new Biconditional(K, new Conjunction(new Negation(D), new Negation(F))));
 
-//		• Lee says, “Bob and Jay are liars.”
+//		Lee says, “Bob and Jay are liars.”
 		add(new Biconditional(L, new Conjunction(new Negation(B), new Negation(J))));
 		
 		
