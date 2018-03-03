@@ -60,10 +60,12 @@ public class KB {
 		}
 	}
 
-	//Helper function for DPLL to get KB as a sentence
+	//ARK: Helper function for DPLL to get KB as a sentence
 	public Sentence getKBAsSentence() {
+		//quick check to prevent null pointer
 		if(!sentences.isEmpty()) {
 			Sentence kb = sentences.get(0);
+			//build giant conjunction of all sentences in kb
 			for(int i=1; i<sentences.size(); i++) {
 				kb = new Conjunction(kb, sentences.get(i));
 			}
