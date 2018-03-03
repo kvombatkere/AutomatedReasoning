@@ -31,6 +31,8 @@ public class DOELiuKB extends KB{
 		Symbol Z = intern("Z");
 		Symbol W = intern("W"); //W is never used but included for completeness
 		
+		Symbol R = intern("R"); //unknown proposition used to fill in blank of fragment
+		
 		//from problem statement:
 		add(new Disjunction(X, new Disjunction(Y, new Disjunction(Z, W))));
 		
@@ -41,8 +43,8 @@ public class DOELiuKB extends KB{
 		add(new Biconditional(C, new Conjunction(A, new Disjunction(B, new Disjunction(C, new Disjunction(D, new Disjunction(E, new Disjunction(F, new Disjunction(G, H)))))))));
 		
 		//G: If C is a knight, ...
-		add(new Biconditional(G, new Implication(C, C)));
-		//Don't know what C implies, so use trivial C implies C
+		add(new Biconditional(G, new Implication(C, R)));
+		//Don't know what C implies, so use symbol R to represent some unknown proposition
 		
 		//H: If G and I (meaning H) are knights, so is A.
 		add(new Biconditional(H, new Implication(new Conjunction(G, H), A)));

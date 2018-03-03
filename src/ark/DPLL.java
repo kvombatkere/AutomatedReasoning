@@ -1,8 +1,11 @@
 package ark;
 
 import pl.core.Model;
+import pl.core.Negation;
 import pl.core.Sentence;
 import pl.core.Symbol;
+import pl.examples.ModusPonensKB;
+import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import pl.cnf.Literal.Polarity;
 
 public interface DPLL {
 	
+	//NOT CHECKED
 	//Check if sentence is satisfiable by calling dpll
 	public static Boolean dpllSatisfiable(Sentence s) {
 		Set<Clause> clauses = CNFConverter.convert(s);
@@ -32,14 +36,17 @@ public interface DPLL {
 		return dpll(clauses, symList, new Model());
 	}
 
+	//NOT CHECKED
 	//main DPLL algorithm
 	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
 		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
 		
 		//if some clause in clauses is false in model then return false
 		for(Clause clause: clauses) {
-			if(!clause.isSatisfiedBy(model)) {	
+			if(clause.isSatisfiedBy(model)!= null) {
+				if(!clause.isSatisfiedBy(model)) {	
 				return false;
+				}
 			}
 		}		
 		
@@ -53,6 +60,9 @@ public interface DPLL {
 		//Improve efficiency by looking for symbols that have same polarity in all clauses and assigning value to make them true
 		Literal pure = findPureSymbol(symbols, clauses, model);
 
+		//TEMP FOR TESTING
+		pure = null;
+		
 		if(pure != null) {
 			//reminder to check about cloning symbols
 			symbols.remove(pure.getContent());
@@ -77,6 +87,9 @@ public interface DPLL {
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 
+		//TEMP FOR TESTING
+		unit = null;
+		
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -112,33 +125,72 @@ public interface DPLL {
 		
 	}
 	
-	
+	//NOT CHECKED
 	//method to determine if all clauses are true in model
 	public static Boolean allClausesTrue(Set<Clause> clauses, Model model) {
 		for(Clause clause: clauses) {
-			if(!clause.isSatisfiedBy(model)) {
+			if(clause.isSatisfiedBy(model)!=null) { //null check
+				if(!clause.isSatisfiedBy(model)) { //if any clause is not satisfied, return false
+					return false;
+				}
+			}
+			else { //if any clauses are still null, return false
 				return false;
 			}
 		}
-		
+		//no clauses are unsatisfied or unknown
 		return true;
 	}
 	
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
-	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		Polarity val;
+	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
+		
+		Polarity val = null;
+		boolean breakAgain = false;
+		boolean pure = false;
+		//eliminateClauses currently not doing anything, just there as placeholder
+		Set<Clause> clauses = eliminateClauses(initClauses, model);
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
-			for(Clause cl: clauses) {
-				if(cl.contains(lit)) {
+			
+			for(Clause cl: clauses) {				
+				for(Literal l: cl) {
+
+					if(l.getContent() == sym && l.getPolarity() != lit.getPolarity()) {
+						System.out.println("nope");
+						pure = false;
+						breakAgain = true;
+						break;
+					}		
 					
+					if(l.getContent() == sym) {
+						lit.setPolarity(l.getPolarity());
+						pure = true;
+					}
 				}
+				
+				if(breakAgain) {
+					breakAgain = false;
+					break;
+
 			}
-		}
 		
 		//return null if can't find pure symbol
+
+			}
+			if(pure) {
+				return lit;
+			}
+			
+		}
 		return null;
+	}
+	
+	//helper method for findPureSymbol to get rid of clauses that are already true
+	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
+		//right now do nothing, just placeholder
+		return clauses;
 	}
 	
 	//IN PROGRESS
@@ -182,4 +234,36 @@ public interface DPLL {
 		return null;
 	}
 	
+	
+	public static void main(String[] args) {
+		
+		
+		//testing to see if null pointer problem is fixed
+		WumpusWorldKB wkb = new WumpusWorldKB();
+		Symbol p12 = wkb.intern("P1,2");
+		wkb.add(p12);
+		wkb.dump();
+		System.out.println("DPLL Satisiable = " + DPLL.dpllSatisfiable(wkb.getKBAsSentence()));
+
+		
+		//testing stuff
+		HornClausesKB kb = new HornClausesKB();
+		Sentence s = kb.getKBAsSentence();
+		Set<Clause> clauses = CNFConverter.convert(s);
+		List<Symbol> symList = new ArrayList<Symbol>();
+		
+		for(Clause cl: clauses){
+			for(Literal lit: cl) {
+				if(!symList.contains(lit.getContent())) {
+				symList.add(lit.getContent());
+				}
+			}
+		}
+		
+		Model model = new Model();
+		System.out.println(clauses);
+		Literal lit = findPureSymbol(symList, clauses, model);
+		System.out.println(symList);
+		System.out.println(lit);
+	}
 }
