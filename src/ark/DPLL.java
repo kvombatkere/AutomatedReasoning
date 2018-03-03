@@ -34,7 +34,6 @@ public interface DPLL {
 
 	//main DPLL algorithm
 	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
-		
 		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
 		
 		//if some clause in clauses is false in model then return false
