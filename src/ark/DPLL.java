@@ -7,6 +7,7 @@ import pl.examples.ModusPonensKB;
 import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -175,7 +176,12 @@ public interface DPLL {
 	
 	//helper method for findPureSymbol to get rid of clauses that are already true
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
+		Iterator<Clause> iterator = clauses.iterator();
 		//right now do nothing, just placeholder
+		for(Clause cl: clauses) {
+			
+			
+		}
 		return clauses;
 	}
 	
