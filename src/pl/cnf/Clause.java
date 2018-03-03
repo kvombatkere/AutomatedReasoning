@@ -83,7 +83,7 @@ public class Clause extends ArraySet<Literal> {
 		//return null if no literals are true and at least one is still null
 		int nullcount = 0;
 		for (Literal literal : this) {
-			if(literal.isSatisfiedBy(model)!=null) {
+			if(literal.isSatisfiedBy(model) != null) {
 				if (literal.isSatisfiedBy(model)) {
 					return true;
 				}

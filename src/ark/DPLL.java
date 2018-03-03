@@ -44,7 +44,7 @@ public interface DPLL {
 		
 		//if some clause in clauses is false in model then return false
 		for(Clause clause: clauses) {
-			if(clause.isSatisfiedBy(model)!= null) {
+			if(clause.isSatisfiedBy(model) != null) {
 				if(!clause.isSatisfiedBy(model)) {	
 				return false;
 				}
@@ -190,12 +190,15 @@ public interface DPLL {
 	
 	//helper method for findPureSymbol to get rid of clauses that are already true
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
-		Iterator<Clause> iterator = clauses.iterator();
-		//right now do nothing, just placeholder
-		for(Clause cl: clauses) {
-			
-			
-		}
+		//commented out because it causes a null pointer exception righ now
+//		Iterator<Clause> iterator = clauses.iterator();
+//		//right now do nothing, just placeholder
+//		while(iterator.hasNext()) {
+//			Clause cl = iterator.next();
+//			if(cl.isSatisfiedBy(model)) {
+//				iterator.remove();
+//			}
+//		}
 		return clauses;
 	}
 	
@@ -245,11 +248,11 @@ public interface DPLL {
 		
 		
 		//testing to see if null pointer problem is fixed
-		WumpusWorldKB wkb = new WumpusWorldKB();
-		Symbol p12 = wkb.intern("P1,2");
-		wkb.add(p12);
-		wkb.dump();
-		System.out.println("DPLL Satisiable = " + DPLL.dpllSatisfiable(wkb.getKBAsSentence()));
+//		WumpusWorldKB wkb = new WumpusWorldKB();
+//		Symbol p12 = wkb.intern("P1,2");
+//		wkb.add(p12);
+//		wkb.dump();
+	//	System.out.println("DPLL Satisiable = " + DPLL.dpllSatisfiable(wkb.getKBAsSentence()));
 
 		
 		//testing stuff
@@ -265,11 +268,13 @@ public interface DPLL {
 				}
 			}
 		}
+		Symbol mammal = kb.intern("Mammal");
 		
 		Model model = new Model();
+		model.set(mammal, true);
 		System.out.println(clauses);
 		Literal lit = findPureSymbol(symList, clauses, model);
 		System.out.println(symList);
-		System.out.println(lit);
+	//	System.out.println(lit);
 	}
 }
