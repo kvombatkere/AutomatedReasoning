@@ -41,8 +41,6 @@ public class Model implements Serializable{
 	public void set(Symbol sym, boolean value) {
 		assignments.put(sym, value);
 	}
-	
-	//
 
 	/**
 	 * Returns the boolean value associated with the given PropositionalSymbol
