@@ -60,4 +60,18 @@ public class KB {
 		}
 	}
 
+	//Helper function for DPLL to get KB as a sentence
+	public Sentence getKBAsSentence() {
+		if(!sentences.isEmpty()) {
+			Sentence kb = sentences.get(0);
+			for(int i=1; i<sentences.size(); i++) {
+				kb = new Conjunction(kb, sentences.get(i));
+			}
+			return kb;
+		}
+		else {
+			return null;
+		}
+	}
+	
 }

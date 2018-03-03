@@ -18,11 +18,11 @@ public class AmyBobCalPartBKB extends KB{
 		Symbol B = intern("Bob");
 		Symbol C = intern("Cal");
 		
-		//Amy says, �Cal is not honest.�
+		//Amy says, "Cal is not honest."
 		add(new Biconditional(A, new Negation(C)));
-		//Bob says, �Amy and Cal never lie.�
+		//Bob says, "Amy and Cal never lie."
 		add(new Biconditional(B, new Conjunction(A, C)));
-		//Cal says, �Bob is correct.�
+		//Cal says, "Bob is correct."
 		add(new Biconditional(C, new Conjunction(B, new Conjunction(A, C))));
 		
 	}
