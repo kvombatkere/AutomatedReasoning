@@ -1,7 +1,7 @@
 //CSC 442 Project 2
 //Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
-//DoorsOfEnlightenmentKB
-//Knowledge base for Smullyan's problem
+//DOELiuKB
+//Knowledge base for Liu's Doors of Enlightenment problem
 
 package ark;
 
@@ -13,9 +13,9 @@ import pl.core.KB;
 import pl.core.Negation;
 import pl.core.Symbol;
 
-public class DoorsOfEnlightenmentKB extends KB{
-
-	public DoorsOfEnlightenmentKB() {
+public class DOELiuKB extends KB{
+	
+	public DOELiuKB() {
 		super();
 		Symbol A = intern("A");
 		Symbol B = intern("B");
@@ -31,21 +31,21 @@ public class DoorsOfEnlightenmentKB extends KB{
 		Symbol Z = intern("Z");
 		Symbol W = intern("W"); //W is never used but included for completeness
 		
+		//from problem statement:
+		add(new Disjunction(X, new Disjunction(Y, new Disjunction(Z, W))));
+		
 		//A: X is a good door.
 		add(new Biconditional(A, X));
-		//B: At least one of the doors Y or Z is good.
-		add(new Biconditional(B, new Disjunction(Y, Z)));
-		//C: A and B are both knights.
-		add(new Biconditional(C, new Conjunction(A, B)));
-		//D: X and Y are both good doors.
-		add(new Biconditional(D, new Conjunction(X, Y)));
-		//E: X and Z are both good doors.
-		add(new Biconditional(E, new Conjunction(X, Z)));
-		//F: Either D or E is a knight.
-		add(new Biconditional(F, new Disjunction(new Conjunction(D, new Negation(E)), new Conjunction(new Negation(D), E))));
-		//G: If C is a knight, so is F.
-		add(new Biconditional(G, new Implication(C, F)));
+		
+		//C: A and ... are both knights.
+		add(new Biconditional(C, new Conjunction(A, new Disjunction(B, new Disjunction(C, new Disjunction(D, new Disjunction(E, new Disjunction(F, new Disjunction(G, H)))))))));
+		
+		//G: If C is a knight, ...
+		add(new Biconditional(G, new Implication(C, C)));
+		//Don't know what C implies, so use trivial C implies C
+		
 		//H: If G and I (meaning H) are knights, so is A.
 		add(new Biconditional(H, new Implication(new Conjunction(G, H), A)));
 	}
+
 }
