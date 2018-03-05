@@ -30,12 +30,13 @@ public interface DPLL {
 		Sentence Skb = kb.getKBAsSentence();
 		
 		//check if conjunction of knowledge base and sentence is satisfiable
-		Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
+		//Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
 		//check if conjunction of knowledge base and negation of sentence is satisfiable
 		Boolean convSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
-
+		System.out.println(convSatisfiable);
+		
 		//if satisfiability requires the input sentence, it must be true
-		if(sSatisfiable.booleanValue() && !convSatisfiable.booleanValue()) {
+		if(!convSatisfiable.booleanValue()) {
 			return true;
 		}
 		else {
@@ -86,10 +87,13 @@ public interface DPLL {
 		Literal pure = findPureSymbol(symbols, eliminateClauses(clauses, model), model);
 
 		if(pure != null) {
+<<<<<<< HEAD
 
 
 	//		System.out.println("pure symbol: "+pure);
 
+=======
+>>>>>>> caa080bc3bcf414da909fbdbf1967fb60846b196
 			symbols.remove(pure.getContent());
 
 			Boolean value;
@@ -110,12 +114,21 @@ public interface DPLL {
 			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelClonePure.assign(pure.getContent(), value ));
 		}
 				
+<<<<<<< HEAD
 
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
 		unit = null;
 
+=======
+		//Unit Propagation
+
+		Literal unit = findUnitClause(symbols, clauses, model);	
+		//System.out.println(unit);
+		//unit = null;
+		
+>>>>>>> caa080bc3bcf414da909fbdbf1967fb60846b196
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -254,11 +267,12 @@ public interface DPLL {
 			//if clause only has one literal, return that literal
 			if(numLiterals == 1) {
 				if(symbols.contains(clause.get(0))) {
+					System.out.println("Found Unit Clause: " + clause.get(0));
 					return clause.get(0);
 				}
 			}
 			
-			//If the clause is not a unit clause
+			//If the clause has more than one literal
 			else {
 				//Loop over all literals in a clause to check if it is a unit clause
 				for(Literal li: clause) {
@@ -290,9 +304,13 @@ public interface DPLL {
 				}
 				//After all literals have been checked, check if the clause is a unit clause
 				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
+<<<<<<< HEAD
 
 			//		System.out.println("Found Unit Clause: " + unitLiteral);
 
+=======
+					System.out.println("Found Unit Clause: " + unitLiteral);
+>>>>>>> caa080bc3bcf414da909fbdbf1967fb60846b196
 					return unitLiteral;
 				}	
 			}
@@ -338,6 +356,7 @@ public interface DPLL {
 		
 		Model model = new Model();
 		model.set(mammal, true);
+		model.set(mythical, true);
 		System.out.println(clauses);
 		Literal lit = findPureSymbol(symList, clauses, model);
 		
