@@ -62,7 +62,7 @@ public interface DPLL {
 		
 		
 		//Improve efficiency by looking for symbols that have same polarity in all clauses and assigning value to make them true
-		Literal pure = findPureSymbol(symbols, clauses, model);
+		Literal pure = findPureSymbol(symbols, eliminateClauses(clauses, model), model);
 
 		//TEMP FOR TESTING
 		//pure = null;
@@ -158,7 +158,8 @@ public interface DPLL {
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
 			
-			for(Clause cl: clauses) {				
+			for(Clause cl: clauses) {
+			
 				for(Literal l: cl) {
 
 					if(l.getContent() == sym && l.getPolarity() != lit.getPolarity()) {
@@ -195,8 +196,8 @@ public interface DPLL {
 	//helper method for findPureSymbol to get rid of clauses that are already true
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
 		//commented out because it causes a null pointer exception right now
-		Set<Clause> clauseClone = (Set<Clause>) Model.deepClone(clauses);
-//		Iterator<Clause> iterator = clauseClone.iterator();
+	//	Set<Clause> clauseClone = (Set<Clause>) Model.deepClone(clauses);
+//		Iterator<Clause> iterator = clauses.iterator();
 //		//right now do nothing, just placeholder
 //		while(iterator.hasNext()) {
 //			Clause cl = iterator.next();
@@ -206,7 +207,7 @@ public interface DPLL {
 //			//	System.out.println("remove clause");
 //			}
 //		}
-		return clauseClone;
+		return clauses;
 	}
 	
 	//method to find clauses with only one literal or clause with only one true literal 
@@ -273,17 +274,19 @@ public interface DPLL {
 		//testing to see if null pointer problem is fixed
 		WumpusWorldKB wkb = new WumpusWorldKB();
 		Symbol p12 = wkb.intern("P1,2");
-		wkb.dump();
+	//	wkb.dump();
 		System.out.println("Wumpus World Pit(1,2) DPLL Satisiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), p12)));
 
 		//testing stuff
 		HornClausesKB kb = new HornClausesKB();
-		Sentence s = kb.getKBAsSentence();
-		Set<Clause> clauses = CNFConverter.convert(s);
+	
+		
 		List<Symbol> symList = new ArrayList<Symbol>();
 		Symbol mythical = kb.intern("Mythical");
 		Symbol magical = kb.intern("Magical");
-		
+
+		Sentence s = kb.getKBAsSentence();
+		Set<Clause> clauses = CNFConverter.convert(s);
 		System.out.println("Horn Clauses Mythical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(mythical))));
 		System.out.println("Horn Clauses Magical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(magical))));
 
