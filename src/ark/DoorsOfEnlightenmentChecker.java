@@ -15,7 +15,6 @@ public class DoorsOfEnlightenmentChecker {
 		//Part A
 		System.out.println("Smullyan's Problem:");
 		DoorsOfEnlightenmentKB kb = new DoorsOfEnlightenmentKB();
-		
 		/*Symbol A = kb.intern("A");
 		Symbol B = kb.intern("B");
 		Symbol C = kb.intern("C");
@@ -29,6 +28,7 @@ public class DoorsOfEnlightenmentChecker {
 		Symbol Y = kb.intern("Y");
 		Symbol Z = kb.intern("Z");
 		Symbol W = kb.intern("W");
+
 		
 		System.out.println("Displaying Knowledge Base:");
 		kb.dump();
