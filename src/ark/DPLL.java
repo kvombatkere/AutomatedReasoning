@@ -81,13 +81,9 @@ public interface DPLL {
 			return true;
 		}
 	
-		
-		
+			
 		//Improve efficiency by looking for symbols that have same polarity in all clauses and assigning value to make them true
 		Literal pure = findPureSymbol(symbols, eliminateClauses(clauses, model), model);
-
-		//TEMP FOR TESTING
-		//pure = null;
 
 		if(pure != null) {
 			//reminder to check about cloning symbols
@@ -113,17 +109,27 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
+<<<<<<< HEAD
 		
 	//	Literal unit = findUnitClause(symbols, clauses, model);	
 		
 		Literal unit = null;
+=======
+		Literal unit = findUnitClause(symbols, clauses, model);	
+		//System.out.println(unit);
+				
+>>>>>>> dc060ff9208b895ff6ca2d3d6500b50572fd8480
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
 			System.out.println("Before remove: "+symbols);
 			System.out.println("WANT TO REMOVE: " +unit.getContent());
 			symbols.remove(unit.getContent());
+<<<<<<< HEAD
 			System.out.println("After remove: " +symbols);
+=======
+			//System.out.println("Printing Symbols:" + symbols);
+>>>>>>> dc060ff9208b895ff6ca2d3d6500b50572fd8480
 			Boolean value = null;
 			
 			//If literal is a negation, assign it false to make it true
@@ -238,7 +244,7 @@ public interface DPLL {
 	
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
+		//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
 		
 		Literal unitLiteral = null;
 
@@ -249,36 +255,41 @@ public interface DPLL {
 			
 			//Get the total number of literals in the clause
 			int numLiterals = clause.size();
-			System.out.println("Number of Literals to check: " + numLiterals);
+			//System.out.println("Number of Literals to check: " + numLiterals);
 			
 			//if clause only has one literal, return that literal
 			if(numLiterals == 1) {
-				return clause.get(0);
+				if(symbols.contains(clause.get(0))) {
+					return clause.get(0);
+				}
 			}
 			
 			//Loop over all literals in a clause to check if it is a unit clause
 			for(Literal li: clause) {
 				Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
-
-				//we have two cases that make a literal assigned false by the model
-				//case 1-> li has negative polarity and and symbolToCheck == true
-				//case 2-> li has positive polarity and symbolToCheck == false
 				
-				//increment the count for number of assigned literals if either of above cases is satisfied
-				if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
-					System.out.println("~" + symbolToCheck + " already assigned false by model");
-					numAssignedValues += 1;
+				//Check if the symbol to be checked is in the symbol list
+				if(symbols.contains(symbolToCheck)) {
+					//we have two cases that make a literal assigned false by the model
+					//case 1-> li has negative polarity and and symbolToCheck == true
+					//case 2-> li has positive polarity and symbolToCheck == false
+					
+					//increment the count for number of assigned literals if either of above cases is satisfied
+					if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
+						System.out.println("~" + symbolToCheck + " already assigned false by model");
+						numAssignedValues += 1;
+					}
+					
+					else if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
+						System.out.println(symbolToCheck + " already assigned false by model");
+						numAssignedValues += 1;
+					}
+					
+					//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
+					else {
+						unitLiteral = li;
+					}	
 				}
-				
-				else if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
-					System.out.println(symbolToCheck + " already assigned false by model");
-					numAssignedValues += 1;
-				}
-				
-				//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
-				else {
-					unitLiteral = li;
-				}	
 
 			}
 			//After all literals have been checked, check if the clause is a unit clause
