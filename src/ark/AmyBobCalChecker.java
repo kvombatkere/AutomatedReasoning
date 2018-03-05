@@ -23,6 +23,16 @@ public class AmyBobCalChecker implements TTModelChecking{
 		System.out.println("Displaying Knowledge Base:");
 		kbA.dump();
 		
+		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		final long DPLLstartA = System.currentTimeMillis();
+				
+		//Check kb entailment of Amy, Bob, and Cal's truthfulness using DPLL and proof by contradiction
+		System.out.println("Amy can be proved truthful : " + DPLL.proofByContradiction(kbA, aA));
+		System.out.println("Bob can be proved truthful : " + DPLL.proofByContradiction(kbA, bA));
+		System.out.println("Cal can be proved truthful : " + DPLL.proofByContradiction(kbA, cA));
+
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstartA) + " ms");
+		
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
 		final long TTstartA = System.currentTimeMillis();
 
@@ -33,15 +43,6 @@ public class AmyBobCalChecker implements TTModelChecking{
 		
 		System.out.println("Computed in " + (System.currentTimeMillis() - TTstartA) + " ms");
 		
-		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
-		final long DPLLstartA = System.currentTimeMillis();
-				
-		//Check kb entailment of Amy, Bob, and Cal's truthfulness using DPLL and proof by contradiction
-		System.out.println("Amy can be proved truthful : " + DPLL.proofByContradiction(kbA, aA));
-		System.out.println("Bob can be proved truthful : " + DPLL.proofByContradiction(kbA, bA));
-		System.out.println("Cal can be proved truthful : " + DPLL.proofByContradiction(kbA, cA));
-
-		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstartA) + " ms");
 		
 		//Part B
 		AmyBobCalPartBKB kbB = new AmyBobCalPartBKB();

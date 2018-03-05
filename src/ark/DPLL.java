@@ -29,12 +29,13 @@ public interface DPLL {
 		Sentence Skb = kb.getKBAsSentence();
 		
 		//check if conjunction of knowledge base and sentence is satisfiable
-		Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
+		//Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
 		//check if conjunction of knowledge base and negation of sentence is satisfiable
 		Boolean convSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
-
+		System.out.println(convSatisfiable);
+		
 		//if satisfiability requires the input sentence, it must be true
-		if(sSatisfiable.booleanValue() && !convSatisfiable.booleanValue()) {
+		if(!convSatisfiable.booleanValue()) {
 			return true;
 		}
 		else {
@@ -111,7 +112,7 @@ public interface DPLL {
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
-		unit = null;
+		//unit = null;
 		
 		if(unit != null) {
 			
@@ -249,11 +250,12 @@ public interface DPLL {
 			//if clause only has one literal, return that literal
 			if(numLiterals == 1) {
 				if(symbols.contains(clause.get(0))) {
+					System.out.println("Found Unit Clause: " + clause.get(0));
 					return clause.get(0);
 				}
 			}
 			
-			//If the clause is not a unit clause
+			//If the clause has more than one literal
 			else {
 				//Loop over all literals in a clause to check if it is a unit clause
 				for(Literal li: clause) {
@@ -330,6 +332,7 @@ public interface DPLL {
 		
 		Model model = new Model();
 		model.set(mammal, true);
+		model.set(mythical, true);
 		System.out.println(clauses);
 		Literal lit = findPureSymbol(symList, clauses, model);
 		
