@@ -25,6 +25,7 @@ public interface DPLL {
 	//use DPLL satisfiability and proof by contradiction to prove or disprove the sentence
 	//returns true if the sentence s is entailed, false o/w
 	public static Boolean proofByContradiction(KB kb, Sentence s) {
+		
 		//convert knowledge base to a sentence
 		Sentence Skb = kb.getKBAsSentence();
 		
@@ -56,14 +57,14 @@ public interface DPLL {
 				}
 			}
 		}
-	//	System.out.println(symList);
+		
 		return dpll(clauses, symList, new Model());
 	}
 
 	//NOT CHECKED
 	//main DPLL algorithm
 	@SuppressWarnings("unused")
-	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
+	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model) {
 		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
 		
 		//if some clause in clauses is false in model then return false
@@ -90,8 +91,9 @@ public interface DPLL {
 
 		if(pure != null) {
 			//reminder to check about cloning symbols
-			System.out.println("pure symbol");
-			symbols.remove(pure.getContent());
+			System.out.println("Before remove: "+symbols);
+			System.out.println(symbols.remove(pure.getContent()));
+			System.out.println("After remove: " +symbols);
 			Boolean value;
 			
 			//If literal is a negation, assign it false to make it true
@@ -111,13 +113,17 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
+		
 	//	Literal unit = findUnitClause(symbols, clauses, model);	
 		
 		Literal unit = null;
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
+			System.out.println("Before remove: "+symbols);
+			System.out.println("WANT TO REMOVE: " +unit.getContent());
 			symbols.remove(unit.getContent());
+			System.out.println("After remove: " +symbols);
 			Boolean value = null;
 			
 			//If literal is a negation, assign it false to make it true
@@ -287,6 +293,7 @@ public interface DPLL {
 		return null;
 	}
 	
+
 	
 	public static void main(String[] args) {		
 		//testing to see if null pointer problem is fixed
