@@ -92,7 +92,11 @@ public interface DPLL {
 		Literal unit = findUnitClause(symbols, clauses, model);	
 
 		//TEMP FOR TESTING
+<<<<<<< HEAD
 		//Literal unit = null;
+=======
+		unit = null;
+>>>>>>> 53e941f34315b62fdef1b6fe6fb665147a3c2bd2
 		
 		if(unit != null) {
 			
@@ -206,10 +210,9 @@ public interface DPLL {
 		return clauses;
 	}
 	
-	//IN PROGRESS
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		System.out.println("Unit Clause FUNCTION CALL:");//print when this method is called
+		System.out.println("FIND UNIT CLAUSE FUNCTION CALL:");//print when this method is called
 
 		Literal unitLiteral = null;
 
@@ -229,20 +232,23 @@ public interface DPLL {
 			//Loop over all literals in a clause to check if it is a unit clause
 			for(Literal li: clause) {
 				Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
-				
+				System.out.println("Literal to check: " + symbolToCheck);
+				System.out.println("Literal Polarity: " + li.getPolarity());
+
 				//we have two cases that make a literal assigned false by the model
 				//case 1-> li has negative polarity and and symbolToCheck == true
 				//case 2-> li has positive polarity and symbolToCheck == false
 				
 				//increment the count for number of assigned literals if either of above cases is satisfied
-				if(model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
-					numAssignedValues += 1;
+				if(model.get(symbolToCheck)!= null) {
+					if(model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
+						numAssignedValues += 1;
+					}
+					
+					if(model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
+						numAssignedValues += 1;
+					}
 				}
-				
-				if(model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
-					numAssignedValues += 1;
-				}
-				
 				
 				//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
 				else {
