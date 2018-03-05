@@ -18,19 +18,13 @@ public class WumpusWorldKB extends KB {
 
 		Symbol b11 = intern("B1,1");
 		Symbol b21 = intern("B2,1");
-		
-		Symbol p13 = intern("P1,3");
-		Symbol b12 = intern("B1,2");
 
 
 		add(new Negation(p11));
 		add(new Biconditional(b11, new Disjunction(p12, p21)));
 		add(new Biconditional(b21, new Disjunction(p12, new Disjunction(p22, p31))));
 		add(new Negation(b11));
-		
-		add(new Biconditional(b12, new Disjunction(p11, new Disjunction(p22, p13))));
-		add(new Negation(b12));
-		add(b21);
+	
 	}
 
 	public static void main(String[] argv) {

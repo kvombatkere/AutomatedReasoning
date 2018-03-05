@@ -16,13 +16,23 @@ public class HornClausesChecker implements TTModelChecking{
 		Symbol magical = HCkb.intern("Magical");
 		Symbol horned = HCkb.intern("Horned");
 		
-		System.out.println("Basic Model Checking/Propositional Entailment for Horn Clauses Problem\n");
+		System.out.println("Basic Model Checking and Propositional Inference for Horn Clauses Problem\n");
 		System.out.println("Displaying Knowledge Base:");
 		HCkb.dump();
 		
-		System.out.println("\nMythical: " + TTModelChecking.ttEntails(HCkb, mythical));
-		System.out.println("Magical: " + TTModelChecking.ttEntails(HCkb, magical));
-		System.out.println("Horned: " + TTModelChecking.ttEntails(HCkb, horned));		
+		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
+		
+		System.out.println("Mythical is entailed : " + TTModelChecking.ttEntails(HCkb, mythical));
+		System.out.println("Magical is entailed : " + TTModelChecking.ttEntails(HCkb, magical));
+		System.out.println("Horned is entailed : " + TTModelChecking.ttEntails(HCkb, horned));	
+		
+		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		
+		//Check kb entailment of mythical, magical, and horned using DPLL and proof by contradiction
+		System.out.println("Mythical can be proved : " + DPLL.proofByContradiction(HCkb, mythical));
+		System.out.println("Magical can be proved : " + DPLL.proofByContradiction(HCkb, magical));
+		System.out.println("Horned can be proved : " + DPLL.proofByContradiction(HCkb, horned));
+
 	}
 
 }

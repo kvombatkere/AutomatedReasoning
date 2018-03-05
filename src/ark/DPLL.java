@@ -2,6 +2,7 @@ package ark;
 
 import pl.core.Conjunction;
 import pl.core.Implication;
+import pl.core.KB;
 import pl.core.Model;
 import pl.core.Negation;
 import pl.core.Sentence;
@@ -20,6 +21,26 @@ import pl.cnf.Literal;
 import pl.cnf.Literal.Polarity;
 
 public interface DPLL {
+	
+	//use DPLL satisfiability and proof by contradiction to prove or disprove the sentence
+	//returns true if the sentence s is entailed, false o/w
+	public static Boolean proofByContradiction(KB kb, Sentence s) {
+		//convert knowledge base to a sentence
+		Sentence Skb = kb.getKBAsSentence();
+		
+		//check if conjunction of knowledge base and sentence is satisfiable
+		Boolean sSatisfiable = dpllSatisfiable(new Conjunction(Skb, s));
+		//check if conjunction of knowledge base and negation of sentence is satisfiable
+		Boolean convSatisfiable = dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
+		
+		//if satisfiability requires the input sentence, it must be true
+		if(sSatisfiable.booleanValue() && !convSatisfiable.booleanValue()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	//NOT CHECKED
 	//Check if sentence is satisfiable by calling dpll
@@ -163,7 +184,7 @@ public interface DPLL {
 				for(Literal l: cl) {
 
 					if(l.getContent() == sym && l.getPolarity() != lit.getPolarity()) {
-						System.out.println("nope");
+						//System.out.println("nope");
 						pure = false;
 						breakAgain = true;
 						break;

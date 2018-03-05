@@ -32,21 +32,20 @@ public class ModusPonensChecker implements TTModelChecking, DPLL{
 		
 		Sentence sentence = new Conjunction(new Implication(p,q), p);
 		
+		System.out.println("Basic Model Checking and Propositional Inference for Modus Ponens\n");
+		System.out.println("Displaying Knowledge Base:");
+		kb.dump();
+		
+		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
 		
 		//Check if kb entails q (should be true)
-		System.out.println(TTModelChecking.ttEntails(kb, q));
+		System.out.println("q is entailed : " + TTModelChecking.ttEntails(kb, q));
 		
-		//Check if kb entails not q (should be false)
-		System.out.println(TTModelChecking.ttEntails(kb, new Negation(q)));
 		
-		//Check if kb entails (p and (not q)) -> should be false
-		System.out.println(TTModelChecking.ttEntails(kb, new Conjunction(p,new Negation(q))));
+		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
 		
-		//Check if kb entails (p and q) -> should be true
-		System.out.println(TTModelChecking.ttEntails(kb, new Conjunction(p,q)));
-		
-		//Check kb entailment of q using dpll (should be true)
-		System.out.println(DPLL.dpllSatisfiable(new Conjunction(sentence, q)));
+		//Check kb entailment of q using DPLL and proof by contradiction
+		System.out.println("q can be proved : " + DPLL.proofByContradiction(kb, q));
 	}
 	
 

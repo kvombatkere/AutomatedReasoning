@@ -4,6 +4,8 @@
 
 package ark;
 
+import pl.core.Conjunction;
+import pl.core.Negation;
 import pl.core.Symbol;
 import pl.examples.WumpusWorldKB;
 
@@ -14,16 +16,19 @@ public class WumpusWorldChecker implements TTModelChecking{
 		WumpusWorldKB kb = new WumpusWorldKB();
 		
 		Symbol p12 = kb.intern("P1,2");
-		Symbol p31 = kb.intern("P3,1");
 	
-		System.out.println("Basic Model Checking/Propositional Entailment for Wumpus World Problem\n");
+		System.out.println("Basic Model Checking and Propositional Inference for Wumpus World Problem\n");
 		System.out.println("Displaying Knowledge Base:");
 		kb.dump();
 
+		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
 
-		System.out.println("\nPit in (1,2) Entailed: " + TTModelChecking.ttEntails(kb, p12));
-		System.out.println("Pit in (3,1) Entailed: " + TTModelChecking.ttEntails(kb, p31));
+		System.out.println("Pit in (1,2) Entailed : " + TTModelChecking.ttEntails(kb, p12));
 
+		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		
+		//Check kb entailment of p12 using DPLL and proof by contradiction
+		System.out.println("Pit in (1,2) can be proved : " + DPLL.proofByContradiction(kb, p12));
 
 	}
 	
