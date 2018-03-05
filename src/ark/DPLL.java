@@ -11,6 +11,7 @@ import pl.examples.ModusPonensKB;
 import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,7 @@ public interface DPLL {
 	
 	//use DPLL satisfiability and proof by contradiction to prove or disprove the sentence
 	//returns true if the sentence s is entailed, false o/w
-	public static Boolean proofByContradiction(KB kb, Sentence s) {
+	public static Boolean proofByContradiction(KB kb, Sentence s) {	
 		//convert knowledge base to a sentence
 		Sentence Skb = kb.getKBAsSentence();
 		
@@ -57,14 +58,14 @@ public interface DPLL {
 				}
 			}
 		}
-	//	System.out.println(symList);
+		
 		return dpll(clauses, symList, new Model());
 	}
 
 	//NOT CHECKED
 	//main DPLL algorithm
 	@SuppressWarnings("unused")
-	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
+	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model) {
 		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
 		
 		//if some clause in clauses is false in model then return false
@@ -86,9 +87,8 @@ public interface DPLL {
 		Literal pure = findPureSymbol(symbols, eliminateClauses(clauses, model), model);
 
 		if(pure != null) {
-			//reminder to check about cloning symbols
-			//System.out.println("pure symbol");
 			symbols.remove(pure.getContent());
+
 			Boolean value;
 			
 			//If literal is a negation, assign it false to make it true
@@ -108,7 +108,6 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
-		//System.out.println("Printing Symbols 1:" + symbols);
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
@@ -118,7 +117,7 @@ public interface DPLL {
 			
 			//reminder to check about cloning symbols
 			symbols.remove(unit.getContent());
-			//System.out.println("Printing Symbols:" + symbols);
+
 			Boolean value = null;
 			
 			//If literal is a negation, assign it false to make it true
@@ -170,12 +169,12 @@ public interface DPLL {
 	
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
-	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
 		
 		boolean breakAgain = false;
 		boolean pure = false;
 		//eliminateClauses currently not doing anything, just there as placeholder
-	//	Set<Clause> clauses = eliminateClauses(initClauses, model);
+		Set<Clause> clauses = eliminateClauses(initClauses, model);
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
 			
@@ -206,7 +205,7 @@ public interface DPLL {
 
 			}
 			if(pure) {
-				System.out.println("Found Pure Symbol: "+ lit);
+		//		System.out.println("Found Pure Symbol: "+ lit);
 				return lit;
 			}
 			
@@ -218,22 +217,24 @@ public interface DPLL {
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
 		//commented out because it causes a null pointer exception right now
 	//	Set<Clause> clauseClone = (Set<Clause>) Model.deepClone(clauses);
-//		Iterator<Clause> iterator = clauses.iterator();
-//		//right now do nothing, just placeholder
-//		while(iterator.hasNext()) {
-//			Clause cl = iterator.next();
-//			if(cl.isSatisfiedBy(model) != null)
-//				if (cl.isSatisfiedBy(model)) {
-//				iterator.remove();
-//			//	System.out.println("remove clause");
-//			}
-//		}
-		return clauses;
+		Set<Clause> reduced = new HashSet<Clause>();
+		reduced.addAll(clauses);
+		Iterator<Clause> iterator = reduced.iterator();
+		//right now do nothing, just placeholder
+		while(iterator.hasNext()) {
+			Clause cl = iterator.next(); 
+			if(cl.isSatisfiedBy(model) != null)
+				if (cl.isSatisfiedBy(model)) {
+				iterator.remove();
+			//	System.out.println("remove clause");
+			}
+		}
+		return reduced;
 	}
 	
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
+	//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
 		
 		Literal unitLiteral = null;
 		//System.out.println(clauses);
@@ -297,6 +298,7 @@ public interface DPLL {
 		return null;
 	}
 	
+
 	
 	public static void main(String[] args) {		
 		//testing to see if null pointer problem is fixed
@@ -339,5 +341,13 @@ public interface DPLL {
 		Literal lit2 = findUnitClause(symList, clauses, model);
 		System.out.println(symList);
 	//	System.out.println(lit);
+		System.out.println("---------------------------------------");
+		Set<Clause> testClauses = CNFConverter.convert(hckb.getKBAsSentence());
+		System.out.println(testClauses);
+		Model modelTest = new Model();
+		modelTest.assign(mythical, true);
+		Set<Clause> reduced = eliminateClauses(testClauses, modelTest);
+		System.out.println(reduced);
+		
 	}
 }
