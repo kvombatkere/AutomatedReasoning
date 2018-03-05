@@ -93,9 +93,9 @@ public class Literal {
      */
     //ARK: Modified to handle null assignments in model
     public Boolean isSatisfiedBy(Model model) {
-    	System.out.println("Literal.isSatisfiedBy: this=" + this);
-    	model.dump();
-    	System.out.println("  model says: " + model.get(content));
+//    	System.out.println("Literal.isSatisfiedBy: this=" + this);
+//    	model.dump();
+//    	System.out.println("  model says: " + model.get(content));
     	if(model.get(content) != null) {
     		if (polarity == Polarity.POSITIVE) {
     			return model.get(content);
