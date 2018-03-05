@@ -33,7 +33,6 @@ public interface DPLL {
 		//Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
 		//check if conjunction of knowledge base and negation of sentence is satisfiable
 		Boolean convSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
-		System.out.println(convSatisfiable);
 		
 		//if satisfiability requires the input sentence, it must be true
 		if(!convSatisfiable.booleanValue()) {
@@ -117,6 +116,7 @@ public interface DPLL {
 			
 			//reminder to check about cloning symbols
 			symbols.remove(unit.getContent());
+			//System.out.println(symbols);
 
 			Boolean value = null;
 			
@@ -251,7 +251,7 @@ public interface DPLL {
 			//if clause only has one literal, return that literal
 			if(numLiterals == 1) {
 				if(symbols.contains(clause.get(0))) {
-					System.out.println("Found Unit Clause: " + clause.get(0));
+					//System.out.println("Found Unit Clause: " + clause.get(0));
 					return clause.get(0);
 				}
 			}
@@ -288,7 +288,7 @@ public interface DPLL {
 				}
 				//After all literals have been checked, check if the clause is a unit clause
 				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
-					System.out.println("Found Unit Clause: " + unitLiteral);
+					//System.out.println("Found Unit Clause: " + unitLiteral);
 					return unitLiteral;
 				}	
 			}
