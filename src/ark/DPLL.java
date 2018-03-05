@@ -90,9 +90,9 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
-		Literal unit = findUnitClause(symbols, clauses, model);	
+	//	Literal unit = findUnitClause(symbols, clauses, model);	
 		
-		
+		Literal unit = null;
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -148,13 +148,13 @@ public interface DPLL {
 	
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
-	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
+	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
 		
 		
 		boolean breakAgain = false;
 		boolean pure = false;
 		//eliminateClauses currently not doing anything, just there as placeholder
-		Set<Clause> clauses = eliminateClauses(initClauses, model);
+	//	Set<Clause> clauses = eliminateClauses(initClauses, model);
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
 			
@@ -195,17 +195,18 @@ public interface DPLL {
 	//helper method for findPureSymbol to get rid of clauses that are already true
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
 		//commented out because it causes a null pointer exception right now
-		Iterator<Clause> iterator = clauses.iterator();
-		//right now do nothing, just placeholder
-		while(iterator.hasNext()) {
-			Clause cl = iterator.next();
-			if(cl.isSatisfiedBy(model) != null)
-				if (cl.isSatisfiedBy(model)) {
-				iterator.remove();
-			//	System.out.println("remove clause");
-			}
-		}
-		return clauses;
+		Set<Clause> clauseClone = (Set<Clause>) Model.deepClone(clauses);
+//		Iterator<Clause> iterator = clauseClone.iterator();
+//		//right now do nothing, just placeholder
+//		while(iterator.hasNext()) {
+//			Clause cl = iterator.next();
+//			if(cl.isSatisfiedBy(model) != null)
+//				if (cl.isSatisfiedBy(model)) {
+//				iterator.remove();
+//			//	System.out.println("remove clause");
+//			}
+//		}
+		return clauseClone;
 	}
 	
 	//method to find clauses with only one literal or clause with only one true literal 
@@ -229,13 +230,6 @@ public interface DPLL {
 			//Loop over all literals in a clause to check if it is a unit clause
 			for(Literal li: clause) {
 				Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
-<<<<<<< HEAD
-			//	System.out.println("Literal to check: " + symbolToCheck);
-			//	System.out.println("Literal Polarity: " + li.getPolarity());
-=======
-				//System.out.println("Literal to check: " + symbolToCheck);
-				//System.out.println("Literal Polarity: " + li.getPolarity());
->>>>>>> a8706e9e8dc9645e0632ee70bfad36b1ea64fcb5
 
 				//we have two cases that make a literal assigned false by the model
 				//case 1-> li has negative polarity and and symbolToCheck == true
@@ -257,11 +251,7 @@ public interface DPLL {
 					}	
 				}
 				
-<<<<<<< HEAD
-				
 
-=======
->>>>>>> a8706e9e8dc9645e0632ee70bfad36b1ea64fcb5
 			}
 			
 			//After all literals have been checked, check if the clause is a unit clause
