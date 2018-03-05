@@ -65,8 +65,8 @@ public interface DPLL {
 		Literal pure = findPureSymbol(symbols, clauses, model);
 
 		//TEMP FOR TESTING
-	//	pure = null;
-		
+		//pure = null;
+
 		if(pure != null) {
 			//reminder to check about cloning symbols
 			System.out.println("pure symbol");
@@ -114,7 +114,6 @@ public interface DPLL {
 			}
 			
 			Model modelCloneUnit = (Model) Model.deepClone(model);
-			
 			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelCloneUnit.assign(unit.getContent(), value));
 		}
 		
@@ -163,6 +162,7 @@ public interface DPLL {
 				for(Literal l: cl) {
 
 					if(l.getContent() == sym && l.getPolarity() != lit.getPolarity()) {
+						//System.out.println("nope");
 						pure = false;
 						breakAgain = true;
 						break;
@@ -210,8 +210,7 @@ public interface DPLL {
 	
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		System.out.println("FIND UNIT CLAUSE FUNCTION CALL:");//print when this method is called
-		
+		System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
 		Literal unitLiteral = null;
 
 		//Loop over all the clauses
@@ -230,8 +229,13 @@ public interface DPLL {
 			//Loop over all literals in a clause to check if it is a unit clause
 			for(Literal li: clause) {
 				Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
+<<<<<<< HEAD
 			//	System.out.println("Literal to check: " + symbolToCheck);
 			//	System.out.println("Literal Polarity: " + li.getPolarity());
+=======
+				//System.out.println("Literal to check: " + symbolToCheck);
+				//System.out.println("Literal Polarity: " + li.getPolarity());
+>>>>>>> a8706e9e8dc9645e0632ee70bfad36b1ea64fcb5
 
 				//we have two cases that make a literal assigned false by the model
 				//case 1-> li has negative polarity and and symbolToCheck == true
@@ -253,8 +257,11 @@ public interface DPLL {
 					}	
 				}
 				
+<<<<<<< HEAD
 				
 
+=======
+>>>>>>> a8706e9e8dc9645e0632ee70bfad36b1ea64fcb5
 			}
 			
 			//After all literals have been checked, check if the clause is a unit clause
