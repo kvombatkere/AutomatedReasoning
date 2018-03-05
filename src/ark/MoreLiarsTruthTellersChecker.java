@@ -28,6 +28,7 @@ public class MoreLiarsTruthTellersChecker implements TTModelChecking, DPLL {
 		kb.dump();
 		
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
+		final long TTstart = System.currentTimeMillis();
 
 		System.out.println("The following can be entailed");
 		System.out.println("Amy is a truth teller : " + TTModelChecking.ttEntails(kb, A));
@@ -43,7 +44,10 @@ public class MoreLiarsTruthTellersChecker implements TTModelChecking, DPLL {
 		System.out.println("Kay is a truth teller : " + TTModelChecking.ttEntails(kb, K));
 		System.out.println("Lee is a truth teller : " + TTModelChecking.ttEntails(kb, L));
 		
+		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
+		
 		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		final long DPLLstart = System.currentTimeMillis();
 		
 		//Check kb entailment of Amy, Bob, and Cal's truthfulness using DPLL and proof by contradiction
 		System.out.println("Amy can be proved truthful : " + DPLL.proofByContradiction(kb, A));
@@ -58,7 +62,8 @@ public class MoreLiarsTruthTellersChecker implements TTModelChecking, DPLL {
 		System.out.println("Jay can be proved truthful : " + DPLL.proofByContradiction(kb, J));
 		System.out.println("Kay can be proved truthful : " + DPLL.proofByContradiction(kb, K));
 		System.out.println("Lee can be proved truthful : " + DPLL.proofByContradiction(kb, L));
-
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
 				
 	}
 
