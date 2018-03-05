@@ -204,7 +204,6 @@ public interface DPLL {
 		return clauses;
 	}
 	
-	//IN PROGRESS
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
 		System.out.println("Unit Clause FUNCTION CALL:");//print when this method is called
