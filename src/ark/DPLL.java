@@ -24,8 +24,7 @@ public interface DPLL {
 	
 	//use DPLL satisfiability and proof by contradiction to prove or disprove the sentence
 	//returns true if the sentence s is entailed, false o/w
-	public static Boolean proofByContradiction(KB kb, Sentence s) {
-		
+	public static Boolean proofByContradiction(KB kb, Sentence s) {	
 		//convert knowledge base to a sentence
 		Sentence Skb = kb.getKBAsSentence();
 		
@@ -87,9 +86,7 @@ public interface DPLL {
 
 		if(pure != null) {
 			//reminder to check about cloning symbols
-			System.out.println("Before remove: "+symbols);
-			System.out.println(symbols.remove(pure.getContent()));
-			System.out.println("After remove: " +symbols);
+
 			Boolean value;
 			
 			//If literal is a negation, assign it false to make it true
@@ -109,27 +106,15 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
-<<<<<<< HEAD
-		
-	//	Literal unit = findUnitClause(symbols, clauses, model);	
-		
-		Literal unit = null;
-=======
+
 		Literal unit = findUnitClause(symbols, clauses, model);	
-		//System.out.println(unit);
-				
->>>>>>> dc060ff9208b895ff6ca2d3d6500b50572fd8480
+
+		unit = null;
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
-			System.out.println("Before remove: "+symbols);
-			System.out.println("WANT TO REMOVE: " +unit.getContent());
 			symbols.remove(unit.getContent());
-<<<<<<< HEAD
-			System.out.println("After remove: " +symbols);
-=======
-			//System.out.println("Printing Symbols:" + symbols);
->>>>>>> dc060ff9208b895ff6ca2d3d6500b50572fd8480
+
 			Boolean value = null;
 			
 			//If literal is a negation, assign it false to make it true
@@ -217,7 +202,7 @@ public interface DPLL {
 
 			}
 			if(pure) {
-				System.out.println("Found Pure Symbol: "+ lit);
+		//		System.out.println("Found Pure Symbol: "+ lit);
 				return lit;
 			}
 			
@@ -232,7 +217,7 @@ public interface DPLL {
 //		Iterator<Clause> iterator = clauses.iterator();
 //		//right now do nothing, just placeholder
 //		while(iterator.hasNext()) {
-//			Clause cl = iterator.next();
+//			Clause cl = iterator.next(); 
 //			if(cl.isSatisfiedBy(model) != null)
 //				if (cl.isSatisfiedBy(model)) {
 //				iterator.remove();
@@ -276,12 +261,12 @@ public interface DPLL {
 					
 					//increment the count for number of assigned literals if either of above cases is satisfied
 					if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
-						System.out.println("~" + symbolToCheck + " already assigned false by model");
+			//			System.out.println("~" + symbolToCheck + " already assigned false by model");
 						numAssignedValues += 1;
 					}
 					
 					else if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
-						System.out.println(symbolToCheck + " already assigned false by model");
+		//				System.out.println(symbolToCheck + " already assigned false by model");
 						numAssignedValues += 1;
 					}
 					
@@ -294,13 +279,13 @@ public interface DPLL {
 			}
 			//After all literals have been checked, check if the clause is a unit clause
 			if(numAssignedValues + 1 == numLiterals) {
-				System.out.println("Unit Clause found:" + unitLiteral);
+		//		System.out.println("Unit Clause found:" + unitLiteral);
 				return unitLiteral;
 			}
 			
 		}
 		//return null if can't find unit clause
-		System.out.println("No unit clause found");
+//		System.out.println("No unit clause found");
 		return null;
 	}
 	
