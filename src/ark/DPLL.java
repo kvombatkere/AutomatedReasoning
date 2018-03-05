@@ -33,7 +33,6 @@ public interface DPLL {
 		//Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
 		//check if conjunction of knowledge base and negation of sentence is satisfiable
 		Boolean convSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
-		System.out.println(convSatisfiable);
 		
 		//if satisfiability requires the input sentence, it must be true
 		if(!convSatisfiable.booleanValue()) {
@@ -251,7 +250,7 @@ public interface DPLL {
 			//if clause only has one literal, return that literal
 			if(numLiterals == 1) {
 				if(symbols.contains(clause.get(0))) {
-					System.out.println("Found Unit Clause: " + clause.get(0));
+					//System.out.println("Found Unit Clause: " + clause.get(0));
 					return clause.get(0);
 				}
 			}
@@ -288,7 +287,7 @@ public interface DPLL {
 				}
 				//After all literals have been checked, check if the clause is a unit clause
 				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
-					System.out.println("Found Unit Clause: " + unitLiteral);
+					//System.out.println("Found Unit Clause: " + unitLiteral);
 					return unitLiteral;
 				}	
 			}
@@ -301,11 +300,11 @@ public interface DPLL {
 
 	
 	public static void main(String[] args) {		
-		//testing to see if null pointer problem is fixed
-		WumpusWorldKB wkb = new WumpusWorldKB();
-		Symbol p12 = wkb.intern("P1,2");
-	//	wkb.dump();
-		System.out.println("Wumpus World ~Pit(1,2) DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), new Negation(p12))));
+//		//testing to see if null pointer problem is fixed
+//		WumpusWorldKB wkb = new WumpusWorldKB();
+//		Symbol p12 = wkb.intern("P1,2");
+//	//	wkb.dump();
+//		System.out.println("Wumpus World ~Pit(1,2) DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), new Negation(p12))));
 
 		//testing stuff
 		HornClausesKB hckb = new HornClausesKB();
@@ -320,34 +319,34 @@ public interface DPLL {
 		System.out.println("Horn Clauses ~Horned DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(sKB, new Negation(horned))));
 
 		
-		List<Symbol> symList = new ArrayList<Symbol>();
-		Set<Clause> clauses = CNFConverter.convert(sKB);
-
-		for(Clause cl: clauses){
-			for(Literal lit: cl) {
-				if(!symList.contains(lit.getContent())) {
-				symList.add(lit.getContent());
-				}
-			}
-		}
-		Symbol mammal = hckb.intern("Mammal");
-		
-		Model model = new Model();
-		model.set(mammal, true);
-		model.set(mythical, true);
-		System.out.println(clauses);
-		Literal lit = findPureSymbol(symList, clauses, model);
-		
-		Literal lit2 = findUnitClause(symList, clauses, model);
-		System.out.println(symList);
-	//	System.out.println(lit);
-		System.out.println("---------------------------------------");
-		Set<Clause> testClauses = CNFConverter.convert(hckb.getKBAsSentence());
-		System.out.println(testClauses);
-		Model modelTest = new Model();
-		modelTest.assign(mythical, true);
-		Set<Clause> reduced = eliminateClauses(testClauses, modelTest);
-		System.out.println(reduced);
+//		List<Symbol> symList = new ArrayList<Symbol>();
+//		Set<Clause> clauses = CNFConverter.convert(sKB);
+//
+//		for(Clause cl: clauses){
+//			for(Literal lit: cl) {
+//				if(!symList.contains(lit.getContent())) {
+//				symList.add(lit.getContent());
+//				}
+//			}
+//		}
+//		Symbol mammal = hckb.intern("Mammal");
+//		
+//		Model model = new Model();
+//		model.set(mammal, true);
+//		model.set(mythical, true);
+//		System.out.println(clauses);
+//		Literal lit = findPureSymbol(symList, clauses, model);
+//		
+//		Literal lit2 = findUnitClause(symList, clauses, model);
+//		System.out.println(symList);
+//	//	System.out.println(lit);
+//		System.out.println("---------------------------------------");
+//		Set<Clause> testClauses = CNFConverter.convert(hckb.getKBAsSentence());
+//		System.out.println(testClauses);
+//		Model modelTest = new Model();
+//		modelTest.assign(mythical, true);
+//		Set<Clause> reduced = eliminateClauses(testClauses, modelTest);
+//		System.out.println(reduced);
 		
 	}
 }

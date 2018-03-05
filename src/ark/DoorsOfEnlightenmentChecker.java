@@ -32,6 +32,17 @@ public class DoorsOfEnlightenmentChecker {
 		
 		System.out.println("Displaying Knowledge Base:");
 		kb.dump();
+		
+		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		final long DPLLstart = System.currentTimeMillis();
+		
+		//Check kb entailment of door status using DPLL and proof by contradiction
+		System.out.println("X leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, X));
+		System.out.println("Y leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, Y));
+		System.out.println("Z leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, Z));
+		System.out.println("W leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, W));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
 				
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
 		final long TTstart = System.currentTimeMillis();
@@ -53,16 +64,6 @@ public class DoorsOfEnlightenmentChecker {
 		System.out.println("G: " + TTModelChecking.ttEntails(kb, G));
 		System.out.println("H: " + TTModelChecking.ttEntails(kb, H));*/
 		
-		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
-		final long DPLLstart = System.currentTimeMillis();
-		
-		//Check kb entailment of door status using DPLL and proof by contradiction
-		System.out.println("X leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, X));
-		System.out.println("Y leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, Y));
-		System.out.println("Z leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, Z));
-		System.out.println("W leads to the Inner Sanctum : " + DPLL.proofByContradiction(kb, W));
-		
-		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
 		
 		//Part B
 		System.out.println("\nLiu's Problem:");
@@ -86,6 +87,17 @@ public class DoorsOfEnlightenmentChecker {
 		System.out.println("Displaying Knowledge Base:");
 		Liukb.dump();
 		
+		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		final long DPLLstartLiu = System.currentTimeMillis();
+		
+		//Check kb entailment of door status using DPLL and proof by contradiction
+		System.out.println("X leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuX));
+		System.out.println("Y leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuY));
+		System.out.println("Z leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuZ));
+		System.out.println("W leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuW));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstartLiu) + " ms");
+		
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
 		final long TTstartLiu = System.currentTimeMillis();
 
@@ -106,15 +118,5 @@ public class DoorsOfEnlightenmentChecker {
 		System.out.println("G: " + TTModelChecking.ttEntails(Liukb, LiuG));
 		System.out.println("H: " + TTModelChecking.ttEntails(Liukb, LiuH));*/
 		
-		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
-		final long DPLLstartLiu = System.currentTimeMillis();
-		
-		//Check kb entailment of door status using DPLL and proof by contradiction
-		System.out.println("X leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuX));
-		System.out.println("Y leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuY));
-		System.out.println("Z leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuZ));
-		System.out.println("W leads to the Inner Sanctum : " + DPLL.proofByContradiction(Liukb, LiuW));
-		
-		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstartLiu) + " ms");
 	}
 }
