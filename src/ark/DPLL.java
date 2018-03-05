@@ -29,10 +29,10 @@ public interface DPLL {
 		Sentence Skb = kb.getKBAsSentence();
 		
 		//check if conjunction of knowledge base and sentence is satisfiable
-		Boolean sSatisfiable = dpllSatisfiable(new Conjunction(Skb, s));
+		Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
 		//check if conjunction of knowledge base and negation of sentence is satisfiable
-		Boolean convSatisfiable = dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
-		
+		Boolean convSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
+
 		//if satisfiability requires the input sentence, it must be true
 		if(sSatisfiable.booleanValue() && !convSatisfiable.booleanValue()) {
 			return true;
@@ -107,6 +107,8 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
+		//System.out.println("Printing Symbols 1:" + symbols);
+
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
 		
@@ -232,7 +234,8 @@ public interface DPLL {
 		//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
 		
 		Literal unitLiteral = null;
-
+		//System.out.println(clauses);
+		//System.out.println("Assignments: " +model.getAss() + ", Symbols: " +  symbols);
 		//Loop over all the clauses
 		for(Clause clause: clauses) {
 			//count to keep track of number of assigned values in clause
@@ -255,32 +258,32 @@ public interface DPLL {
 				for(Literal li: clause) {
 					Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
 					
-					//Check if the symbol to be checked is in the symbol list
-					if(symbols.contains(symbolToCheck)) {
 						//we have two cases that make a literal assigned false by the model
 						//case 1-> li has negative polarity and and symbolToCheck == true
 						//case 2-> li has positive polarity and symbolToCheck == false
 						
 						//increment the count for number of assigned literals if either of above cases is satisfied
 						if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
-							System.out.println("~" + symbolToCheck + " already assigned false by model");
+							//System.out.println("~" + symbolToCheck + " already assigned false by model");
 							numAssignedValues += 1;
 						}
 						
 						else if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
-							System.out.println(symbolToCheck + " already assigned false by model");
+							//System.out.println(symbolToCheck + " already assigned false by model");
 							numAssignedValues += 1;
 						}
 						
 						//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
 						else {
-							unitLiteral = li;
+							//Check if the symbol to be checked is in the symbol list before assigning (prevent stack overflow)
+							if(symbols.contains(symbolToCheck)) {
+								unitLiteral = li;
+							}
 						}	
-					}
 	
 				}
 				//After all literals have been checked, check if the clause is a unit clause
-				if(numAssignedValues + 1 == numLiterals) {
+				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
 					System.out.println("Found Unit Clause: " + unitLiteral);
 					return unitLiteral;
 				}	
@@ -297,20 +300,23 @@ public interface DPLL {
 		WumpusWorldKB wkb = new WumpusWorldKB();
 		Symbol p12 = wkb.intern("P1,2");
 	//	wkb.dump();
-		System.out.println("Wumpus World Pit(1,2) DPLL Satisiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), p12)));
+		System.out.println("Wumpus World ~Pit(1,2) DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), new Negation(p12))));
 
 		//testing stuff
-		HornClausesKB kb = new HornClausesKB();
+		HornClausesKB hckb = new HornClausesKB();
 	
+		Symbol mythical = hckb.intern("Mythical");
+		Symbol magical = hckb.intern("Magical");
+		Symbol horned = hckb.intern("Horned");
+		
+		Sentence sKB = hckb.getKBAsSentence();
+		System.out.println("Horn Clauses ~Mythical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(sKB, new Negation(mythical))));
+		System.out.println("Horn Clauses ~Magical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(sKB, new Negation(magical))));
+		System.out.println("Horn Clauses ~Horned DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(sKB, new Negation(horned))));
+
 		
 		List<Symbol> symList = new ArrayList<Symbol>();
-		Symbol mythical = kb.intern("Mythical");
-		Symbol magical = kb.intern("Magical");
-
-		Sentence s = kb.getKBAsSentence();
-		Set<Clause> clauses = CNFConverter.convert(s);
-		System.out.println("Horn Clauses Mythical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(mythical))));
-		System.out.println("Horn Clauses Magical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(magical))));
+		Set<Clause> clauses = CNFConverter.convert(sKB);
 
 		for(Clause cl: clauses){
 			for(Literal lit: cl) {
@@ -319,7 +325,7 @@ public interface DPLL {
 				}
 			}
 		}
-		Symbol mammal = kb.intern("Mammal");
+		Symbol mammal = hckb.intern("Mammal");
 		
 		Model model = new Model();
 		model.set(mammal, true);
