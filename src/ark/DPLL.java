@@ -11,6 +11,7 @@ import pl.examples.ModusPonensKB;
 import pl.examples.WumpusWorldKB;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -24,15 +25,15 @@ public interface DPLL {
 	
 	//use DPLL satisfiability and proof by contradiction to prove or disprove the sentence
 	//returns true if the sentence s is entailed, false o/w
-	public static Boolean proofByContradiction(KB kb, Sentence s) {
+	public static Boolean proofByContradiction(KB kb, Sentence s) {	
 		//convert knowledge base to a sentence
 		Sentence Skb = kb.getKBAsSentence();
 		
 		//check if conjunction of knowledge base and sentence is satisfiable
-		Boolean sSatisfiable = dpllSatisfiable(new Conjunction(Skb, s));
+		Boolean sSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, s));
 		//check if conjunction of knowledge base and negation of sentence is satisfiable
-		Boolean convSatisfiable = dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
-		
+		Boolean convSatisfiable = DPLL.dpllSatisfiable(new Conjunction(Skb, new Negation(s)));
+
 		//if satisfiability requires the input sentence, it must be true
 		if(sSatisfiable.booleanValue() && !convSatisfiable.booleanValue()) {
 			return true;
@@ -56,14 +57,14 @@ public interface DPLL {
 				}
 			}
 		}
-	//	System.out.println(symList);
+		
 		return dpll(clauses, symList, new Model());
 	}
 
 	//NOT CHECKED
 	//main DPLL algorithm
 	@SuppressWarnings("unused")
-	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model ) {
+	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model) {
 		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
 		
 		//if some clause in clauses is false in model then return false
@@ -85,9 +86,8 @@ public interface DPLL {
 		Literal pure = findPureSymbol(symbols, eliminateClauses(clauses, model), model);
 
 		if(pure != null) {
-			//reminder to check about cloning symbols
-			System.out.println("pure symbol");
 			symbols.remove(pure.getContent());
+
 			Boolean value;
 			
 			//If literal is a negation, assign it false to make it true
@@ -107,14 +107,16 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
+
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
-		unit = null;
+		//unit = null;
+
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
 			symbols.remove(unit.getContent());
-			//System.out.println("Printing Symbols:" + symbols);
+
 			Boolean value = null;
 			
 			//If literal is a negation, assign it false to make it true
@@ -166,12 +168,12 @@ public interface DPLL {
 	
 	//IN PROGRESS
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
-	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> clauses, Model model) {
+	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
 		
 		boolean breakAgain = false;
 		boolean pure = false;
 		//eliminateClauses currently not doing anything, just there as placeholder
-	//	Set<Clause> clauses = eliminateClauses(initClauses, model);
+		Set<Clause> clauses = eliminateClauses(initClauses, model);
 		for (Symbol sym: symbols) {
 			Literal lit = new Literal(sym);
 			
@@ -202,7 +204,7 @@ public interface DPLL {
 
 			}
 			if(pure) {
-				System.out.println("Found Pure Symbol: "+ lit);
+		//		System.out.println("Found Pure Symbol: "+ lit);
 				return lit;
 			}
 			
@@ -214,25 +216,28 @@ public interface DPLL {
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
 		//commented out because it causes a null pointer exception right now
 	//	Set<Clause> clauseClone = (Set<Clause>) Model.deepClone(clauses);
-//		Iterator<Clause> iterator = clauses.iterator();
-//		//right now do nothing, just placeholder
-//		while(iterator.hasNext()) {
-//			Clause cl = iterator.next();
-//			if(cl.isSatisfiedBy(model) != null)
-//				if (cl.isSatisfiedBy(model)) {
-//				iterator.remove();
-//			//	System.out.println("remove clause");
-//			}
-//		}
-		return clauses;
+		Set<Clause> reduced = new HashSet<Clause>();
+		reduced.addAll(clauses);
+		Iterator<Clause> iterator = reduced.iterator();
+		//right now do nothing, just placeholder
+		while(iterator.hasNext()) {
+			Clause cl = iterator.next(); 
+			if(cl.isSatisfiedBy(model) != null)
+				if (cl.isSatisfiedBy(model)) {
+				iterator.remove();
+			//	System.out.println("remove clause");
+			}
+		}
+		return reduced;
 	}
 	
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-		//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
+	//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
 		
 		Literal unitLiteral = null;
-
+		//System.out.println(clauses);
+		//System.out.println("Assignments: " +model.getAss() + ", Symbols: " +  symbols);
 		//Loop over all the clauses
 		for(Clause clause: clauses) {
 			//count to keep track of number of assigned values in clause
@@ -249,66 +254,72 @@ public interface DPLL {
 				}
 			}
 			
-			//Loop over all literals in a clause to check if it is a unit clause
-			for(Literal li: clause) {
-				Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
-				
-				//Check if the symbol to be checked is in the symbol list
-				if(symbols.contains(symbolToCheck)) {
-					//we have two cases that make a literal assigned false by the model
-					//case 1-> li has negative polarity and and symbolToCheck == true
-					//case 2-> li has positive polarity and symbolToCheck == false
+			//If the clause is not a unit clause
+			else {
+				//Loop over all literals in a clause to check if it is a unit clause
+				for(Literal li: clause) {
+					Symbol symbolToCheck = li.getContent(); //the literal we want to check in the model
 					
-					//increment the count for number of assigned literals if either of above cases is satisfied
-					if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
-						System.out.println("~" + symbolToCheck + " already assigned false by model");
-						numAssignedValues += 1;
-					}
-					
-					else if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
-						System.out.println(symbolToCheck + " already assigned false by model");
-						numAssignedValues += 1;
-					}
-					
-					//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
-					else {
-						unitLiteral = li;
-					}	
+						//we have two cases that make a literal assigned false by the model
+						//case 1-> li has negative polarity and and symbolToCheck == true
+						//case 2-> li has positive polarity and symbolToCheck == false
+						
+						//increment the count for number of assigned literals if either of above cases is satisfied
+						if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
+							//System.out.println("~" + symbolToCheck + " already assigned false by model");
+							numAssignedValues += 1;
+						}
+						
+						else if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
+							//System.out.println(symbolToCheck + " already assigned false by model");
+							numAssignedValues += 1;
+						}
+						
+						//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
+						else {
+							//Check if the symbol to be checked is in the symbol list before assigning (prevent stack overflow)
+							if(symbols.contains(symbolToCheck)) {
+								unitLiteral = li;
+							}
+						}	
+	
 				}
-
+				//After all literals have been checked, check if the clause is a unit clause
+				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
+					System.out.println("Found Unit Clause: " + unitLiteral);
+					return unitLiteral;
+				}	
 			}
-			//After all literals have been checked, check if the clause is a unit clause
-			if(numAssignedValues + 1 == numLiterals) {
-				System.out.println("Unit Clause found:" + unitLiteral);
-				return unitLiteral;
-			}
-			
 		}
 		//return null if can't find unit clause
-		System.out.println("No unit clause found");
+		//System.out.println("No unit clause found");
 		return null;
 	}
 	
+
 	
 	public static void main(String[] args) {		
 		//testing to see if null pointer problem is fixed
 		WumpusWorldKB wkb = new WumpusWorldKB();
 		Symbol p12 = wkb.intern("P1,2");
 	//	wkb.dump();
-		System.out.println("Wumpus World Pit(1,2) DPLL Satisiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), p12)));
+		System.out.println("Wumpus World ~Pit(1,2) DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), new Negation(p12))));
 
 		//testing stuff
-		HornClausesKB kb = new HornClausesKB();
+		HornClausesKB hckb = new HornClausesKB();
 	
+		Symbol mythical = hckb.intern("Mythical");
+		Symbol magical = hckb.intern("Magical");
+		Symbol horned = hckb.intern("Horned");
+		
+		Sentence sKB = hckb.getKBAsSentence();
+		System.out.println("Horn Clauses ~Mythical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(sKB, new Negation(mythical))));
+		System.out.println("Horn Clauses ~Magical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(sKB, new Negation(magical))));
+		System.out.println("Horn Clauses ~Horned DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(sKB, new Negation(horned))));
+
 		
 		List<Symbol> symList = new ArrayList<Symbol>();
-		Symbol mythical = kb.intern("Mythical");
-		Symbol magical = kb.intern("Magical");
-
-		Sentence s = kb.getKBAsSentence();
-		Set<Clause> clauses = CNFConverter.convert(s);
-		System.out.println("Horn Clauses Mythical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(mythical))));
-		System.out.println("Horn Clauses Magical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(magical))));
+		Set<Clause> clauses = CNFConverter.convert(sKB);
 
 		for(Clause cl: clauses){
 			for(Literal lit: cl) {
@@ -317,7 +328,7 @@ public interface DPLL {
 				}
 			}
 		}
-		Symbol mammal = kb.intern("Mammal");
+		Symbol mammal = hckb.intern("Mammal");
 		
 		Model model = new Model();
 		model.set(mammal, true);
@@ -327,5 +338,13 @@ public interface DPLL {
 		Literal lit2 = findUnitClause(symList, clauses, model);
 		System.out.println(symList);
 	//	System.out.println(lit);
+		System.out.println("---------------------------------------");
+		Set<Clause> testClauses = CNFConverter.convert(hckb.getKBAsSentence());
+		System.out.println(testClauses);
+		Model modelTest = new Model();
+		modelTest.assign(mythical, true);
+		Set<Clause> reduced = eliminateClauses(testClauses, modelTest);
+		System.out.println(reduced);
+		
 	}
 }

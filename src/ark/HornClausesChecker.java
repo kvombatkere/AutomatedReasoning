@@ -6,7 +6,7 @@ package ark;
 
 import pl.core.*;
 
-public class HornClausesChecker implements TTModelChecking{
+public class HornClausesChecker implements TTModelChecking, DPLL{
 
 	public static void main(String[] args) {
 		HornClausesKB HCkb = new HornClausesKB();
