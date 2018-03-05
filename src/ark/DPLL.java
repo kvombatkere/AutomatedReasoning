@@ -116,6 +116,7 @@ public interface DPLL {
 			
 			//reminder to check about cloning symbols
 			symbols.remove(unit.getContent());
+			//System.out.println(symbols);
 
 			Boolean value = null;
 			
