@@ -86,8 +86,13 @@ public interface DPLL {
 		Literal pure = findPureSymbol(symbols, eliminateClauses(clauses, model), model);
 
 		if(pure != null) {
+<<<<<<< HEAD
 
 	//		System.out.println("pure symbol: "+pure);
+=======
+			//reminder to check about cloning symbols
+			//System.out.println("pure symbol");
+>>>>>>> 30c113e3079ae2591b3f03fc9c1bd6b5c33b9e5d
 			symbols.remove(pure.getContent());
 
 			Boolean value;
@@ -109,12 +114,20 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
+<<<<<<< HEAD
 
+=======
+		//System.out.println("Printing Symbols 1:" + symbols);
+>>>>>>> 30c113e3079ae2591b3f03fc9c1bd6b5c33b9e5d
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
 		unit = null;
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 30c113e3079ae2591b3f03fc9c1bd6b5c33b9e5d
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -289,7 +302,11 @@ public interface DPLL {
 				}
 				//After all literals have been checked, check if the clause is a unit clause
 				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
+<<<<<<< HEAD
 			//		System.out.println("Found Unit Clause: " + unitLiteral);
+=======
+					System.out.println("Found Unit Clause: " + unitLiteral);
+>>>>>>> 30c113e3079ae2591b3f03fc9c1bd6b5c33b9e5d
 					return unitLiteral;
 				}	
 			}
