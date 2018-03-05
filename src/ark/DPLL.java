@@ -69,6 +69,7 @@ public interface DPLL {
 		
 		if(pure != null) {
 			//reminder to check about cloning symbols
+			System.out.println("pure symbol");
 			symbols.remove(pure.getContent());
 			Boolean value;
 			
@@ -91,12 +92,6 @@ public interface DPLL {
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 
-		//TEMP FOR TESTING
-<<<<<<< HEAD
-		//Literal unit = null;
-=======
-		unit = null;
->>>>>>> 53e941f34315b62fdef1b6fe6fb665147a3c2bd2
 		
 		if(unit != null) {
 			
@@ -115,6 +110,7 @@ public interface DPLL {
 			//this should never happen (i chose true randomly), but wanted to include both polarity options for readability
 			else {
 				value = true;
+				System.out.println("uh oh");
 			}
 			
 			Model modelCloneUnit = (Model) Model.deepClone(model);
@@ -199,21 +195,23 @@ public interface DPLL {
 	//helper method for findPureSymbol to get rid of clauses that are already true
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
 		//commented out because it causes a null pointer exception right now
-//		Iterator<Clause> iterator = clauses.iterator();
-//		//right now do nothing, just placeholder
-//		while(iterator.hasNext()) {
-//			Clause cl = iterator.next();
-//			if(cl.isSatisfiedBy(model) != null && cl.isSatisfiedBy(model)) {
-//				iterator.remove();
-//			}
-//		}
+		Iterator<Clause> iterator = clauses.iterator();
+		//right now do nothing, just placeholder
+		while(iterator.hasNext()) {
+			Clause cl = iterator.next();
+			if(cl.isSatisfiedBy(model) != null)
+				if (cl.isSatisfiedBy(model)) {
+				iterator.remove();
+			//	System.out.println("remove clause");
+			}
+		}
 		return clauses;
 	}
 	
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
 		System.out.println("FIND UNIT CLAUSE FUNCTION CALL:");//print when this method is called
-
+		
 		Literal unitLiteral = null;
 
 		//Loop over all the clauses
@@ -264,6 +262,7 @@ public interface DPLL {
 			
 		}
 		//return null if can't find unit clause
+		System.out.println("no unit clause found");
 		return null;
 	}
 	
