@@ -150,7 +150,6 @@ public interface DPLL {
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
 	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
 		
-		
 		boolean breakAgain = false;
 		boolean pure = false;
 		//eliminateClauses currently not doing anything, just there as placeholder
@@ -211,6 +210,7 @@ public interface DPLL {
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
 		System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
+		
 		Literal unitLiteral = null;
 
 		//Loop over all the clauses
@@ -220,6 +220,7 @@ public interface DPLL {
 			
 			//Get the total number of literals in the clause
 			int numLiterals = clause.size();
+			System.out.println("Number of Literals to check: " + numLiterals);
 			
 			//if clause only has one literal, return that literal
 			if(numLiterals == 1) {
@@ -237,23 +238,21 @@ public interface DPLL {
 				//case 2-> li has positive polarity and symbolToCheck == false
 				
 				//increment the count for number of assigned literals if either of above cases is satisfied
-				if(model.get(symbolToCheck)!= null) {
-					if(model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
-						numAssignedValues += 1;
-					}
-					
-					if(model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
-						numAssignedValues += 1;
-					}
-					
-					//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
-					else {
-						unitLiteral = li;
-					}	
+				if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == true && li.getPolarity() == Polarity.NEGATIVE) {
+					System.out.println("~" + symbolToCheck + " already assigned false by model");
+					numAssignedValues += 1;
 				}
 				
+				else if(model.get(symbolToCheck)!= null && model.get(symbolToCheck) == false && li.getPolarity() == Polarity.POSITIVE) {
+					System.out.println(symbolToCheck + " already assigned false by model");
+					numAssignedValues += 1;
+				}
+				
+				//If neither of the above cases are satisfied, then the particular literal is a contender for being a unit clause
+				else {
+					unitLiteral = li;
+				}	
 			}
-			
 			//After all literals have been checked, check if the clause is a unit clause
 			if(numAssignedValues + 1 == numLiterals) {
 				System.out.println("Unit Clause found:" + unitLiteral);
@@ -262,14 +261,12 @@ public interface DPLL {
 			
 		}
 		//return null if can't find unit clause
-		System.out.println("no unit clause found");
+		System.out.println("No unit clause found");
 		return null;
 	}
 	
 	
-	public static void main(String[] args) {
-		
-		
+	public static void main(String[] args) {		
 		//testing to see if null pointer problem is fixed
 		WumpusWorldKB wkb = new WumpusWorldKB();
 		Symbol p12 = wkb.intern("P1,2");
@@ -300,6 +297,7 @@ public interface DPLL {
 		model.set(mammal, true);
 		System.out.println(clauses);
 		Literal lit = findPureSymbol(symList, clauses, model);
+		Literal lit2 = findUnitClause(symList, clauses, model);
 		System.out.println(symList);
 	//	System.out.println(lit);
 	}
