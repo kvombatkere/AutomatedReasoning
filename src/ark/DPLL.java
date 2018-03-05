@@ -109,7 +109,7 @@ public interface DPLL {
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
-				
+		unit = null;
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
