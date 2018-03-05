@@ -1,8 +1,12 @@
 package ark;
 
+<<<<<<< HEAD
 import pl.core.Biconditional;
 import pl.core.Conjunction;
 import pl.core.Disjunction;
+=======
+import pl.core.Conjunction;
+>>>>>>> 0a68406599d4a0a66a03f3233c35521a431df06f
 import pl.core.Implication;
 import pl.core.Model;
 import pl.core.Negation;
@@ -96,10 +100,17 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
+<<<<<<< HEAD
 	//	Literal unit = findUnitClause(symbols, clauses, model);	
 
 		//TEMP FOR TESTING
 		Literal	unit = null;
+=======
+		//Literal unit = findUnitClause(symbols, clauses, model);	
+
+		//TEMP FOR TESTING
+		Literal unit = null;
+>>>>>>> 0a68406599d4a0a66a03f3233c35521a431df06f
 		
 		if(unit != null) {
 			
@@ -276,16 +287,42 @@ public interface DPLL {
 		
 		
 		//testing to see if null pointer problem is fixed
+<<<<<<< HEAD
 //		WumpusWorldKB wkb = new WumpusWorldKB();
 //		Symbol p12 = wkb.intern("P1,2");
 //		wkb.add(p12);
 //		wkb.dump();
 //		System.out.println("DPLL Satisiable = " + DPLL.dpllSatisfiable(wkb.getKBAsSentence()));
+=======
+		WumpusWorldKB wkb = new WumpusWorldKB();
+		Symbol p12 = wkb.intern("P1,2");
+		wkb.dump();
+		System.out.println("Wumpus World Pit(1,2) DPLL Satisiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), p12)));
+>>>>>>> 0a68406599d4a0a66a03f3233c35521a431df06f
 
-		
 		//testing stuff
 		HornClausesKB kb = new HornClausesKB();
+<<<<<<< HEAD
 		
+=======
+		Sentence s = kb.getKBAsSentence();
+		Set<Clause> clauses = CNFConverter.convert(s);
+		List<Symbol> symList = new ArrayList<Symbol>();
+		Symbol mythical = kb.intern("Mythical");
+		Symbol magical = kb.intern("Magical");
+		
+		System.out.println("Horn Clauses Mythical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(mythical))));
+		System.out.println("Horn Clauses Magical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(magical))));
+
+		for(Clause cl: clauses){
+			for(Literal lit: cl) {
+				if(!symList.contains(lit.getContent())) {
+				symList.add(lit.getContent());
+				}
+			}
+		}
+		Symbol mammal = kb.intern("Mammal");
+>>>>>>> 0a68406599d4a0a66a03f3233c35521a431df06f
 		
 		
 //		List<Symbol> symList = new ArrayList<Symbol>();
