@@ -22,13 +22,19 @@ public class WumpusWorldChecker implements TTModelChecking{
 		kb.dump();
 
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
+		final long TTstart = System.currentTimeMillis();
 
 		System.out.println("Pit in (1,2) Entailed : " + TTModelChecking.ttEntails(kb, p12));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
 
 		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		final long DPLLstart = System.currentTimeMillis();
 		
 		//Check kb entailment of p12 using DPLL and proof by contradiction
 		System.out.println("Pit in (1,2) can be proved : " + DPLL.proofByContradiction(kb, p12));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
 
 	}
 	

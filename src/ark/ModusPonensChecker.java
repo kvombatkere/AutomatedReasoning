@@ -37,15 +37,20 @@ public class ModusPonensChecker implements TTModelChecking, DPLL{
 		kb.dump();
 		
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
+		final long TTstart = System.currentTimeMillis();
 		
 		//Check if kb entails q (should be true)
 		System.out.println("q is entailed : " + TTModelChecking.ttEntails(kb, q));
 		
+		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
 		
 		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
-		
+		final long DPLLstart = System.currentTimeMillis();
+
 		//Check kb entailment of q using DPLL and proof by contradiction
 		System.out.println("q can be proved : " + DPLL.proofByContradiction(kb, q));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
 	}
 	
 

@@ -21,17 +21,23 @@ public class HornClausesChecker implements TTModelChecking{
 		HCkb.dump();
 		
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
+		final long TTstart = System.currentTimeMillis();
 		
 		System.out.println("Mythical is entailed : " + TTModelChecking.ttEntails(HCkb, mythical));
 		System.out.println("Magical is entailed : " + TTModelChecking.ttEntails(HCkb, magical));
-		System.out.println("Horned is entailed : " + TTModelChecking.ttEntails(HCkb, horned));	
+		System.out.println("Horned is entailed : " + TTModelChecking.ttEntails(HCkb, horned));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
 		
 		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		final long DPLLstart = System.currentTimeMillis();
 		
 		//Check kb entailment of mythical, magical, and horned using DPLL and proof by contradiction
 		System.out.println("Mythical can be proved : " + DPLL.proofByContradiction(HCkb, mythical));
 		System.out.println("Magical can be proved : " + DPLL.proofByContradiction(HCkb, magical));
 		System.out.println("Horned can be proved : " + DPLL.proofByContradiction(HCkb, horned));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
 
 	}
 
