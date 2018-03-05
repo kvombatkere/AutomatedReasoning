@@ -66,9 +66,10 @@ public interface DPLL {
 
 		//TEMP FOR TESTING
 		//pure = null;
-		
+
 		if(pure != null) {
 			//reminder to check about cloning symbols
+			System.out.println("pure symbol");
 			symbols.remove(pure.getContent());
 			Boolean value;
 			
@@ -91,8 +92,6 @@ public interface DPLL {
 		//Unit Propagation
 		Literal unit = findUnitClause(symbols, clauses, model);	
 
-		//TEMP FOR TESTING
-		unit = null;
 		
 		if(unit != null) {
 			
@@ -111,6 +110,7 @@ public interface DPLL {
 			//this should never happen (i chose true randomly), but wanted to include both polarity options for readability
 			else {
 				value = true;
+				System.out.println("uh oh");
 			}
 			
 			Model modelCloneUnit = (Model) Model.deepClone(model);
@@ -150,7 +150,7 @@ public interface DPLL {
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
 	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
 		
-		Polarity val = null;
+		
 		boolean breakAgain = false;
 		boolean pure = false;
 		//eliminateClauses currently not doing anything, just there as placeholder
@@ -184,6 +184,7 @@ public interface DPLL {
 
 			}
 			if(pure) {
+				System.out.println("Found Pure Symbol: "+ lit);
 				return lit;
 			}
 			
@@ -193,15 +194,17 @@ public interface DPLL {
 	
 	//helper method for findPureSymbol to get rid of clauses that are already true
 	public static Set<Clause> eliminateClauses(Set<Clause> clauses, Model model){
-		//commented out because it causes a null pointer exception righ now
-//		Iterator<Clause> iterator = clauses.iterator();
-//		//right now do nothing, just placeholder
-//		while(iterator.hasNext()) {
-//			Clause cl = iterator.next();
-//			if(cl.isSatisfiedBy(model)) {
-//				iterator.remove();
-//			}
-//		}
+		//commented out because it causes a null pointer exception right now
+		Iterator<Clause> iterator = clauses.iterator();
+		//right now do nothing, just placeholder
+		while(iterator.hasNext()) {
+			Clause cl = iterator.next();
+			if(cl.isSatisfiedBy(model) != null)
+				if (cl.isSatisfiedBy(model)) {
+				iterator.remove();
+			//	System.out.println("remove clause");
+			}
+		}
 		return clauses;
 	}
 	
@@ -259,6 +262,7 @@ public interface DPLL {
 			
 		}
 		//return null if can't find unit clause
+		System.out.println("no unit clause found");
 		return null;
 	}
 	
