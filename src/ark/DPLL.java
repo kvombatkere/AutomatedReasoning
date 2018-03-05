@@ -1,5 +1,7 @@
 package ark;
 
+import pl.core.Conjunction;
+import pl.core.Implication;
 import pl.core.Model;
 import pl.core.Negation;
 import pl.core.Sentence;
@@ -87,10 +89,10 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
-		Literal unit = findUnitClause(symbols, clauses, model);	
+		//Literal unit = findUnitClause(symbols, clauses, model);	
 
 		//TEMP FOR TESTING
-		unit = null;
+		Literal unit = null;
 		
 		if(unit != null) {
 			
@@ -263,19 +265,22 @@ public interface DPLL {
 		
 		
 		//testing to see if null pointer problem is fixed
-//		WumpusWorldKB wkb = new WumpusWorldKB();
-//		Symbol p12 = wkb.intern("P1,2");
-//		wkb.add(p12);
-//		wkb.dump();
-	//	System.out.println("DPLL Satisiable = " + DPLL.dpllSatisfiable(wkb.getKBAsSentence()));
+		WumpusWorldKB wkb = new WumpusWorldKB();
+		Symbol p12 = wkb.intern("P1,2");
+		wkb.dump();
+		System.out.println("Wumpus World Pit(1,2) DPLL Satisiable = " + DPLL.dpllSatisfiable(new Conjunction(wkb.getKBAsSentence(), p12)));
 
-		
 		//testing stuff
 		HornClausesKB kb = new HornClausesKB();
 		Sentence s = kb.getKBAsSentence();
 		Set<Clause> clauses = CNFConverter.convert(s);
 		List<Symbol> symList = new ArrayList<Symbol>();
+		Symbol mythical = kb.intern("Mythical");
+		Symbol magical = kb.intern("Magical");
 		
+		System.out.println("Horn Clauses Mythical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(mythical))));
+		System.out.println("Horn Clauses Magical DPLL Satisfiable = " + DPLL.dpllSatisfiable(new Conjunction(s, new Negation(magical))));
+
 		for(Clause cl: clauses){
 			for(Literal lit: cl) {
 				if(!symList.contains(lit.getContent())) {
