@@ -43,7 +43,7 @@ public interface DPLL {
 		}
 	}
 	
-	//NOT CHECKED
+	
 	//Check if sentence is satisfiable by calling dpll
 	public static Boolean dpllSatisfiable(Sentence s) {
 		Set<Clause> clauses = CNFConverter.convert(s);
@@ -61,11 +61,11 @@ public interface DPLL {
 		return dpll(clauses, symList, new Model());
 	}
 
-	//NOT CHECKED
+	
 	//main DPLL algorithm
 	@SuppressWarnings("unused")
 	public static Boolean dpll(Set<Clause> clauses, List<Symbol> symbols, Model model) {
-		//THESE TWO IF STATEMENTS NEED FIXING, i think they need to be able to handle unknown(null) values	
+	
 		
 		//if some clause in clauses is false in model then return false
 		for(Clause clause: clauses) {
@@ -86,6 +86,7 @@ public interface DPLL {
 		Literal pure = findPureSymbol(symbols, eliminateClauses(clauses, model), model);
 
 		if(pure != null) {
+
 			symbols.remove(pure.getContent());
 
 			Boolean value;
@@ -108,10 +109,9 @@ public interface DPLL {
 				
 		//Unit Propagation
 		//System.out.println("Before findUnitClause call:" + symbols);
-
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
-		
+
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols
@@ -150,7 +150,7 @@ public interface DPLL {
 		
 	}
 	
-	//NOT CHECKED
+	
 	//method to determine if all clauses are true in model
 	public static Boolean allClausesTrue(Set<Clause> clauses, Model model) {
 		for(Clause clause: clauses) {
@@ -167,7 +167,7 @@ public interface DPLL {
 		return true;
 	}
 	
-	//IN PROGRESS
+	
 	//method to find (symbol, value) pair of pure symbol..i think literal might work for this but not positive
 	public static Literal findPureSymbol(List<Symbol> symbols, Set<Clause> initClauses, Model model) {
 		
@@ -289,7 +289,7 @@ public interface DPLL {
 				}
 				//After all literals have been checked, check if the clause is a unit clause
 				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
-					//sSystem.out.println("Found Unit Clause: " + unitLiteral);
+					//System.out.println("Found Unit Clause: " + unitLiteral);
 					return unitLiteral;
 				}	
 			}
