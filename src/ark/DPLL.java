@@ -111,7 +111,7 @@ public interface DPLL {
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
-		//unit = null;
+		unit = null;
 		
 		if(unit != null) {
 			
