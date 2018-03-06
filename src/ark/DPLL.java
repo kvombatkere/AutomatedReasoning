@@ -111,7 +111,6 @@ public interface DPLL {
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
-		unit = null;
 		
 		if(unit != null) {
 			
@@ -237,11 +236,12 @@ public interface DPLL {
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
 	//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
 		
-		Literal unitLiteral = null;
 		//System.out.println(clauses);
 		//System.out.println("Assignments: " +model.getAss() + ", Symbols: " +  symbols);
 		//Loop over all the clauses
 		for(Clause clause: clauses) {
+			Literal unitLiteral = null;
+
 			//count to keep track of number of assigned values in clause
 			int numAssignedValues = 0;
 			
@@ -289,7 +289,7 @@ public interface DPLL {
 				}
 				//After all literals have been checked, check if the clause is a unit clause
 				if(numAssignedValues + 1 == numLiterals && unitLiteral != null) {
-					//System.out.println("Found Unit Clause: " + unitLiteral);
+					//sSystem.out.println("Found Unit Clause: " + unitLiteral);
 					return unitLiteral;
 				}	
 			}
