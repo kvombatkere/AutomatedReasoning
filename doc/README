@@ -1,0 +1,24 @@
+CSC 442 Project 2: Automated Reasoning
+Rebecca Ho Van Dyke, Karan Vombatkere, Avram Webberman
+March 6th, 2018
+
+To build project:
+./compile.sh
+
+To run question 1:
+java ModusPonensChecker
+
+To run question 2:
+java WumpusWorldChecker
+
+To run question 3:
+java HornClausesChecker
+
+To run question 4:
+java AmyBobCalChecker
+
+To run question 5:
+java MoreLiarsTruthTellersChecker
+
+To run question 6:
+java DoorsOfEnlightenmentChecker
