@@ -30,11 +30,6 @@ public class HornClausesChecker implements TTModelChecking, DPLL{
 		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
 		
 		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
-		HCkb = new HornClausesKB();
-		//Symbols for the different elements in KB
-		mythical = HCkb.intern("Mythical");
-		magical = HCkb.intern("Magical");
-		horned = HCkb.intern("Horned");
 		final long DPLLstart = System.currentTimeMillis();
 		
 		//Check kb entailment of mythical, magical, and horned using DPLL and proof by contradiction

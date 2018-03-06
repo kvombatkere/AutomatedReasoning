@@ -107,12 +107,21 @@ public interface DPLL {
 			return dpll(clauses, (List<Symbol>) Model.deepClone(symbols), modelClonePure.assign(pure.getContent(), value ));
 		}
 				
+<<<<<<< HEAD
 
+=======
+		//Unit Propagation
+		//System.out.println("Before findUnitClause call:" + symbols);
+>>>>>>> 66f4de7b4b69996d0dab4c9726bc3de80927a947
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
 		unit = null;
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 66f4de7b4b69996d0dab4c9726bc3de80927a947
 		if(unit != null) {
 			
 			//reminder to check about cloning symbols

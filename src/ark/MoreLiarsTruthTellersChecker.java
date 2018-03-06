@@ -27,25 +27,6 @@ public class MoreLiarsTruthTellersChecker implements TTModelChecking, DPLL {
 		System.out.println("Displaying Knowledge Base:");
 		kb.dump();
 		
-		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
-		final long DPLLstart = System.currentTimeMillis();
-		
-		//Check kb entailment of Amy, Bob, and Cal's truthfulness using DPLL and proof by contradiction
-		System.out.println("Amy can be proved truthful : " + DPLL.proofByContradiction(kb, A));
-		System.out.println("Bob can be proved truthful : " + DPLL.proofByContradiction(kb, B));
-		System.out.println("Cal can be proved truthful : " + DPLL.proofByContradiction(kb, C));
-		System.out.println("Dee can be proved truthful : " + DPLL.proofByContradiction(kb, D));
-		System.out.println("Eli can be proved truthful : " + DPLL.proofByContradiction(kb, E));
-		System.out.println("Fay can be proved truthful : " + DPLL.proofByContradiction(kb, F));
-		System.out.println("Gil can be proved truthful : " + DPLL.proofByContradiction(kb, G));
-		System.out.println("Hal can be proved truthful : " + DPLL.proofByContradiction(kb, H));
-		System.out.println("Ida can be proved truthful : " + DPLL.proofByContradiction(kb, I));
-		System.out.println("Jay can be proved truthful : " + DPLL.proofByContradiction(kb, J));
-		System.out.println("Kay can be proved truthful : " + DPLL.proofByContradiction(kb, K));
-		System.out.println("Lee can be proved truthful : " + DPLL.proofByContradiction(kb, L));
-		
-		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
-		
 		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
 		final long TTstart = System.currentTimeMillis();
 
@@ -65,6 +46,25 @@ public class MoreLiarsTruthTellersChecker implements TTModelChecking, DPLL {
 		
 		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
 	
+		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
+		final long DPLLstart = System.currentTimeMillis();
+		
+		//Check kb entailment of Amy, Bob, and Cal's truthfulness using DPLL and proof by contradiction
+		System.out.println("Amy can be proved truthful : " + DPLL.proofByContradiction(kb, A));
+		System.out.println("Bob can be proved truthful : " + DPLL.proofByContradiction(kb, B));
+		System.out.println("Cal can be proved truthful : " + DPLL.proofByContradiction(kb, C));
+		System.out.println("Dee can be proved truthful : " + DPLL.proofByContradiction(kb, D));
+		System.out.println("Eli can be proved truthful : " + DPLL.proofByContradiction(kb, E));
+		System.out.println("Fay can be proved truthful : " + DPLL.proofByContradiction(kb, F));
+		System.out.println("Gil can be proved truthful : " + DPLL.proofByContradiction(kb, G));
+		System.out.println("Hal can be proved truthful : " + DPLL.proofByContradiction(kb, H));
+		System.out.println("Ida can be proved truthful : " + DPLL.proofByContradiction(kb, I));
+		System.out.println("Jay can be proved truthful : " + DPLL.proofByContradiction(kb, J));
+		System.out.println("Kay can be proved truthful : " + DPLL.proofByContradiction(kb, K));
+		System.out.println("Lee can be proved truthful : " + DPLL.proofByContradiction(kb, L));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
+		
 	}
 
 }
