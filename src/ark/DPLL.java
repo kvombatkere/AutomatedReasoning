@@ -107,10 +107,11 @@ public interface DPLL {
 		}
 				
 		//Unit Propagation
+		//System.out.println("Before findUnitClause call:" + symbols);
 
 		Literal unit = findUnitClause(symbols, clauses, model);	
 		//System.out.println(unit);
-		//unit = null;
+		unit = null;
 		
 		if(unit != null) {
 			
