@@ -27,25 +27,6 @@ public class MoreLiarsTruthTellersChecker implements TTModelChecking, DPLL {
 		System.out.println("Displaying Knowledge Base:");
 		kb.dump();
 		
-		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
-		final long TTstart = System.currentTimeMillis();
-
-		System.out.println("The following can be entailed");
-		System.out.println("Amy is a truth teller : " + TTModelChecking.ttEntails(kb, A));
-		System.out.println("Bob is a truth teller : " + TTModelChecking.ttEntails(kb, B));
-		System.out.println("Cal is a truth teller : " + TTModelChecking.ttEntails(kb, C));
-		System.out.println("Dee is a truth teller : " + TTModelChecking.ttEntails(kb, D));
-		System.out.println("Eli is a truth teller : " + TTModelChecking.ttEntails(kb, E));
-		System.out.println("Fay is a truth teller : " + TTModelChecking.ttEntails(kb, F));
-		System.out.println("Gil is a truth teller : " + TTModelChecking.ttEntails(kb, G));
-		System.out.println("Hal is a truth teller : " + TTModelChecking.ttEntails(kb, H));
-		System.out.println("Ida is a truth teller : " + TTModelChecking.ttEntails(kb, I));
-		System.out.println("Jay is a truth teller : " + TTModelChecking.ttEntails(kb, J));
-		System.out.println("Kay is a truth teller : " + TTModelChecking.ttEntails(kb, K));
-		System.out.println("Lee is a truth teller : " + TTModelChecking.ttEntails(kb, L));
-		
-		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
-		
 		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
 		final long DPLLstart = System.currentTimeMillis();
 		
@@ -64,7 +45,26 @@ public class MoreLiarsTruthTellersChecker implements TTModelChecking, DPLL {
 		System.out.println("Lee can be proved truthful : " + DPLL.proofByContradiction(kb, L));
 		
 		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstart) + " ms");
-				
+		
+		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
+		final long TTstart = System.currentTimeMillis();
+
+		System.out.println("The following can be entailed");
+		System.out.println("Amy is a truth teller : " + TTModelChecking.ttEntails(kb, A));
+		System.out.println("Bob is a truth teller : " + TTModelChecking.ttEntails(kb, B));
+		System.out.println("Cal is a truth teller : " + TTModelChecking.ttEntails(kb, C));
+		System.out.println("Dee is a truth teller : " + TTModelChecking.ttEntails(kb, D));
+		System.out.println("Eli is a truth teller : " + TTModelChecking.ttEntails(kb, E));
+		System.out.println("Fay is a truth teller : " + TTModelChecking.ttEntails(kb, F));
+		System.out.println("Gil is a truth teller : " + TTModelChecking.ttEntails(kb, G));
+		System.out.println("Hal is a truth teller : " + TTModelChecking.ttEntails(kb, H));
+		System.out.println("Ida is a truth teller : " + TTModelChecking.ttEntails(kb, I));
+		System.out.println("Jay is a truth teller : " + TTModelChecking.ttEntails(kb, J));
+		System.out.println("Kay is a truth teller : " + TTModelChecking.ttEntails(kb, K));
+		System.out.println("Lee is a truth teller : " + TTModelChecking.ttEntails(kb, L));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - TTstart) + " ms");
+	
 	}
 
 }

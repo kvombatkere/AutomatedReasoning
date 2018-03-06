@@ -42,8 +42,7 @@ public class AmyBobCalChecker implements TTModelChecking{
 		System.out.println("Cal is a truth teller: " + TTModelChecking.ttEntails(kbA, cA));
 		
 		System.out.println("Computed in " + (System.currentTimeMillis() - TTstartA) + " ms");
-		
-		
+			
 		//Part B
 		AmyBobCalPartBKB kbB = new AmyBobCalPartBKB();
 		
@@ -53,17 +52,7 @@ public class AmyBobCalChecker implements TTModelChecking{
 		
 		System.out.println("\nBasic Model Checking and Propositional Inference for Liars and Truth Tellers Problem Part B\n");
 		System.out.println("Displaying Knowledge Base:");
-		kbA.dump();
-		
-		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
-		final long TTstartB = System.currentTimeMillis();
-
-		System.out.println("The following can be entailed");
-		System.out.println("Amy is a truth teller : " + TTModelChecking.ttEntails(kbB, aB));
-		System.out.println("Bob is a truth teller : " + TTModelChecking.ttEntails(kbB, bB));
-		System.out.println("Cal is a truth teller : " + TTModelChecking.ttEntails(kbB, cB));
-		
-		System.out.println("Computed in " + (System.currentTimeMillis() - TTstartB) + " ms");
+		kbB.dump();
 		
 		System.out.println("\nAIMA Figure 7.17 DPLL with Proof by Contradiction");
 		final long DPLLstartB = System.currentTimeMillis();
@@ -74,7 +63,16 @@ public class AmyBobCalChecker implements TTModelChecking{
 		System.out.println("Cal can be proved truthful : " + DPLL.proofByContradiction(kbB, cB));
 		
 		System.out.println("Computed in " + (System.currentTimeMillis() - DPLLstartB) + " ms");
+		
+		System.out.println("\nAIMA Figure 7.10 Truth Table Enumeration method");
+		final long TTstartB = System.currentTimeMillis();
 
+		System.out.println("The following can be entailed");
+		System.out.println("Amy is a truth teller : " + TTModelChecking.ttEntails(kbB, aB));
+		System.out.println("Bob is a truth teller : " + TTModelChecking.ttEntails(kbB, bB));
+		System.out.println("Cal is a truth teller : " + TTModelChecking.ttEntails(kbB, cB));
+		
+		System.out.println("Computed in " + (System.currentTimeMillis() - TTstartB) + " ms");
 		
 	}
 }
