@@ -1,4 +1,5 @@
-//CSC 442 Project 2
+//CSC 442: AI Project 02 - Automated Reasoning
+//March 2018
 //Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
 //DOELiuKB
 //Knowledge base for Liu's Doors of Enlightenment problem

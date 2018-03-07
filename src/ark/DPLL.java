@@ -1,3 +1,8 @@
+//CSC 442: AI Project 02 - Automated Reasoning
+//March 2018
+//Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
+//DPLL - implements DPLL Algorithm
+
 package ark;
 
 import pl.core.Conjunction;
@@ -234,9 +239,8 @@ public interface DPLL {
 	
 	//method to find clauses with only one literal or clause with only one true literal 
 	public static Literal findUnitClause(List<Symbol> symbols, Set<Clause> clauses, Model model) {
-	//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
+		//System.out.println("FIND UNIT CLAUSE FUNCTION CALL");//print when this method is called
 		
-		//System.out.println(clauses);
 		//System.out.println("Assignments: " +model.getAss() + ", Symbols: " +  symbols);
 		//Loop over all the clauses
 		for(Clause clause: clauses) {

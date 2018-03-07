@@ -1,3 +1,8 @@
+//CSC 442: AI Project 02 - Automated Reasoning
+//March 2018
+//Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
+//MoreLiarsTruthTellersChecker
+
 package ark;
 
 import pl.core.Conjunction;

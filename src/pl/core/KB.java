@@ -1,3 +1,8 @@
+//CSC 442: AI Project 02 - Automated Reasoning
+//March 2018
+//Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
+//getKBAsSentence helper function modification
+
 package pl.core;
 import java.util.Collection;
 import java.util.LinkedList;

@@ -1,3 +1,8 @@
+//CSC 442: AI Project 02 - Automated Reasoning
+//March 2018
+//Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
+//HornClausesKB
+
 package ark;
 
 import pl.core.Biconditional;
@@ -23,7 +28,7 @@ public class HornClausesKB extends KB{
 
 		//if mythical => Immortal
 		add(new Implication(mythical, new Negation(mortal)));
-		
+
 		//if NOT mythical => Mortal Mammal
 		add(new Implication(new Negation(mythical), new Conjunction(mortal, mammal)));
 		
