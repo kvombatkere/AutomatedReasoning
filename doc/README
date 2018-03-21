@@ -1,12 +1,9 @@
-CSC 442 Project 2: Automated Reasoning
-Rebecca Ho Van Dyke, Karan Vombatkere, Avram Webberman
-March 6th, 2018
+//CSC 442: AI Project 02 - Automated Reasoning
+//March 2018
+//Avi Webberman, Rebecca Van Dyke, Karan Vombatkere
 
 To build project:
 ./compile.sh
-
-NOTE:
-DPLL algorithm has unit clause removal disabled. Comment out line 114 of DPLL.java to see bug behavior described in write up.
 
 To run question 1:
 java ModusPonensChecker
